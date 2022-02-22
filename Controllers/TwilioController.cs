@@ -3,7 +3,7 @@ using TwilioAPI.Models;
 using TwilioAPI.Data;
 namespace TwilioAPI.Controllers {
     //api/twilioapi
-    [Route("api/[controller]")]
+    [Route("api/twilio/")]
     [ApiController]
     public class TwilioApiController : ControllerBase
     {
@@ -15,7 +15,7 @@ namespace TwilioAPI.Controllers {
             return Ok(commandItems);
         }
         
-        [HttpGet("{number}")]
+        [HttpGet("{callingNumber}")]
         public ActionResult<TwilioApi> GetOutboundNumber(string callingNumber){
             var commandItem = _repository.GetOutboundNumber(callingNumber);
             return Ok(commandItem);
