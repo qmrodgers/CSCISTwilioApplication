@@ -14,9 +14,10 @@ namespace TwilioAPI.Controllers {
             var commandItems = _repository.GetAll();
             return Ok(commandItems);
         }
-        
-        [HttpGet("{callingNumber}")]
-        public ActionResult<TwilioApi> GetOutboundNumber(string callingNumber){
+        [HttpGet("getNumber/")]
+        public ActionResult<TwilioApi> GetOutboundNumber([FromForm]string callingNumber)
+        {   
+            Console.WriteLine(callingNumber);
             var commandItem = _repository.GetOutboundNumber(callingNumber);
             return Ok(commandItem);
         }
