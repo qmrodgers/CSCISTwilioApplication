@@ -11,33 +11,38 @@ namespace TwilioWebApplication.Controllers
         private readonly ILogger<HomeController> _logger;
 
         // Twilio Account ID and Secret Key (Will later pull this info from Database)
-        private List<Employee> employees;
+        //private List<TwilioNumber> numbers;
+        string TwilioSID = "SK4eb6e77fcda1d92d5650409bb5d1614d";
+        string TwilioSecretKey = "CXoWbQUp6uzMtIOWlTjB1jgJO8i31umV";
+        
 
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
 
-            string TwilioSID = "SK4eb6e77fcda1d92d5650409bb5d1614d";
-            string TwilioSecretKey = "CXoWbQUp6uzMtIOWlTjB1jgJO8i31umV";
 
             TwilioClient.Init(TwilioSID, TwilioSecretKey);
+            var incomingPhoneNumbers = IncomingPhoneNumberResource.Read(limit: 20);
+            
 
-            var incomingPhoneNumbers = IncomingPhoneNumberResource.Read();
-
+            Console.WriteLine("This ran");
             foreach (var record in incomingPhoneNumbers)
             {
+                Console.WriteLine("Hello");
                 Console.WriteLine(record.PhoneNumber);
             }
 
-            employees = new List<Employee>()
+            /*numbers = new List<TwilioNumber>()
             {
-                new Employee() { EmployeeID = 1, FirstName = "Quaid", LastName = "Rodgers", Email = "qmrodgers@eagles.usi.edu", PersonalPhone = "812-677-8115", TwilioPhone = "Unimplemented"}
-            };
+
+                
+
+            };*/
         }
 
         public IActionResult Index()
         {
-            return View(employees);
+            return View();
         }
 
         public IActionResult Privacy()
