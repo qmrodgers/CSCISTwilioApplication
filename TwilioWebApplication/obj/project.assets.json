@@ -4326,11 +4326,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\quaid\\source\\repos\\TwilioWebApplication\\TwilioWebApplication\\TwilioWebApplication.csproj",
+      "projectUniqueName": "C:\\Users\\quaid\\source\\repos\\CSCISTwilioApplication\\TwilioWebApplication\\TwilioWebApplication.csproj",
       "projectName": "TwilioWebApplication",
-      "projectPath": "C:\\Users\\quaid\\source\\repos\\TwilioWebApplication\\TwilioWebApplication\\TwilioWebApplication.csproj",
+      "projectPath": "C:\\Users\\quaid\\source\\repos\\CSCISTwilioApplication\\TwilioWebApplication\\TwilioWebApplication.csproj",
       "packagesPath": "C:\\Users\\quaid\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\quaid\\source\\repos\\TwilioWebApplication\\TwilioWebApplication\\obj\\",
+      "outputPath": "C:\\Users\\quaid\\source\\repos\\CSCISTwilioApplication\\TwilioWebApplication\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\quaid\\AppData\\Roaming\\NuGet\\NuGet.Config",

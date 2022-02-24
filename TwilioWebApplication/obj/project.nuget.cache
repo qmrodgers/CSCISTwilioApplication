@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "E3cnBAc0o+eCj9egMmPt3Bwg+tJVZIeujvS2FJxHCxcUinrBe+fXqvQfMkdoaSm9g/uCQW1iMoxrUuQSerhiWQ==",
+  "dgSpecHash": "15Fxh0qBOW2B6jrjX0EY37XnNxuh85HGzMozCvr1k1fKFX1D57cdOEB/87MNP8D6l0dZnFJVGeYMPj03wfBC/g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\quaid\\source\\repos\\TwilioWebApplication\\TwilioWebApplication\\TwilioWebApplication.csproj",
+  "projectFilePath": "C:\\Users\\quaid\\source\\repos\\CSCISTwilioApplication\\TwilioWebApplication\\TwilioWebApplication.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\quaid\\.nuget\\packages\\microsoft.identitymodel.jsonwebtokens\\5.3.0\\microsoft.identitymodel.jsonwebtokens.5.3.0.nupkg.sha512",
     "C:\\Users\\quaid\\.nuget\\packages\\microsoft.identitymodel.logging\\5.3.0\\microsoft.identitymodel.logging.5.3.0.nupkg.sha512",

@@ -31,7 +31,7 @@ namespace TwilioWebApplication.Controllers
 
             employees = new List<Employee>()
             {
-                new Employee() { EmployeeID = 1, FirstName = "Steve", LastName = "Harrington", Email = "steve@steve.net", PersonalPhone = "111-123-1234", TwilioPhone = "123456789"}
+                new Employee() { EmployeeID = 1, FirstName = "Quaid", LastName = "Rodgers", Email = "qmrodgers@eagles.usi.edu", PersonalPhone = "812-677-8115", TwilioPhone = "Unimplemented"}
             };
         }
 
