@@ -3,10 +3,14 @@ using Microsoft.Extensions.DependencyInjection;
 using TwilioWebApplication.Data;
 
 var builder = WebApplication.CreateBuilder(args);
-
+var _connection = builder.Configuration.GetConnectionString("DefaultConnection");
+if (_connection.Contains("%CONTENTROOTPATH%"))
+{
+    _connection = _connection.Replace("%CONTENTROOTPATH%", builder.Environment.ContentRootPath);
+}
 
 builder.Services.AddDbContext<WebApplicationContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("DefaultConnection")
+    _connection
     ));
 
 // Add services to the container.
