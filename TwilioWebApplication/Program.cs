@@ -1,9 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using TwilioWebApplication.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 
-
+builder.Services.AddDbContext<WebApplicationContext>(options => options.UseSqlServer(
+    builder.Configuration.GetConnectionString("DefaultConnection")
+    ));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

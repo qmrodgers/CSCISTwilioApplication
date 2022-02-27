@@ -15,6 +15,14 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Employee/Employees.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcRW1wbG95ZWVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Employee/Numbers.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcTnVtYmVycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

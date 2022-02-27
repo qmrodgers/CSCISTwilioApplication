@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Employee>
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<table class="table">
+        <thead>
+            <th scope="col">Row #</th>
+            <th scope="col">Twilio #</th>
+            <th scope="col">Employee</th>
+            <th scope="col">Email</th>
+            <th scope="col">Personal #</th>
+        </thead>
+        <tbody>
+            @{
+                int count = 1;
+                foreach (Employee d in Model)
+                {
+                   
+                    <tr>
+                    <th scope="row">@count</th>
+                    
+                    <td>@d.PurchasedNumberID</td>
+                    <td>@d.FirstName @d.LastName</td>
+                    <td>@d.Email</td>
+                    <td>@d.PhoneNumber</td>
+                    </tr>
+                }
+                }
+        </tbody>
+    </table>
