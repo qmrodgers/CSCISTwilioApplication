@@ -15,6 +15,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Employee/CreateEmployee.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcQ3JlYXRlRW1wbG95ZWUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Employee/Employees.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcRW1wbG95ZWVzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -33,6 +37,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Shared/_Employees.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9FbXBsb3llZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Shared/_Numbers.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9OdW1iZXJzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Shared/_ValidationScriptsPartial.cshtml]

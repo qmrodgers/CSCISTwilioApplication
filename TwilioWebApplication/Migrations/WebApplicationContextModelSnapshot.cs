@@ -79,6 +79,9 @@ namespace TwilioWebApplication.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EmployeeID"), 1L, 1);
 
+                    b.Property<string>("AssignedNumber")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
@@ -89,30 +92,11 @@ namespace TwilioWebApplication.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PurchasedNumberID")
-                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("EmployeeID");
 
-                    b.HasIndex("PurchasedNumberID");
-
                     b.ToTable("Employees");
-                });
-
-            modelBuilder.Entity("TwilioWebApplication.Models.PurchasedNumber", b =>
-                {
-                    b.Property<string>("PurchasedNumberID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("FriendlyNumberName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("PurchasedNumberID");
-
-                    b.ToTable("PurchasedNumbers");
                 });
 
             modelBuilder.Entity("TwilioWebApplication.Models.User", b =>
@@ -151,15 +135,6 @@ namespace TwilioWebApplication.Migrations
                         .IsRequired();
 
                     b.Navigation("Employee");
-                });
-
-            modelBuilder.Entity("TwilioWebApplication.Models.Employee", b =>
-                {
-                    b.HasOne("TwilioWebApplication.Models.PurchasedNumber", "PurchasedNumber")
-                        .WithMany()
-                        .HasForeignKey("PurchasedNumberID");
-
-                    b.Navigation("PurchasedNumber");
                 });
 
             modelBuilder.Entity("TwilioWebApplication.Models.User", b =>

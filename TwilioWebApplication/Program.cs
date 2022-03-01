@@ -2,8 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using TwilioWebApplication.Data;
 
-var builder = WebApplication.CreateBuilder(args);
-var _connection = builder.Configuration.GetConnectionString("DefaultConnection");
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+string _connection = builder.Configuration.GetConnectionString("DefaultConnection");
 if (_connection.Contains("%CONTENTROOTPATH%"))
 {
     _connection = _connection.Replace("%CONTENTROOTPATH%", builder.Environment.ContentRootPath);

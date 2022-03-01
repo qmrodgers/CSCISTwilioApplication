@@ -1,26 +1,13 @@
-﻿@model IEnumerable<PurchasedNumber>
+﻿@model CombinedModel
 @*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
+<div class="text-center container-fluid">
 
-<table class="table">
-        <thead>
-            <th scope="col">Row #</th>
-            <th scope="col">Purchased Number</th>
-            <th scope="col">Friendly Name</th>
-        </thead>
-        <tbody>
-            @{
-                int count = 1;
-                foreach (PurchasedNumber d in Model)
-                {
-                   
-                    <tr>
-                    <th scope="row">@count</th>
-                    <td>@d.PurchasedNumberID</td>
-                    <td>@d.FriendlyNumberName</td>
-                    </tr>
-                }
-                }
-        </tbody>
-    </table>
+    <h1 class="">Purchased Twilio Numbers</h1>
+
+    <p>Create, Delete, or Edit Twilio Numbers via Twilio's API</p>
+
+</div>
+
+<partial name="~/Views/Shared/_Numbers.cshtml" />

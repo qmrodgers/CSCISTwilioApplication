@@ -1,0 +1,34 @@
+﻿@model IEnumerable<Employee>
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<table class="table table-striped table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">EmployeeID</th>
+            <th scope="col">Assigned Number</th>
+            <th scope="col">Employee</th>
+            <th scope="col">Email</th>
+            <th scope="col">Personal #</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int count = 1;
+            //Employee e in Model <- replace bottom with if Linq not working out
+            foreach (Employee emp in (from e in Model orderby e.EmployeeID ascending select e))
+            {
+                    <tr>
+                        <th scope="row">@emp.EmployeeID</th>
+                        <th scope="row">@emp.AssignedNumber</th>
+                        <td>@emp.FirstName @emp.LastName</td>
+                        <td>@emp.Email</td>
+                        <td>@emp.PhoneNumber</td>
+                    </tr>
+                    count++;
+            }
+        }
+    </tbody>
+</table>
+
