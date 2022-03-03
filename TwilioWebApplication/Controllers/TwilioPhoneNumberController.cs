@@ -23,7 +23,7 @@ namespace TwilioWebApplication.Controllers
         }
 
 
-        [Route("Get/")]
+        [Route("Get/All")]
         [HttpGet]
         public ActionResult<IEnumerable<string>> GetTwilioPhoneNumbers()
         {
@@ -44,17 +44,21 @@ namespace TwilioWebApplication.Controllers
             return Ok(phoneNumbersList);
         }
 
-        [Route("Get/{twilioNumber}")]
+        [Route("Get")]
         [HttpGet]
-        public ActionResult<ReturnedNumberInformation> GetNumber([FromBody] IncomingFromTwilio fromTwilio)
+        public ActionResult<IEnumerable<string>> GetNumber(string callerNumber, string twilioNumber)
         {
-            throw new NotImplementedException();
             Employee emp = null;
             ReturnedNumberInformation returnedNumberInformation = new ReturnedNumberInformation();
 
-            
-            //temp functionality
+            List<string> tempList = new List<string>();
+            tempList.Add($"{callerNumber} this is the number calling");
+            tempList.Add($"{twilioNumber} this is the twilio number called");
 
+            return Ok(tempList);
+
+            //temp functionality
+            /*
             var emplist = (from e in _db.Employees where e.PhoneNumber == fromTwilio.CallingNumber select e).ToList();
 
             if (emplist.Count == 1)
@@ -72,6 +76,7 @@ namespace TwilioWebApplication.Controllers
             {
 
             }
+            */
 
         }
         
