@@ -24,6 +24,12 @@ namespace TwilioWebApplication.Migrations
 
             modelBuilder.Entity("TwilioWebApplication.Models.CallLog", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
                     b.Property<DateTime>("CallDate")
                         .HasColumnType("datetime2");
 
@@ -40,8 +46,7 @@ namespace TwilioWebApplication.Migrations
                     b.Property<bool>("Favorite")
                         .HasColumnType("bit");
 
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
+                    b.HasKey("Id");
 
                     b.HasIndex("EmployeeID");
 
@@ -87,6 +92,9 @@ namespace TwilioWebApplication.Migrations
 
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastCall")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");

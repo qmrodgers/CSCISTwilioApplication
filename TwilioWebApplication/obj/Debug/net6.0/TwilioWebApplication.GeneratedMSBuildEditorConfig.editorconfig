@@ -11,7 +11,7 @@ build_property.RootNamespace = TwilioWebApplication
 build_property.ProjectDir = C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
-build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = true
 build_property.MSBuildProjectDirectory = C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication
 build_property._RazorSourceGeneratorDebug = 
 

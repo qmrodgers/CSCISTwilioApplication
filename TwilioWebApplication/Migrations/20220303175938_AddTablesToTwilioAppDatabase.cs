@@ -34,7 +34,8 @@ namespace TwilioWebApplication.Migrations
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AssignedNumber = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    AssignedNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastCall = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -66,7 +67,8 @@ namespace TwilioWebApplication.Migrations
                 name: "CallLogs",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Caller = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CallType = table.Column<int>(type: "int", nullable: false),
                     CallDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -75,6 +77,7 @@ namespace TwilioWebApplication.Migrations
                 },
                 constraints: table =>
                 {
+                    table.PrimaryKey("PK_CallLogs", x => x.Id);
                     table.ForeignKey(
                         name: "FK_CallLogs_Employees_EmployeeID",
                         column: x => x.EmployeeID,

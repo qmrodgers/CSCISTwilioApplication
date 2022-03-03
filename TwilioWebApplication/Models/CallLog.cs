@@ -6,7 +6,6 @@ namespace TwilioWebApplication.Models
     {
         Missed, Received, Sent
     }
-    [Keyless]
     public class CallLog
     {
         public int Id { get; set; }

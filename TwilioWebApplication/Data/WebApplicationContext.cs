@@ -4,6 +4,7 @@ namespace TwilioWebApplication.Data
 {
     public class WebApplicationContext : DbContext
     {
+
         public WebApplicationContext(DbContextOptions<WebApplicationContext> options) : base(options)
         {
 

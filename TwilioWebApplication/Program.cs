@@ -12,9 +12,10 @@ if (_connection.Contains("%CONTENTROOTPATH%"))
 builder.Services.AddDbContext<WebApplicationContext>(options => options.UseSqlServer(
     _connection
     ));
-
+builder.Services.AddEndpointsApiExplorer();
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+
 
 var app = builder.Build();
 
@@ -31,10 +32,11 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/");
 
 app.Run();
