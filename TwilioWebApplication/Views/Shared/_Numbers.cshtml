@@ -5,6 +5,7 @@
             <th scope="col">Purchased Number</th>
             <th scope="col">Friendly Name</th>
             <th scope="col">Employee Assigned</th>
+            <th scope="col">Last Called</th>
         </tr>
     </thead>
     <tbody>
@@ -37,6 +38,7 @@
                         string result = emp.AssignedNumber == null ? "None" : $"{emp.FirstName} {emp.LastName}";
 
                         <td>@result</td>
+                        <td>@emp.LastCall.ToString()</td>
                     }
                     
                 </tr>
