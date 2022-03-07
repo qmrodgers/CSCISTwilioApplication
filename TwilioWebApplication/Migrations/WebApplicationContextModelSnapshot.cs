@@ -33,12 +33,16 @@ namespace TwilioWebApplication.Migrations
                     b.Property<DateTime>("CallDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("CallType")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Caller")
+                    b.Property<string>("CallFrom")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CallTo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CallType")
+                        .HasColumnType("int");
 
                     b.Property<int>("EmployeeID")
                         .HasColumnType("int");
@@ -71,7 +75,13 @@ namespace TwilioWebApplication.Migrations
                     b.Property<string>("TwilioSecretKey")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("CompanyID");
+
+                    b.HasIndex("UserEmail");
 
                     b.ToTable("Companies");
                 });
@@ -87,6 +97,9 @@ namespace TwilioWebApplication.Migrations
                     b.Property<string>("AssignedNumber")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("CompanyID")
+                        .HasColumnType("int");
+
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
@@ -97,23 +110,24 @@ namespace TwilioWebApplication.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("EmployeeID");
+
+                    b.HasIndex("CompanyID");
 
                     b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("TwilioWebApplication.Models.User", b =>
                 {
-                    b.Property<string>("UserName")
+                    b.Property<string>("Email")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("CompanyID")
-                        .HasColumnType("int");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -127,9 +141,7 @@ namespace TwilioWebApplication.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UserName");
-
-                    b.HasIndex("CompanyID");
+                    b.HasKey("Email");
 
                     b.ToTable("Users");
                 });
@@ -145,7 +157,18 @@ namespace TwilioWebApplication.Migrations
                     b.Navigation("Employee");
                 });
 
-            modelBuilder.Entity("TwilioWebApplication.Models.User", b =>
+            modelBuilder.Entity("TwilioWebApplication.Models.Company", b =>
+                {
+                    b.HasOne("TwilioWebApplication.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserEmail")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("TwilioWebApplication.Models.Employee", b =>
                 {
                     b.HasOne("TwilioWebApplication.Models.Company", "Company")
                         .WithMany()

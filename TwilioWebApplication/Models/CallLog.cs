@@ -9,7 +9,8 @@ namespace TwilioWebApplication.Models
     public class CallLog
     {
         public int Id { get; set; }
-        public string Caller { get; set; }
+        public string CallFrom { get; set; }
+        public string CallTo { get; set; }
         public CallType CallType { get; set; }
         public DateTime CallDate { get; set; }
         public bool Favorite { get; set; }

@@ -7,5 +7,6 @@ namespace TwilioWebApplication.Models
         public string CompanyName { get; set; }
         public string? TwilioSID { get; set; }
         public string? TwilioSecretKey { get; set; }
+        public User User { get; set; }
     }
 }

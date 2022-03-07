@@ -10,8 +10,8 @@ namespace TwilioWebApplication.Models
         public static IEnumerable<TwilioPhoneNumber> GetTwilioPhoneNumbers()
         {
             List<TwilioPhoneNumber> TwilioPhoneNumbers = new List<TwilioPhoneNumber>();
-            string SID = Environment.GetEnvironmentVariable("TwilioProject_SID", EnvironmentVariableTarget.User);
-            string Secret = Environment.GetEnvironmentVariable("TwilioProject_Secret", EnvironmentVariableTarget.User);
+            string SID = Environment.GetEnvironmentVariable("TwilioProject_SID", EnvironmentVariableTarget.Machine);
+            string Secret = Environment.GetEnvironmentVariable("TwilioProject_Secret", EnvironmentVariableTarget.Machine);
 
             TwilioClient.Init(SID, Secret);
 
