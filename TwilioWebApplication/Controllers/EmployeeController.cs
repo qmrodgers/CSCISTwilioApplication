@@ -17,6 +17,8 @@ namespace TwilioWebApplication.Controllers
         private readonly List<Company> _companylist;
         private readonly List<Employee> _employeelist;
         private List<TwilioPhoneNumber> _phoneNumbers;
+        private readonly string TwilioSID;
+        private readonly string TwilioSecret;
 
 
 
@@ -26,8 +28,10 @@ namespace TwilioWebApplication.Controllers
             _db = db;
             _companylist = _db.Companies.ToList();
             _employeelist = _db.Employees.ToList();
-            _phoneNumbers = TwilioPhoneNumber.GetTwilioPhoneNumbers().ToList(); //needs to be changed, this constructor is called every time we go to a route in the controller
-
+            _phoneNumbers = _db.TwilioPhoneNumbers.ToList();
+            TwilioSID = Environment.GetEnvironmentVariable("TwilioProject_SID", EnvironmentVariableTarget.Machine);
+            TwilioSecret = Environment.GetEnvironmentVariable("TwilioProject_Secret", EnvironmentVariableTarget.Machine);
+            TwilioClient.Init(TwilioSID, TwilioSecret);
         }
 
 
@@ -44,9 +48,32 @@ namespace TwilioWebApplication.Controllers
         [Route("Numbers")]
         public IActionResult Numbers()
         {
+            var phoneNumbers = IncomingPhoneNumberResource.Read();
+            List<TwilioPhoneNumber> updatedNumbers = new List<TwilioPhoneNumber>();
+            foreach (var x in phoneNumbers)
+            {
+                TwilioPhoneNumber number = (from TwilioPhoneNumber t in _db.TwilioPhoneNumbers where x.PhoneNumber.ToString() == t.PhoneNumber select t).FirstOrDefault();
+                if (number == null)
+                {
+                    _db.TwilioPhoneNumbers.Add(new TwilioPhoneNumber { PhoneNumber = x.PhoneNumber.ToString(), FriendlyName = x.FriendlyName});
+                }
+                _db.SaveChanges();
+
+            }
+            foreach (TwilioPhoneNumber t in _db.TwilioPhoneNumbers)
+            {
+                
+                if ((from IncomingPhoneNumberResource x in phoneNumbers where x.PhoneNumber.ToString() == t.PhoneNumber select x).Count() < 1)
+                {
+                    _db.TwilioPhoneNumbers.Remove(t);
+                }
+                _db.SaveChanges();
+            }
+            
+
             CombinedModel combinedModel = new CombinedModel();
             combinedModel.Employees = _db.Employees;
-            combinedModel.TwilioPhoneNumbers = _phoneNumbers;
+            combinedModel.TwilioPhoneNumbers = _db.TwilioPhoneNumbers;
             return View(combinedModel);
         }
 
@@ -89,8 +116,8 @@ namespace TwilioWebApplication.Controllers
             ViewData["numbers"] = filteredPhoneNumbers;
 
 
-
-            if (ModelState.ErrorCount == 1 && empModel.ReturnedCompanyID != "") //custom ModelState check: Our dropdown list on the submission page always throws a model state error, even when correct. So if there's only 1 error it is still actually valid. We see if the dropdown is valid by making sure the ReturnedCompanyID isn't blank.
+            //custom ModelState check: Our dropdown list on the submission page always throws a model state error, even when correct. So if there's only 1 error it is still actually valid. We see if the dropdown is valid by making sure the ReturnedCompanyID isn't blank.
+            if (ModelState.ErrorCount == 1 && empModel.ReturnedCompanyID != "") 
             {
                 
                 Company company = (from Company c in _db.Companies where c.CompanyID == Convert.ToInt16(empModel.ReturnedCompanyID) select c).First(); // LINQ method

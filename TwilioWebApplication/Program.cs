@@ -8,7 +8,6 @@ if (_connection.Contains("%CONTENTROOTPATH%"))
 {
     _connection = _connection.Replace("%CONTENTROOTPATH%", builder.Environment.ContentRootPath);
 }
-
 builder.Services.AddDbContext<WebApplicationContext>(options => options.UseSqlServer(
     _connection
     ));

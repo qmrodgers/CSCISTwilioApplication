@@ -124,6 +124,20 @@ namespace TwilioWebApplication.Migrations
                     b.ToTable("Employees");
                 });
 
+            modelBuilder.Entity("TwilioWebApplication.Models.TwilioPhoneNumber", b =>
+                {
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("FriendlyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PhoneNumber");
+
+                    b.ToTable("TwilioPhoneNumbers");
+                });
+
             modelBuilder.Entity("TwilioWebApplication.Models.User", b =>
                 {
                     b.Property<string>("Email")

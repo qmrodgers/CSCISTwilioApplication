@@ -1,5 +1,6 @@
 ﻿@model CombinedModel
-<table class="table table-striped table-hover">
+<div class="container">
+<table class="table table-bordered table-hover">
     <thead class="thead-dark">
         <tr>
             <th scope="col">Purchased Number</th>
@@ -14,26 +15,22 @@
             {
 
                 <tr>
-                    <td>@t.PhoneNumber</td>
+                    <th scope="row">@t.PhoneNumber</th>
                     <td>@t.FriendlyName</td>
                     @{
                         Employee emp = new Employee();
 
                         foreach (Employee e in Model.Employees)
                         {
-                            System.Diagnostics.Debug.WriteLine($"Looking at {e.FirstName} {e.LastName}");
-                            System.Diagnostics.Debug.WriteLine($"Their number: {e.AssignedNumber}");
-                            System.Diagnostics.Debug.WriteLine($"Comparing to: {t.PhoneNumber}");
 
                             if (e.AssignedNumber != null && (e.AssignedNumber.Trim() == t.PhoneNumber))
                             {
-                                System.Diagnostics.Debug.WriteLine($"Found number {e.AssignedNumber}");
+                                
                                 emp = e;
                                 break;
                             }
 
                         }
-                        System.Diagnostics.Debug.WriteLine($"Hello There");
 
                         string result = emp.AssignedNumber == null ? "None" : $"{emp.FirstName} {emp.LastName}";
 
@@ -47,3 +44,4 @@
         }
     </tbody>
 </table>
+</div>

@@ -10,6 +10,18 @@ namespace TwilioWebApplication.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "TwilioPhoneNumbers",
+                columns: table => new
+                {
+                    PhoneNumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FriendlyName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TwilioPhoneNumbers", x => x.PhoneNumber);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -114,6 +126,9 @@ namespace TwilioWebApplication.Migrations
         {
             migrationBuilder.DropTable(
                 name: "CallLogs");
+
+            migrationBuilder.DropTable(
+                name: "TwilioPhoneNumbers");
 
             migrationBuilder.DropTable(
                 name: "Employees");

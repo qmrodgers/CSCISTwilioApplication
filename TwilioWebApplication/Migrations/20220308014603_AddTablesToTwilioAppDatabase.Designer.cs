@@ -12,7 +12,7 @@ using TwilioWebApplication.Data;
 namespace TwilioWebApplication.Migrations
 {
     [DbContext(typeof(WebApplicationContext))]
-    [Migration("20220307204518_AddTablesToTwilioAppDatabase")]
+    [Migration("20220308014603_AddTablesToTwilioAppDatabase")]
     partial class AddTablesToTwilioAppDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -124,6 +124,20 @@ namespace TwilioWebApplication.Migrations
                     b.HasIndex("CompanyID");
 
                     b.ToTable("Employees");
+                });
+
+            modelBuilder.Entity("TwilioWebApplication.Models.TwilioPhoneNumber", b =>
+                {
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("FriendlyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PhoneNumber");
+
+                    b.ToTable("TwilioPhoneNumbers");
                 });
 
             modelBuilder.Entity("TwilioWebApplication.Models.User", b =>
