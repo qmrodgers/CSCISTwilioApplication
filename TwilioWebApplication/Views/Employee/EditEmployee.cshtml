@@ -1,0 +1,66 @@
+﻿@model AddEmployeeModel
+
+@if(ViewData["failed"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+    @(ViewData["failed"] as string)
+    </div>
+}
+
+<form method="post">
+    <div class="border p-4 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Add New Employee</h2>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Employee.EmployeeID"></label>
+            <input asp-for="Employee.EmployeeID" class="form-control" readonly="@(true)"/>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Employee.FirstName"></label>
+            <input asp-for="Employee.FirstName" class="form-control"/>
+            <span asp-validation-for="Employee.FirstName" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Employee.LastName"></label>
+            <input asp-for="Employee.LastName" class="form-control"/>
+            <span asp-validation-for="Employee.LastName" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Employee.Email"></label>
+            <input asp-for="Employee.Email" class="form-control"/>
+            <span asp-validation-for="Employee.Email" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Employee.PhoneNumber"></label>
+            <input asp-for="Employee.PhoneNumber" class="form-control"/>
+            <span asp-validation-for="Employee.PhoneNumber" class="text-danger"></span>
+        </div>
+        @{
+            List<TwilioPhoneNumber> twillist = ViewData["numbers"] as List<TwilioPhoneNumber>;
+
+            if (twillist != null) System.Diagnostics.Debug.WriteLine(twillist.Count + "Is the length of the number list");
+            }
+        <div class="mb-3">
+            <label asp-for="Employee.AssignedNumber"></label>            
+            <select asp-for="Employee.AssignedNumber" asp-items="@(new SelectList((ViewData["numbers"] as List<TwilioPhoneNumber>), nameof(TwilioPhoneNumber.PhoneNumber), nameof(TwilioPhoneNumber.FriendlyName)))" class="form-select"> 
+                <option value="@null" selected>Select a TwilioPhoneNumber</option>
+            </select>
+        </div>
+
+           
+        <div class="mb-3">
+            <label asp-for="ReturnedCompanyID"></label>            
+            <select asp-for="ReturnedCompanyID" asp-items="@(new SelectList((ViewData["companies"] as IEnumerable<Company>), nameof(Company.CompanyID), nameof(Company.CompanyName)))" class="form-select"> 
+                <option value="" selected>Select the employees company</option>
+
+            </select>
+
+        </div>
+        <div class="mb-3">
+            <button type="submit"  asp-route-empID="@Model.Employee.EmployeeID" class="btn btn-primary" style="width:150px">Confirm</button>
+            <a asp-controller="Employee" asp-action="Employees"class="btn btn-secondary">Back</a>
+        </div>
+    </div>
+
+</form>

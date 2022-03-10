@@ -3,6 +3,6 @@
     public class AddEmployeeModel
     {
         public Employee Employee { get; set; }
-        public string ReturnedCompanyID { get; set; }
+        public string? ReturnedCompanyID { get; set; }
     }
 }

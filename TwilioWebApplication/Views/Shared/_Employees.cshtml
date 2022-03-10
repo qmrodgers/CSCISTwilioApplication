@@ -11,6 +11,8 @@
             <th scope="col">Assigned #</th>
             <th scope="col">Email</th>
             <th scope="col">Personal #</th>
+            <th></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -26,6 +28,8 @@
                         <th scope="row">@emp.AssignedNumber</th>
                         <td>@emp.Email</td>
                         <td>@emp.PhoneNumber</td>
+                        <td class="w-auto"><a asp-controller="Employee" asp-action="EditEmployee" asp-route-empId="@emp.EmployeeID" class="btn btn-warning">Edit</a></td>
+                        <td class="w-auto"><a asp-controller="Employee" asp-action="DeleteEmployee" asp-route-empId="@emp.EmployeeID" class="btn btn-danger">Delete</a></td>
                     </tr>
                     count++;
                     
