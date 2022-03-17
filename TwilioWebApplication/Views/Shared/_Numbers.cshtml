@@ -3,10 +3,10 @@
 <table class="table table-bordered table-hover">
     <thead class="thead-dark">
         <tr>
-            <th scope="col">Purchased Number</th>
-            <th scope="col">Friendly Name</th>
-            <th scope="col">Employee Assigned</th>
-            <th scope="col">Last Called</th>
+            <th scope="col" class="text-center p-1">Purchased Number</th>
+            <th scope="col" class="text-center p-1">Friendly Name</th>
+            <th scope="col" class="text-center p-1">Employee Assigned</th>
+            <th scope="col" class="text-center p-1">Last Called</th>
         </tr>
     </thead>
     <tbody>
@@ -15,8 +15,8 @@
             {
 
                 <tr>
-                    <th scope="row">@t.PhoneNumber</th>
-                    <td>@t.FriendlyName</td>
+                    <th scope="row" class="text-center p-1">@t.PhoneNumber</th>
+                    <td class="text-center p-1">@t.FriendlyName</td>
                     @{
                         Employee emp = new Employee();
 
@@ -34,8 +34,8 @@
 
                         string result = emp.AssignedNumber == null ? "None" : $"{emp.FirstName} {emp.LastName}";
 
-                        <td>@result</td>
-                        <td>@emp.LastCall.ToString()</td>
+                        <td class="text-center p-1">@result</td>
+                        <td class="text-center p-1">@emp.LastCall.ToString()</td>
                     }
                     
                 </tr>

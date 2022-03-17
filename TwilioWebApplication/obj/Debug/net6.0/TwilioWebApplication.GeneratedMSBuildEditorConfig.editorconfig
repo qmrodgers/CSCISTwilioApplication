@@ -19,8 +19,20 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcQWRkTmV3RW1wbG95ZWUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Employee/Companies.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcQ29tcGFuaWVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Employee/DeleteCompany.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcRGVsZXRlQ29tcGFueS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Employee/DeleteEmployee.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcRGVsZXRlRW1wbG95ZWUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Employee/EditCompany.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcRWRpdENvbXBhbnkuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Employee/EditEmployee.cshtml]
@@ -45,6 +57,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Shared/_Companies.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Db21wYW5pZXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Shared/_Employees.cshtml]

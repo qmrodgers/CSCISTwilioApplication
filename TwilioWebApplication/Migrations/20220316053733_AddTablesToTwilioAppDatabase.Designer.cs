@@ -12,7 +12,7 @@ using TwilioWebApplication.Data;
 namespace TwilioWebApplication.Migrations
 {
     [DbContext(typeof(WebApplicationContext))]
-    [Migration("20220308014603_AddTablesToTwilioAppDatabase")]
+    [Migration("20220316053733_AddTablesToTwilioAppDatabase")]
     partial class AddTablesToTwilioAppDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -71,19 +71,13 @@ namespace TwilioWebApplication.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TwilioSID")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TwilioSecretKey")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserEmail")
+                    b.Property<string>("UserEmailID")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("CompanyID");
 
-                    b.HasIndex("UserEmail");
+                    b.HasIndex("UserEmailID");
 
                     b.ToTable("Companies");
                 });
@@ -142,7 +136,7 @@ namespace TwilioWebApplication.Migrations
 
             modelBuilder.Entity("TwilioWebApplication.Models.User", b =>
                 {
-                    b.Property<string>("Email")
+                    b.Property<string>("UserEmailID")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("FirstName")
@@ -157,7 +151,15 @@ namespace TwilioWebApplication.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Email");
+                    b.Property<string>("TwilioSID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TwilioSecretKey")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserEmailID");
 
                     b.ToTable("Users");
                 });
@@ -177,7 +179,7 @@ namespace TwilioWebApplication.Migrations
                 {
                     b.HasOne("TwilioWebApplication.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserEmail")
+                        .HasForeignKey("UserEmailID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

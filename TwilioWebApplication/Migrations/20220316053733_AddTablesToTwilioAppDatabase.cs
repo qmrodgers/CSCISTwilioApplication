@@ -25,14 +25,16 @@ namespace TwilioWebApplication.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Email = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserEmailID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TwilioSID = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TwilioSecretKey = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Email);
+                    table.PrimaryKey("PK_Users", x => x.UserEmailID);
                 });
 
             migrationBuilder.CreateTable(
@@ -42,18 +44,16 @@ namespace TwilioWebApplication.Migrations
                     CompanyID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CompanyName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TwilioSID = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TwilioSecretKey = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserEmail = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserEmailID = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Companies", x => x.CompanyID);
                     table.ForeignKey(
-                        name: "FK_Companies_Users_UserEmail",
-                        column: x => x.UserEmail,
+                        name: "FK_Companies_Users_UserEmailID",
+                        column: x => x.UserEmailID,
                         principalTable: "Users",
-                        principalColumn: "Email",
+                        principalColumn: "UserEmailID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -112,9 +112,9 @@ namespace TwilioWebApplication.Migrations
                 column: "EmployeeID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Companies_UserEmail",
+                name: "IX_Companies_UserEmailID",
                 table: "Companies",
-                column: "UserEmail");
+                column: "UserEmailID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employees_CompanyID",

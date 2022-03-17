@@ -29,8 +29,8 @@ namespace TwilioWebApplication.Controllers
             _companylist = _db.Companies.ToList();
             _employeelist = _db.Employees.ToList();
             _phoneNumbers = _db.TwilioPhoneNumbers.ToList();
-            TwilioSID = Environment.GetEnvironmentVariable("TwilioProject_SID", EnvironmentVariableTarget.Machine);
-            TwilioSecret = Environment.GetEnvironmentVariable("TwilioProject_Secret", EnvironmentVariableTarget.Machine);
+            TwilioSID = Environment.GetEnvironmentVariable("TwilioProject_SID", EnvironmentVariableTarget.User);
+            TwilioSecret = Environment.GetEnvironmentVariable("TwilioProject_Secret", EnvironmentVariableTarget.User);
             TwilioClient.Init(TwilioSID, TwilioSecret);
         }
 
@@ -119,20 +119,21 @@ namespace TwilioWebApplication.Controllers
         }
         //Action to send User to EditEmployee View (Page)
         [Route("Employees/Edit")]
-        public IActionResult EditEmployee(int empId, bool failedValidation=false) //failedValidation is set to true by the HttpPost if an error occurred (or the user didn't select company
+        public IActionResult EditEmployee(int empID, bool failedValidation=false) //failedValidation is set to true by the HttpPost if an error occurred (or the user didn't select company
         {
             ViewData["companies"] = _companylist;
-            AddEmployeeModel addEmpModel = new AddEmployeeModel { Employee = (from Employee e in _employeelist where e.EmployeeID == empId select e).FirstOrDefault() };
+            AddEmployeeModel addEmpModel = new AddEmployeeModel { Employee = (from Employee e in _employeelist where e.EmployeeID == empID select e).FirstOrDefault() };
             List<TwilioPhoneNumber> filteredPhoneNumbers = _phoneNumbers.ToList();
             foreach (Employee e in _db.Employees)
             {
-                if (e.AssignedNumber != null && e.EmployeeID != empId)
+                if (e.AssignedNumber != null && e.EmployeeID != empID)
                 {
                     filteredPhoneNumbers.RemoveAll(x => x.PhoneNumber == e.AssignedNumber);
                 }
             }
             if (failedValidation) ViewData["failed"] = "Server Validation failed. Did you select the employee's company?";
-            ViewData["numbers"] = _phoneNumbers;
+            //ViewData["numbers"] = _phoneNumbers;
+            ViewData["numbers"] = filteredPhoneNumbers;
             return View(addEmpModel);
         }
 
@@ -140,7 +141,7 @@ namespace TwilioWebApplication.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("Employees/Edit")]
-        public IActionResult EditEmployee(AddEmployeeModel empModel, int empId)
+        public IActionResult EditEmployee(AddEmployeeModel empModel, int empID)
         {
 
 
@@ -151,7 +152,7 @@ namespace TwilioWebApplication.Controllers
                 Company company = (from Company c in _db.Companies where c.CompanyID == Convert.ToInt16(empModel.ReturnedCompanyID) select c).First(); // LINQ method
                 empModel.Employee.Company = company;
 
-                Employee dbEmp = _db.Employees.Where(e => e.EmployeeID == empId).First();
+                Employee dbEmp = _db.Employees.Where(e => e.EmployeeID == empID).First();
 
                 //update employee
                 dbEmp.PhoneNumber = empModel.Employee.PhoneNumber;
@@ -170,16 +171,16 @@ namespace TwilioWebApplication.Controllers
 
                 return RedirectToAction("Employees");
             }
-            return RedirectToAction("EditEmployee", new { empId = empId, failedValidation = true }) ;
+            return RedirectToAction("EditEmployee", new { empID = empID, failedValidation = true }) ;
 
         }
 
         //Action to send User to DeleteEmployee View (Page)
         [Route("Employees/Delete")]
-        public IActionResult DeleteEmployee(int empId)
+        public IActionResult DeleteEmployee(int empID)
         {
 
-            Employee emp = (from Employee e in _employeelist where e.EmployeeID == empId select e).FirstOrDefault();
+            Employee emp = (from Employee e in _employeelist where e.EmployeeID == empID select e).FirstOrDefault();
 
             return View(emp);
         }
@@ -188,10 +189,10 @@ namespace TwilioWebApplication.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("Employees/Delete")]
-        public IActionResult DeleteEmployeeAtId(int empId)
+        public IActionResult DeleteEmployeeAtId(int empID)
         {
 
-            Employee emp = _db.Employees.Find(empId);
+            Employee emp = _db.Employees.Find(empID);
             if (emp == null)
             {
                 return NotFound();
@@ -249,6 +250,111 @@ namespace TwilioWebApplication.Controllers
             return RedirectToAction("Numbers");
         }
 
+        /// End of Number Views
+        /// 
+        /// </summary>
+        /// Start of Company Views
+        /// 
+
+
+        [Route("Companies")]
+        public IActionResult Companies(bool companyDeleted = false) //employeeDeleted is set to true when HttpDelete is called on an employee
+        {
+            IEnumerable<Company> Companies = _db.Companies;
+            if (companyDeleted) ViewData["deleted"] = "Company successfully deleted.";
+            ViewData["Employees"] = _db.Employees.ToList();
+            return View(Companies);
+
+        }
+
+        //Action to send User to EditCompany View (Page)
+        [Route("Companies/Edit")]
+        public IActionResult EditCompany(int cID, bool failedValidation = false) //failedValidation is set to true by the HttpPost if an error occurred (or the user didn't select company
+        {
+
+            Company company = (from c in _companylist where c.CompanyID == cID select c).First();
+
+
+            if (failedValidation) ViewData["failed"] = "Server Validation failed";
+            //ViewData["numbers"] = _phoneNumbers;
+
+            return View(company);
+        }
+
+        // Posts empModel object to here when User submits form to edit an employee
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("Companies/Edit")]
+        public IActionResult EditCompany(Company company, int cID)
+        {
+            Company c = _db.Companies.Where(c => c.CompanyID == cID).First();
+
+            //custom ModelState check: Ours does not return a companies assigned user which throws an error, which is corrected below
+            if (ModelState.ErrorCount <= 1)
+            {
+                
+                c.CompanyName = company.CompanyName;
+
+                _db.SaveChanges();
+
+
+                ModelState.Clear();
+
+                return RedirectToAction("Companies");
+            }
+            return RedirectToAction("EditCompany", new { cID = cID, failedValidation = true });
+
+        }
+        //Action to send User to DeleteCompany View (Page)
+        [Route("Companies/Delete")]
+        public IActionResult DeleteCompany(int cID)
+        {
+
+            Company company = (from Company c in _companylist where c.CompanyID == cID select c).First();
+            List<Company> companiesWithRemoved = _db.Companies.ToList();
+            companiesWithRemoved.Remove(company);
+            ViewData["companies"] = companiesWithRemoved;
+            ViewData["employees"] = _db.Employees.ToList();
+            return View(company);
+        }
+
+
+        // Deletes employee
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("Companies/Delete")]
+        public IActionResult DeleteCompanyAtId(Company? c, int cID)
+        {
+
+            Company company = _db.Companies.Find(cID);
+
+            if (ModelState.Count == 4)
+            {
+                foreach (Employee e in _db.Employees)
+                {
+                    if (e.Company.CompanyID == cID)
+                    {
+                        e.Company = (from Company comp in _companylist where comp.CompanyID == c.CompanyID select comp).First();
+                    }
+                }
+            }
+            
+
+            if (company == null)
+            {
+                return NotFound();
+            }
+            _db.Companies.Remove(company);
+            _db.SaveChanges();
+
+
+
+            return RedirectToAction("Companies");
+
+        }
+        
 
     }
+
+
 }

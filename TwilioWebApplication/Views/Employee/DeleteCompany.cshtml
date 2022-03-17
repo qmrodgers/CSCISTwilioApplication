@@ -1,0 +1,54 @@
+﻿@model Company
+
+<form method="post" asp-action="DeleteEmployeeAtId">
+<div class="container p-3">
+    <div class="row">
+ <div class="col-12">
+     <h3 class="text-danger">Delete Company</h3>
+     <div class="alert alert-warning" role="alert">
+         You are about to delete company @(Model.CompanyName).
+                    @{
+                        List<Employee>? employees = ViewData["employees"] as List<Employee>;
+                        if (employees != null)
+                        {
+                            int count = 0;
+
+                            foreach (Employee emp in employees)
+                            {
+                                if (emp.Company.CompanyID == Model.CompanyID) count++;
+                            }
+
+                            if (count > 0)
+                            {
+                                bool plural = (count > 1);
+                                <p>@count employee@(plural ? "s are" : " is") registered under this company and need to be assigned under one.</p>
+                                <p>Please select a company to place the remaining employees in</p>
+
+                                <div class="mb-3">
+                                <label asp-for="CompanyID"></label>            
+                                <select asp-for="CompanyID" asp-items="@(new SelectList((ViewData["companies"] as List<Company>), nameof(Company.CompanyID), nameof(Company.CompanyName)))" class="form-select"> 
+                                <option value="@null" selected>Select a Company</option>
+                                </select>
+                                </div>
+                            }
+                            
+
+                        }
+
+                        
+                        }
+                        
+                    
+                        Are you sure you would like to continue?
+     </div>
+ </div>
+
+ <div class="col-6"></div>
+ <div class="col-6 text-end">
+     <button type="submit" asp-route-cID="@Model.CompanyID" class="btn btn-danger" style="width:150px">Delete</button>
+            <a asp-controller="Employee" asp-action="Companies"class="btn btn-secondary">Back</a>
+ </div>
+ </div>
+
+</div>
+</form>
