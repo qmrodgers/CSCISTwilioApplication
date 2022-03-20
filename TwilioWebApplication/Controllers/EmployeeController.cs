@@ -26,8 +26,8 @@ namespace TwilioWebApplication.Controllers
         public EmployeeController(WebApplicationContext db)
         {
             _db = db;
-            _companylist = _db.Companies.ToList();
-            _employeelist = _db.Employees.ToList();
+            _companylist = (from Company c in _db.Companies where c.User.UserEmailID == "quaidrodgers13@hotmail.com" select c).ToList();
+            _employeelist = (from Employee e in _db.Employees where e.Company.User.UserEmailID == "quaidrodgers13@hotmail.com" select e).ToList();
             _phoneNumbers = _db.TwilioPhoneNumbers.ToList();
             TwilioSID = Environment.GetEnvironmentVariable("TwilioProject_SID", EnvironmentVariableTarget.User);
             TwilioSecret = Environment.GetEnvironmentVariable("TwilioProject_Secret", EnvironmentVariableTarget.User);
@@ -57,7 +57,7 @@ namespace TwilioWebApplication.Controllers
         {
             ViewData["companies"] = _companylist;
             ViewData["employees"] = _employeelist;
-            List<TwilioPhoneNumber> filteredPhoneNumbers = _phoneNumbers.ToList();
+            List<TwilioPhoneNumber> filteredPhoneNumbers = _phoneNumbers;
             foreach (Employee e in _db.Employees)
             {
                 if (e.AssignedNumber != null)
@@ -79,7 +79,7 @@ namespace TwilioWebApplication.Controllers
 
             ViewData["companies"] = _companylist;
             ViewData["employees"] = _employeelist;
-            List<TwilioPhoneNumber> filteredPhoneNumbers = _phoneNumbers.ToList();
+            List<TwilioPhoneNumber> filteredPhoneNumbers = _phoneNumbers;
             foreach (Employee e in _db.Employees)
             {
                 if (e.AssignedNumber != null)
@@ -94,7 +94,7 @@ namespace TwilioWebApplication.Controllers
             if (ModelState.ErrorCount == 1 && empModel.ReturnedCompanyID != null) 
             {
                 
-                Company company = (from Company c in _db.Companies where c.CompanyID == Convert.ToInt16(empModel.ReturnedCompanyID) select c).First(); // LINQ method
+                Company company = (from Company c in _companylist where c.CompanyID == Convert.ToInt16(empModel.ReturnedCompanyID) select c).First(); // LINQ method
                 empModel.Employee.Company = company;
                 
                 _db.Employees.Add(empModel.Employee);
@@ -149,7 +149,7 @@ namespace TwilioWebApplication.Controllers
             if (ModelState.ErrorCount == 1 && empModel.ReturnedCompanyID != null)
             {
 
-                Company company = (from Company c in _db.Companies where c.CompanyID == Convert.ToInt16(empModel.ReturnedCompanyID) select c).First(); // LINQ method
+                Company company = (from Company c in _companylist where c.CompanyID == Convert.ToInt16(empModel.ReturnedCompanyID) select c).First(); // LINQ method
                 empModel.Employee.Company = company;
 
                 Employee dbEmp = _db.Employees.Where(e => e.EmployeeID == empID).First();
@@ -218,14 +218,14 @@ namespace TwilioWebApplication.Controllers
 
 
             CombinedModel combinedModel = new CombinedModel();
-            combinedModel.Employees = _db.Employees;
+            combinedModel.Employees = _employeelist;
             combinedModel.TwilioPhoneNumbers = _db.TwilioPhoneNumbers;
             return View(combinedModel);
         }
         [Route("Numbers/RefreshNumbers")]
         public IActionResult RefreshNumbers()
         {
-            System.Diagnostics.Debug.WriteLine("made it");
+
             var phoneNumbers = IncomingPhoneNumberResource.Read();
             List<TwilioPhoneNumber> updatedNumbers = new List<TwilioPhoneNumber>();
             foreach (var x in phoneNumbers)
@@ -260,7 +260,7 @@ namespace TwilioWebApplication.Controllers
         [Route("Companies")]
         public IActionResult Companies(bool companyDeleted = false) //employeeDeleted is set to true when HttpDelete is called on an employee
         {
-            IEnumerable<Company> Companies = _db.Companies;
+            IEnumerable<Company> Companies = _companylist;
             if (companyDeleted) ViewData["deleted"] = "Company successfully deleted.";
             ViewData["Employees"] = _db.Employees.ToList();
             return View(Companies);
@@ -352,7 +352,40 @@ namespace TwilioWebApplication.Controllers
             return RedirectToAction("Companies");
 
         }
-        
+
+        //Action to send User to AddNewEmployee View (Page)
+        [Route("Companies/Create")]
+        public IActionResult AddNewCompany()
+        {
+            
+            return View();
+        }
+
+        // Posts empModel object to here when User submits form to add new employee
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("Companies/Create")]
+        public IActionResult AddNewCompany(Company comp)
+        {
+            if (comp.CompanyName != null)
+            {
+                comp.User = (from User u in _db.Users where u.UserEmailID == "quaidrodgers13@hotmail.com" select u).First();
+                _db.Companies.Add(comp);
+
+                _db.SaveChanges();
+
+                ViewData["submitted"] = $"Successfully added new company \"{comp.CompanyName}\".";
+                return View();
+            }
+            else
+            {
+                ViewData["failed"] = "Failed to create new company";
+                return View();
+            }
+            
+
+        }
+
 
     }
 

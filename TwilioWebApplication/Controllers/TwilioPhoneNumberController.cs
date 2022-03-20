@@ -48,12 +48,15 @@ namespace TwilioWebApplication.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> GetNumber(string callerNumber, string twilioNumber)
         {
-            Employee emp = null;
+           
             ReturnedNumberInformation returnedNumberInformation = new ReturnedNumberInformation();
+
+            Employee emp = (from Employee e in _db.Employees where e.AssignedNumber == twilioNumber select e).First();
 
             List<string> tempList = new List<string>();
             tempList.Add($"{callerNumber} this is the number calling");
             tempList.Add($"{twilioNumber} this is the twilio number called");
+            tempList.Add($"{emp.FirstName} {emp.LastName} is the person assigned to this Twilio Number.");
 
             return Ok(tempList);
 
