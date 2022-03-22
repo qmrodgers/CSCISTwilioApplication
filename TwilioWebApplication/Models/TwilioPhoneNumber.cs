@@ -15,13 +15,7 @@ namespace TwilioWebApplication.Models
 
     }
 
-    //supposed to get sent back to twilio http request
-    public class ReturnedNumberInformation
-    {
-        //needs more implementation
-        public string OutgoingNumber { get; set; }
-        public Dictionary<string, string> CallLog { get; set; }
-    }
+
 
     public class IncomingFromTwilio
     {

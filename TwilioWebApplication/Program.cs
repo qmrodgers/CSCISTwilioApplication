@@ -12,6 +12,7 @@ builder.Services.AddDbContext<WebApplicationContext>(options => options.UseSqlSe
     _connection
     ));
 builder.Services.AddEndpointsApiExplorer();
+
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 

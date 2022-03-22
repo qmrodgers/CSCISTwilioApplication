@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "LcaYGQpCAycTVSH3zf8NBrWPvoI+ZfRv11ADmAS0v8TMz3uaZmKMC92UeElq7JL4/kGWhJIOlmK9SxpJ3tY1sg==",
+  "dgSpecHash": "Fc53qbhaD1PUzYgUhHB00LXVFYv/bwh2RjlbcOqNbjca9Bcc0hpPf+mA3q9aqqFI1D6rykaJuox45P3LGU3joQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\quaid\\source\\repos\\CSCISTwilioApplication\\TwilioWebApplication\\TwilioWebApplication.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,8 @@
     "C:\\Users\\quaid\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",
     "C:\\Users\\quaid\\.nuget\\packages\\messagepack.annotations\\2.1.152\\messagepack.annotations.2.1.152.nupkg.sha512",
     "C:\\Users\\quaid\\.nuget\\packages\\messagepackanalyzer\\2.1.152\\messagepackanalyzer.2.1.152.nupkg.sha512",
+    "C:\\Users\\quaid\\.nuget\\packages\\microsoft.aspnet.webapi.client\\5.2.7\\microsoft.aspnet.webapi.client.5.2.7.nupkg.sha512",
+    "C:\\Users\\quaid\\.nuget\\packages\\microsoft.aspnet.webapi.core\\5.2.7\\microsoft.aspnet.webapi.core.5.2.7.nupkg.sha512",
     "C:\\Users\\quaid\\.nuget\\packages\\microsoft.aspnetcore.mvc.razor.extensions\\6.0.2\\microsoft.aspnetcore.mvc.razor.extensions.6.0.2.nupkg.sha512",
     "C:\\Users\\quaid\\.nuget\\packages\\microsoft.aspnetcore.mvc.razor.runtimecompilation\\6.0.2\\microsoft.aspnetcore.mvc.razor.runtimecompilation.6.0.2.nupkg.sha512",
     "C:\\Users\\quaid\\.nuget\\packages\\microsoft.aspnetcore.razor.language\\6.0.2\\microsoft.aspnetcore.razor.language.6.0.2.nupkg.sha512",
@@ -74,6 +76,7 @@
     "C:\\Users\\quaid\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
     "C:\\Users\\quaid\\.nuget\\packages\\netstandard.library\\1.6.1\\netstandard.library.1.6.1.nupkg.sha512",
     "C:\\Users\\quaid\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
+    "C:\\Users\\quaid\\.nuget\\packages\\newtonsoft.json.bson\\1.0.1\\newtonsoft.json.bson.1.0.1.nupkg.sha512",
     "C:\\Users\\quaid\\.nuget\\packages\\nuget.common\\5.11.0\\nuget.common.5.11.0.nupkg.sha512",
     "C:\\Users\\quaid\\.nuget\\packages\\nuget.configuration\\5.11.0\\nuget.configuration.5.11.0.nupkg.sha512",
     "C:\\Users\\quaid\\.nuget\\packages\\nuget.dependencyresolver.core\\5.11.0\\nuget.dependencyresolver.core.5.11.0.nupkg.sha512",
@@ -183,5 +186,16 @@
     "C:\\Users\\quaid\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
     "C:\\Users\\quaid\\.nuget\\packages\\twilio\\5.72.0\\twilio.5.72.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Microsoft.AspNet.WebApi.Core 5.2.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net6.0'. This package may not be fully compatible with your project.",
+      "libraryId": "Microsoft.AspNet.WebApi.Core",
+      "targetGraphs": [
+        "net6.0"
+      ]
+    }
+  ]
 }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Globalization;
 using Microsoft.AspNetCore.Authorization;
+using System.Text.RegularExpressions;
 
 namespace TwilioWebApplication.Controllers
 {
@@ -29,8 +30,8 @@ namespace TwilioWebApplication.Controllers
             _companylist = (from Company c in _db.Companies where c.User.UserEmailID == "quaidrodgers13@hotmail.com" select c).ToList();
             _employeelist = (from Employee e in _db.Employees where e.Company.User.UserEmailID == "quaidrodgers13@hotmail.com" select e).ToList();
             _phoneNumbers = _db.TwilioPhoneNumbers.ToList();
-            TwilioSID = Environment.GetEnvironmentVariable("TwilioProject_SID", EnvironmentVariableTarget.User);
-            TwilioSecret = Environment.GetEnvironmentVariable("TwilioProject_Secret", EnvironmentVariableTarget.User);
+            TwilioSID = Environment.GetEnvironmentVariable("TwilioProject_SID", EnvironmentVariableTarget.Machine);
+            TwilioSecret = Environment.GetEnvironmentVariable("TwilioProject_Secret", EnvironmentVariableTarget.Machine);
             TwilioClient.Init(TwilioSID, TwilioSecret);
         }
 
@@ -96,6 +97,21 @@ namespace TwilioWebApplication.Controllers
                 
                 Company company = (from Company c in _companylist where c.CompanyID == Convert.ToInt16(empModel.ReturnedCompanyID) select c).First(); // LINQ method
                 empModel.Employee.Company = company;
+                try
+                {
+                    Regex numberCheck = new Regex(@"^(\+1)?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$");
+                    if (!numberCheck.IsMatch(empModel.Employee.PhoneNumber))
+                    {
+                        throw new Exception("incorrect number format");
+                    }
+                    empModel.Employee.PhoneNumber = Employee.FormatPhoneNumber(empModel.Employee.PhoneNumber);
+                }
+                catch(Exception ex)
+                {
+                    ViewData["failed"] = "Server Validation failed. Did you format the employee's phone number correctly?";
+                    return View(empModel);
+                }
+                 
                 
                 _db.Employees.Add(empModel.Employee);
                 _db.SaveChanges();
@@ -119,7 +135,7 @@ namespace TwilioWebApplication.Controllers
         }
         //Action to send User to EditEmployee View (Page)
         [Route("Employees/Edit")]
-        public IActionResult EditEmployee(int empID, bool failedValidation=false) //failedValidation is set to true by the HttpPost if an error occurred (or the user didn't select company
+        public IActionResult EditEmployee(int empID) //failedValidation is set to true by the HttpPost if an error occurred (or the user didn't select company
         {
             ViewData["companies"] = _companylist;
             AddEmployeeModel addEmpModel = new AddEmployeeModel { Employee = (from Employee e in _employeelist where e.EmployeeID == empID select e).FirstOrDefault() };
@@ -131,7 +147,7 @@ namespace TwilioWebApplication.Controllers
                     filteredPhoneNumbers.RemoveAll(x => x.PhoneNumber == e.AssignedNumber);
                 }
             }
-            if (failedValidation) ViewData["failed"] = "Server Validation failed. Did you select the employee's company?";
+            if (TempData["failed"] is not null) ViewData["failed"] = TempData["failed"];
             //ViewData["numbers"] = _phoneNumbers;
             ViewData["numbers"] = filteredPhoneNumbers;
             return View(addEmpModel);
@@ -155,7 +171,21 @@ namespace TwilioWebApplication.Controllers
                 Employee dbEmp = _db.Employees.Where(e => e.EmployeeID == empID).First();
 
                 //update employee
-                dbEmp.PhoneNumber = empModel.Employee.PhoneNumber;
+                try
+                {
+                    Regex numberCheck = new Regex(@"^(\+1)?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$");
+                    if (!numberCheck.IsMatch(empModel.Employee.PhoneNumber))
+                    {
+                        throw new Exception("incorrect number format");
+                    }
+                    dbEmp.PhoneNumber = Employee.FormatPhoneNumber(empModel.Employee.PhoneNumber);
+                }
+                catch (Exception ex)
+                {
+                    TempData["failed"] = "Server Validation failed. Please format your employee number in a regular U.S. format";
+                    return RedirectToAction("EditEmployee", new { empID = empID, failedValidation = true });
+                }
+                
                 dbEmp.FirstName = empModel.Employee.FirstName;
                 dbEmp.LastName = empModel.Employee.LastName;
                 dbEmp.Email = empModel.Employee.Email;
@@ -171,6 +201,7 @@ namespace TwilioWebApplication.Controllers
 
                 return RedirectToAction("Employees");
             }
+            TempData["failed"] = "Server Validation failed. Did you select the employee's company?";
             return RedirectToAction("EditEmployee", new { empID = empID, failedValidation = true }) ;
 
         }

@@ -587,3 +587,6 @@ C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debu
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\obj\Debug\net6.0\TwilioWebApplication.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\System.Net.Http.Formatting.dll
+C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\System.Web.Http.dll
+C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
