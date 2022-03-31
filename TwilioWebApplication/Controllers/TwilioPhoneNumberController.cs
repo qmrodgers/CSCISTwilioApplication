@@ -3,6 +3,8 @@ using TwilioWebApplication.Models;
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
 using Twilio.Base;
+using Twilio.AspNet.Mvc;
+using Twilio.AspNet.Common;
 using TwilioWebApplication.Data;
 using System.Text.RegularExpressions;
 using System.Net;
@@ -10,6 +12,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 using System.Web;
+using Twilio.TwiML;
 
 namespace TwilioWebApplication.Controllers
 {
@@ -18,12 +21,13 @@ namespace TwilioWebApplication.Controllers
     public class TwilioPhoneNumberController : Controller
     {
         private WebApplicationContext _db;
-
+        string SID;
+        string Secret;
         public TwilioPhoneNumberController(WebApplicationContext db)
         {
             _db = db;
-            string SID = Environment.GetEnvironmentVariable("TwilioProject_SID", EnvironmentVariableTarget.Machine);
-            string Secret = Environment.GetEnvironmentVariable("TwilioProject_Secret", EnvironmentVariableTarget.Machine);
+            SID = Environment.GetEnvironmentVariable("TwilioProject_SID", EnvironmentVariableTarget.User);
+            Secret = Environment.GetEnvironmentVariable("TwilioProject_Secret", EnvironmentVariableTarget.User);
 
             TwilioClient.Init(SID, Secret);
         }
@@ -90,7 +94,7 @@ namespace TwilioWebApplication.Controllers
 
         [Route("Get/Employee")]
         [HttpGet]
-        public JsonResult GetNumber(string callerNumber, string twilioNumber, string messageData)
+        public async Task<JsonResult> GetNumber(string callerNumber, string twilioNumber, string messageData)
         {
             Regex e164formatTest = new Regex(@"^\+?[1 - 9]\d{1,14}");
 
@@ -104,8 +108,13 @@ namespace TwilioWebApplication.Controllers
 
 
             ApiResponseModel response = new ApiResponseModel(emp);
+            response.TwilioSecret = Secret;
+            response.TwilioSid = SID;
             // returns early without extra processing if caller is not an employee.
             if (emp.PhoneNumber != callerNumber) return Json(response);
+
+            
+
 
             response.callerIsEmployee = true;
             var wrappedResponse = new
@@ -113,9 +122,9 @@ namespace TwilioWebApplication.Controllers
                 root = response
             };
 
- 
             
             
+
             return Json(response); //needs more data
             
 
@@ -142,5 +151,76 @@ namespace TwilioWebApplication.Controllers
 
         }
 
+
+        [HttpPost]
+        [Route("Voicemail")]
+        public ActionResult PostVoicemailLog(string callerNumber, string employeeNumber, string twilioNumber, string recordingSid)
+        {
+            Call call = new Call();
+            call.CallDate = DateTime.Now;
+            call.CallType = CallType.Missed;
+            call.RecordingId = recordingSid;
+            call.ClientNumber = callerNumber;
+            call.TwilioNumber = twilioNumber;
+            call.Employee = (from Employee e in _db.Employees where e.PhoneNumber == employeeNumber select e).First();
+            _db.Calls.Add(call);
+            _db.SaveChanges();
+            
+
+            return Ok();
+            
+
+            
+        }
+
+        [HttpPost]
+        [Route("Call")]
+        public ActionResult PostCallLog(string callerNumber, string employeeNumber, string twilioNumber)
+        {
+            Call call = new Call();
+            call.CallDate = DateTime.Now;
+            call.CallType = CallType.Received;
+            call.ClientNumber = callerNumber;
+            call.TwilioNumber = twilioNumber;
+            call.Employee = (from Employee e in _db.Employees where e.PhoneNumber == employeeNumber select e).First();
+            _db.Calls.Add(call);
+            _db.SaveChanges();
+            var messagingResponse = new MessagingResponse();
+
+            return Ok();
+
+
+
+        }
+
+
+        [HttpPost]
+        [Route("EmployeeToClient")]
+        public ActionResult PostEmployeeCallLog(string calledNumber, string employeeNumber, string twilioNumber)
+        {
+            Call call = new Call();
+            call.CallDate = DateTime.Now;
+            call.CallType = CallType.Sent;
+            call.ClientNumber = calledNumber;
+            call.TwilioNumber = twilioNumber;
+            call.Employee = (from Employee e in _db.Employees where e.PhoneNumber == employeeNumber select e).First();
+            _db.Calls.Add(call);
+            _db.SaveChanges();
+            var messagingResponse = new MessagingResponse();
+
+            return Ok();
+
+
+
+        }
+
+
+
+
     }
+
+
+    
+        
+    
 }

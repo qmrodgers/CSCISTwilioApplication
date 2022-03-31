@@ -40,7 +40,8 @@
           "Microsoft.EntityFrameworkCore.SqlServer": "6.0.2",
           "Microsoft.EntityFrameworkCore.Tools": "6.0.2",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "6.0.2",
-          "Twilio": "5.72.0",
+          "Twilio": "5.73.0",
+          "Twilio.AspNet.Mvc": "5.71.0",
           "Microsoft.AspNetCore.Antiforgery": "6.0.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions": "6.0.0.0",
           "Microsoft.AspNetCore.Authentication.Cookies": "6.0.0.0",
@@ -377,6 +378,32 @@
         }
       },
       "MessagePackAnalyzer/2.1.152": {},
+      "Microsoft.AspNet.Mvc/3.0.20105.1": {
+        "dependencies": {
+          "Microsoft.AspNet.Razor": "1.0.20105.408",
+          "Microsoft.AspNet.WebPages": "1.0.20105.408"
+        },
+        "runtime": {
+          "lib/net40/System.Web.Mvc.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.20105.0"
+          }
+        },
+        "compile": {
+          "lib/net40/System.Web.Mvc.dll": {}
+        }
+      },
+      "Microsoft.AspNet.Razor/1.0.20105.408": {
+        "runtime": {
+          "lib/net40/System.Web.Razor.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.20105.407"
+          }
+        },
+        "compile": {
+          "lib/net40/System.Web.Razor.dll": {}
+        }
+      },
       "Microsoft.AspNet.WebApi.Client/5.2.7": {
         "dependencies": {
           "Newtonsoft.Json": "13.0.1",
@@ -404,6 +431,36 @@
         },
         "compile": {
           "lib/net45/System.Web.Http.dll": {}
+        }
+      },
+      "Microsoft.AspNet.WebPages/1.0.20105.408": {
+        "dependencies": {
+          "Microsoft.AspNet.Razor": "1.0.20105.408",
+          "Microsoft.Web.Infrastructure": "1.0.0"
+        },
+        "runtime": {
+          "lib/net40/System.Web.Helpers.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.20105.407"
+          },
+          "lib/net40/System.Web.WebPages.Deployment.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.20105.407"
+          },
+          "lib/net40/System.Web.WebPages.Razor.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.20105.407"
+          },
+          "lib/net40/System.Web.WebPages.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.20105.407"
+          }
+        },
+        "compile": {
+          "lib/net40/System.Web.Helpers.dll": {},
+          "lib/net40/System.Web.WebPages.Deployment.dll": {},
+          "lib/net40/System.Web.WebPages.Razor.dll": {},
+          "lib/net40/System.Web.WebPages.dll": {}
         }
       },
       "Microsoft.AspNetCore.Mvc.Razor.Extensions/6.0.2": {
@@ -1708,6 +1765,17 @@
           "lib/net6.0/Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll": {}
         }
       },
+      "Microsoft.Web.Infrastructure/1.0.0": {
+        "runtime": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.20105.407"
+          }
+        },
+        "compile": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
+        }
+      },
       "Microsoft.Win32.Primitives/4.3.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "3.1.0",
@@ -2831,7 +2899,7 @@
           "System.Xml.ReaderWriter": "4.3.0"
         }
       },
-      "Twilio/5.72.0": {
+      "Twilio/5.73.0": {
         "dependencies": {
           "Microsoft.IdentityModel.Tokens": "6.8.0",
           "Newtonsoft.Json": "13.0.1",
@@ -2840,12 +2908,43 @@
         },
         "runtime": {
           "lib/netstandard2.0/Twilio.dll": {
-            "assemblyVersion": "5.72.0.0",
-            "fileVersion": "5.72.0.0"
+            "assemblyVersion": "5.73.0.0",
+            "fileVersion": "5.73.0.0"
           }
         },
         "compile": {
           "lib/netstandard2.0/Twilio.dll": {}
+        }
+      },
+      "Twilio.AspNet.Common/5.71.0": {
+        "dependencies": {
+          "NETStandard.Library": "1.6.1"
+        },
+        "runtime": {
+          "lib/netstandard1.0/Twilio.AspNet.Common.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard1.0/Twilio.AspNet.Common.dll": {}
+        }
+      },
+      "Twilio.AspNet.Mvc/5.71.0": {
+        "dependencies": {
+          "Microsoft.AspNet.Mvc": "3.0.20105.1",
+          "Newtonsoft.Json": "13.0.1",
+          "Twilio": "5.73.0",
+          "Twilio.AspNet.Common": "5.71.0"
+        },
+        "runtime": {
+          "lib/net451/Twilio.AspNet.Mvc.dll": {
+            "assemblyVersion": "5.71.0.0",
+            "fileVersion": "5.71.0.0"
+          }
+        },
+        "compile": {
+          "lib/net451/Twilio.AspNet.Mvc.dll": {}
         }
       },
       "Microsoft.AspNetCore.Antiforgery/6.0.0.0": {
@@ -4612,6 +4711,20 @@
       "path": "messagepackanalyzer/2.1.152",
       "hashPath": "messagepackanalyzer.2.1.152.nupkg.sha512"
     },
+    "Microsoft.AspNet.Mvc/3.0.20105.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-CjEb1ExBqe3DceDCg4EhdimdoDTMuBOmA490lRKgl3EN8L4G8+lBRHDF7Ho8QkFsY7C5Y4pTfqhD7Zl8VPOtWQ==",
+      "path": "microsoft.aspnet.mvc/3.0.20105.1",
+      "hashPath": "microsoft.aspnet.mvc.3.0.20105.1.nupkg.sha512"
+    },
+    "Microsoft.AspNet.Razor/1.0.20105.408": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-vRmwL/G31Xc9DusVQUJXmDpTYEVB7xUoIjKqCyuOHrCyG9kzM66MadNjdPLzplSsDoWqiae35US8XiiI3e6SBw==",
+      "path": "microsoft.aspnet.razor/1.0.20105.408",
+      "hashPath": "microsoft.aspnet.razor.1.0.20105.408.nupkg.sha512"
+    },
     "Microsoft.AspNet.WebApi.Client/5.2.7": {
       "type": "package",
       "serviceable": true,
@@ -4625,6 +4738,13 @@
       "sha512": "sha512-gM2QzApnHdy1FbKUJ/ROGJSm69P2G+HMoVd/t5Vq1O/zZ5TI4IKC9PX6nUfRt/NHgebZOIWHpB4/4K4inuy4yQ==",
       "path": "microsoft.aspnet.webapi.core/5.2.7",
       "hashPath": "microsoft.aspnet.webapi.core.5.2.7.nupkg.sha512"
+    },
+    "Microsoft.AspNet.WebPages/1.0.20105.408": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-da1//kx0b6GXJG6V8vGl7PmvhPJE/aNs2mK0QJ9bojgy059BDdYhmAwpTT1ucDgbImbFDdmNGi/XJj2SU0QJeA==",
+      "path": "microsoft.aspnet.webpages/1.0.20105.408",
+      "hashPath": "microsoft.aspnet.webpages.1.0.20105.408.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Mvc.Razor.Extensions/6.0.2": {
       "type": "package",
@@ -5052,6 +5172,13 @@
       "sha512": "sha512-PKNDmK8SyZZ2b/bKtKvgqRsi6jibeVUkQFjdFEtL4ROOWiqnGiBgxN0o2A+rr3WsE5klU3b6HS6JpwlMjCklkQ==",
       "path": "microsoft.visualstudio.web.codegenerators.mvc/6.0.2",
       "hashPath": "microsoft.visualstudio.web.codegenerators.mvc.6.0.2.nupkg.sha512"
+    },
+    "Microsoft.Web.Infrastructure/1.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-FNmvLn5m2LTU/Rs2KWVo0SIIh9Ek+U0ojex7xeDaSHw/zgEP77A8vY5cVWgUtBGS8MJfDGNn8rpXJWEIQaPwTg==",
+      "path": "microsoft.web.infrastructure/1.0.0",
+      "hashPath": "microsoft.web.infrastructure.1.0.0.nupkg.sha512"
     },
     "Microsoft.Win32.Primitives/4.3.0": {
       "type": "package",
@@ -5844,12 +5971,26 @@
       "path": "system.xml.xdocument/4.3.0",
       "hashPath": "system.xml.xdocument.4.3.0.nupkg.sha512"
     },
-    "Twilio/5.72.0": {
+    "Twilio/5.73.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-LkFy05H8Ir+s8Ky0eFZj1dCBLwHskjENjNG6DiRaGNuFGcoU6VdkNfzty6XC594ELoDdPi/PaZH9qgF5jKbq8w==",
-      "path": "twilio/5.72.0",
-      "hashPath": "twilio.5.72.0.nupkg.sha512"
+      "sha512": "sha512-Jh9DSjSY18WqnCtWhPk3GWrGdwsdLtHgPt7n1Q6ueOkhhJ0nz7ns92huvp9gVTFHClJjMKHcSm77OHu93JFbQg==",
+      "path": "twilio/5.73.0",
+      "hashPath": "twilio.5.73.0.nupkg.sha512"
+    },
+    "Twilio.AspNet.Common/5.71.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-8w6pDfY3S7bJk5RnImVRZqnzBRbni+cceGpoJ3w/jlr4TWDPFIIERYk8Ympc3eWsVUP/ywM6e0x8ugz6UpdZ4Q==",
+      "path": "twilio.aspnet.common/5.71.0",
+      "hashPath": "twilio.aspnet.common.5.71.0.nupkg.sha512"
+    },
+    "Twilio.AspNet.Mvc/5.71.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-JeSCfpjO3YMoTKQhh2sntV8lOPzUcwGiHE95/nlg9mA/fCfjEZ1QyHfzIjQehh/AQEpbVneyQ6EIwa0SqZiD3Q==",
+      "path": "twilio.aspnet.mvc/5.71.0",
+      "hashPath": "twilio.aspnet.mvc.5.71.0.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Antiforgery/6.0.0.0": {
       "type": "referenceassembly",

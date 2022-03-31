@@ -10,6 +10,22 @@ namespace TwilioWebApplication.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Contacts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ContactName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ContactPhone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EmployeePhone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Favorite = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Contacts", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TwilioPhoneNumbers",
                 columns: table => new
                 {
@@ -83,23 +99,25 @@ namespace TwilioWebApplication.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CallLogs",
+                name: "Calls",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CallFrom = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CallTo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ClientNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmployeeNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TwilioNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RecordingId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SessionId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CallType = table.Column<int>(type: "int", nullable: false),
                     CallDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Favorite = table.Column<bool>(type: "bit", nullable: false),
                     EmployeeID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CallLogs", x => x.Id);
+                    table.PrimaryKey("PK_Calls", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CallLogs_Employees_EmployeeID",
+                        name: "FK_Calls_Employees_EmployeeID",
                         column: x => x.EmployeeID,
                         principalTable: "Employees",
                         principalColumn: "EmployeeID",
@@ -107,8 +125,8 @@ namespace TwilioWebApplication.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CallLogs_EmployeeID",
-                table: "CallLogs",
+                name: "IX_Calls_EmployeeID",
+                table: "Calls",
                 column: "EmployeeID");
 
             migrationBuilder.CreateIndex(
@@ -125,7 +143,10 @@ namespace TwilioWebApplication.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CallLogs");
+                name: "Calls");
+
+            migrationBuilder.DropTable(
+                name: "Contacts");
 
             migrationBuilder.DropTable(
                 name: "TwilioPhoneNumbers");

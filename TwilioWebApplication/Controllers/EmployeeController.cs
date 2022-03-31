@@ -30,8 +30,8 @@ namespace TwilioWebApplication.Controllers
             _companylist = (from Company c in _db.Companies where c.User.UserEmailID == "quaidrodgers13@hotmail.com" select c).ToList();
             _employeelist = (from Employee e in _db.Employees where e.Company.User.UserEmailID == "quaidrodgers13@hotmail.com" select e).ToList();
             _phoneNumbers = _db.TwilioPhoneNumbers.ToList();
-            TwilioSID = Environment.GetEnvironmentVariable("TwilioProject_SID", EnvironmentVariableTarget.Machine);
-            TwilioSecret = Environment.GetEnvironmentVariable("TwilioProject_Secret", EnvironmentVariableTarget.Machine);
+            TwilioSID = Environment.GetEnvironmentVariable("TwilioProject_SID", EnvironmentVariableTarget.User);
+            TwilioSecret = Environment.GetEnvironmentVariable("TwilioProject_Secret", EnvironmentVariableTarget.User);
             TwilioClient.Init(TwilioSID, TwilioSecret);
         }
 

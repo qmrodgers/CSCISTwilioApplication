@@ -11,10 +11,10 @@ namespace TwilioWebApplication.Data
         }
 
         public DbSet<Employee> Employees { get; set; }
-        public DbSet<CallLog> CallLogs { get; set; }
+        public DbSet<Call> Calls { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<TwilioPhoneNumber> TwilioPhoneNumbers { get; set; }
-
+        public DbSet<Contact> Contacts { get; set; }
     }
 }

@@ -12,7 +12,7 @@ using TwilioWebApplication.Data;
 namespace TwilioWebApplication.Migrations
 {
     [DbContext(typeof(WebApplicationContext))]
-    [Migration("20220316053733_AddTablesToTwilioAppDatabase")]
+    [Migration("20220331162249_AddTablesToTwilioAppDatabase")]
     partial class AddTablesToTwilioAppDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,7 +24,7 @@ namespace TwilioWebApplication.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("TwilioWebApplication.Models.CallLog", b =>
+            modelBuilder.Entity("TwilioWebApplication.Models.Call", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -35,28 +35,33 @@ namespace TwilioWebApplication.Migrations
                     b.Property<DateTime>("CallDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("CallFrom")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CallTo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("CallType")
                         .HasColumnType("int");
+
+                    b.Property<string>("ClientNumber")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("EmployeeID")
                         .HasColumnType("int");
 
-                    b.Property<bool>("Favorite")
-                        .HasColumnType("bit");
+                    b.Property<string>("EmployeeNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RecordingId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SessionId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TwilioNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("EmployeeID");
 
-                    b.ToTable("CallLogs");
+                    b.ToTable("Calls");
                 });
 
             modelBuilder.Entity("TwilioWebApplication.Models.Company", b =>
@@ -80,6 +85,33 @@ namespace TwilioWebApplication.Migrations
                     b.HasIndex("UserEmailID");
 
                     b.ToTable("Companies");
+                });
+
+            modelBuilder.Entity("TwilioWebApplication.Models.Contact", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ContactName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContactPhone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmployeePhone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Favorite")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Contacts");
                 });
 
             modelBuilder.Entity("TwilioWebApplication.Models.Employee", b =>
@@ -164,7 +196,7 @@ namespace TwilioWebApplication.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("TwilioWebApplication.Models.CallLog", b =>
+            modelBuilder.Entity("TwilioWebApplication.Models.Call", b =>
                 {
                     b.HasOne("TwilioWebApplication.Models.Employee", "Employee")
                         .WithMany()
