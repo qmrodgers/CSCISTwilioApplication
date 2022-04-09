@@ -4,14 +4,12 @@ namespace TwilioWebApplication.Models
 {
     public enum CallType
     {
-        Missed, Received, Sent
+        Missed = 0, Received = 1, Sent = 2, Failed = 3
     }
     public class Call
     {
         public int Id { get; set; }
         public string? ClientNumber { get; set; }
-        public string? EmployeeNumber { get; set; }
-
         public string TwilioNumber { get; set; }
         public string? RecordingId { get; set; }
         public string? SessionId { get; set; }

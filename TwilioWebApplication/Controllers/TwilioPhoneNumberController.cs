@@ -3,8 +3,6 @@ using TwilioWebApplication.Models;
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
 using Twilio.Base;
-using Twilio.AspNet.Mvc;
-using Twilio.AspNet.Common;
 using TwilioWebApplication.Data;
 using System.Text.RegularExpressions;
 using System.Net;
@@ -13,23 +11,26 @@ using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 using System.Web;
 using Twilio.TwiML;
+using Microsoft.AspNetCore.Identity;
 
 namespace TwilioWebApplication.Controllers
 {
+    
+
     [ApiController]
     [Route("Api/")]
     public class TwilioPhoneNumberController : Controller
     {
-        private WebApplicationContext _db;
+        private readonly UserManager<User> _userManager;
+        private readonly WebApplicationContext _db;
         string SID;
         string Secret;
-        public TwilioPhoneNumberController(WebApplicationContext db)
+        public TwilioPhoneNumberController(WebApplicationContext db, UserManager<User> userManager)
         {
             _db = db;
-            SID = Environment.GetEnvironmentVariable("TwilioProject_SID", EnvironmentVariableTarget.User);
-            Secret = Environment.GetEnvironmentVariable("TwilioProject_Secret", EnvironmentVariableTarget.User);
+            _userManager = userManager;
 
-            TwilioClient.Init(SID, Secret);
+            TwilioClient.Init(userManager.GetUserAsync(User).Result.TwilioSID, userManager.GetUserAsync(User).Result.TwilioSID);
         }
 
 
@@ -68,6 +69,8 @@ namespace TwilioWebApplication.Controllers
             tempList.Add(twilioNumber);
 
             return Ok(tempList);
+
+            
 
             //temp functionality
             /*
@@ -113,7 +116,11 @@ namespace TwilioWebApplication.Controllers
             // returns early without extra processing if caller is not an employee.
             if (emp.PhoneNumber != callerNumber) return Json(response);
 
+
             
+
+            
+
 
 
             response.callerIsEmployee = true;
@@ -153,40 +160,52 @@ namespace TwilioWebApplication.Controllers
 
 
         [HttpPost]
-        [Route("Voicemail")]
-        public ActionResult PostVoicemailLog(string callerNumber, string employeeNumber, string twilioNumber, string recordingSid)
+        [Route("Get/Voicemail")]
+        public JsonResult GetVoicemailList(string employeeNumber, string twilioNumber)
         {
-            Call call = new Call();
-            call.CallDate = DateTime.Now;
-            call.CallType = CallType.Missed;
-            call.RecordingId = recordingSid;
-            call.ClientNumber = callerNumber;
-            call.TwilioNumber = twilioNumber;
-            call.Employee = (from Employee e in _db.Employees where e.PhoneNumber == employeeNumber select e).First();
-            _db.Calls.Add(call);
-            _db.SaveChanges();
-            
+            var recordings = new Dictionary<string, string>();
+            int counter = 1;
+            foreach (Call call in _db.Calls)
+            {
+                
+                if (call.Employee.PhoneNumber == employeeNumber)
+                {
+                    recordings.Add($"recording {counter}", call.RecordingId);
+                    counter++;
+                }
 
-            return Ok();
+            }
+
+            return Json(recordings);
             
 
             
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("Call")]
-        public ActionResult PostCallLog(string callerNumber, string employeeNumber, string twilioNumber)
+        public ActionResult PostCallLog(string clientNumber, string employeeNumber, string sessionId, string twilioNumber, CallType? type, string? recordingSid = null)
         {
             Call call = new Call();
             call.CallDate = DateTime.Now;
-            call.CallType = CallType.Received;
-            call.ClientNumber = callerNumber;
+            call.ClientNumber = clientNumber;
             call.TwilioNumber = twilioNumber;
             call.Employee = (from Employee e in _db.Employees where e.PhoneNumber == employeeNumber select e).First();
-            _db.Calls.Add(call);
-            _db.SaveChanges();
-            var messagingResponse = new MessagingResponse();
+            call.RecordingId = recordingSid;
 
+            //CallType is sent in HttpRequest
+            try
+            {
+                call.CallType = (CallType)type;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new Exception("Please indicate a value in parameter 'type': 0 for missed, 1 for received, 2 for sent, 3 for failed"));
+            }
+            
+             
+            _db.Calls.Add(call);
+            _db.SaveChanges();          
             return Ok();
 
 

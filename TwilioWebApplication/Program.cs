@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using TwilioWebApplication.Data;
+using TwilioWebApplication.Models;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 string _connection = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -11,7 +13,11 @@ if (_connection.Contains("%CONTENTROOTPATH%"))
 builder.Services.AddDbContext<WebApplicationContext>(options => options.UseSqlServer(
     _connection
     ));
+builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<WebApplicationContext>();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddRazorPages();
+
+//builder.Services.AddIdentity<User, IdentityRole>().AddUserStore<WebApplicationContext>().AddDefaultTokenProviders();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
@@ -35,8 +41,11 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.MapRazorPages();
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/");
+
 
 app.Run();

@@ -11,11 +11,7 @@ namespace TwilioWebApplication.Models
         [Key]
         public string PhoneNumber { get; set; }
         public string FriendlyName { get; set; }
-
-
-    }
-
-
+        public string TwilioSID { get; set; }
 
     public class IncomingFromTwilio
     {

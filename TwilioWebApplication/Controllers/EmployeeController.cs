@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Globalization;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using System.Text.RegularExpressions;
 
 namespace TwilioWebApplication.Controllers
@@ -14,25 +15,27 @@ namespace TwilioWebApplication.Controllers
     [Route("Manage/")]
     public class EmployeeController : Controller
     {
+
+        private readonly UserManager<User> _userManager;
         private readonly WebApplicationContext _db;
         private readonly List<Company> _companylist;
         private readonly List<Employee> _employeelist;
         private List<TwilioPhoneNumber> _phoneNumbers;
-        private readonly string TwilioSID;
-        private readonly string TwilioSecret;
 
 
 
 
-        public EmployeeController(WebApplicationContext db)
+
+        public EmployeeController(WebApplicationContext db, UserManager<User> userManager)
         {
+            //UserManager<User> hello = new UserManager<User>();
             _db = db;
-            _companylist = (from Company c in _db.Companies where c.User.UserEmailID == "quaidrodgers13@hotmail.com" select c).ToList();
-            _employeelist = (from Employee e in _db.Employees where e.Company.User.UserEmailID == "quaidrodgers13@hotmail.com" select e).ToList();
-            _phoneNumbers = _db.TwilioPhoneNumbers.ToList();
-            TwilioSID = Environment.GetEnvironmentVariable("TwilioProject_SID", EnvironmentVariableTarget.User);
-            TwilioSecret = Environment.GetEnvironmentVariable("TwilioProject_Secret", EnvironmentVariableTarget.User);
-            TwilioClient.Init(TwilioSID, TwilioSecret);
+            _userManager = userManager;
+            _companylist = (from Company c in _db.Companies where c.User.Id == userManager.GetUserId(User) select c).ToList();
+            _employeelist = (from Employee e in _db.Employees where e.Company.User.Id == userManager.GetUserId(User) select e).ToList();
+            
+            TwilioClient.Init(userManager.GetUserAsync(User).Result.TwilioSID, userManager.GetUserAsync(User).Result.TwilioSID);
+            _phoneNumbers = (from _db.TwilioPhoneNumbers  ;
         }
 
 
@@ -400,7 +403,7 @@ namespace TwilioWebApplication.Controllers
         {
             if (comp.CompanyName != null)
             {
-                comp.User = (from User u in _db.Users where u.UserEmailID == "quaidrodgers13@hotmail.com" select u).First();
+                comp.User = (from User u in _db.Users /*where u.UserEmailId == "quaidrodgers13@hotmail.com"*/ select u).First();
                 _db.Companies.Add(comp);
 
                 _db.SaveChanges();

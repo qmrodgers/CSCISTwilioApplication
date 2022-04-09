@@ -51,8 +51,8 @@
            
         <div class="mb-3">
             <label asp-for="ReturnedCompanyID"></label>            
-            <select asp-for="ReturnedCompanyID" asp-items="@(new SelectList((ViewData["companies"] as IEnumerable<Company>), nameof(Company.CompanyID), nameof(Company.CompanyName)))" class="form-select"> 
-                <option value="" selected>Select the employees company</option>
+            <select asp-for="ReturnedCompanyID" asp-items="@(new SelectList((ViewData["companies"] as IEnumerable<Company>), nameof(Company.CompanyID), nameof(Company.CompanyName), Model.Employee.Company.CompanyID))" class="form-select"> 
+                <option value="@null">Select the employees company</option>
 
             </select>
 

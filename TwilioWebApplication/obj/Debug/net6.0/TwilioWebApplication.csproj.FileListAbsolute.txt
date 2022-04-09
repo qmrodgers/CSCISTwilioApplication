@@ -31,14 +31,6 @@ C:\Users\quaid\source\repos\TwilioWebApplication\TwilioWebApplication\bin\Debug\
 C:\Users\quaid\source\repos\TwilioWebApplication\TwilioWebApplication\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
 C:\Users\quaid\source\repos\TwilioWebApplication\TwilioWebApplication\bin\Debug\net6.0\Twilio.dll
 C:\Users\quaid\source\repos\TwilioWebApplication\TwilioWebApplication\obj\Debug\net6.0\TwilioWebApplication.csproj.CopyComplete
-C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Microsoft.CodeAnalysis.CSharp.Scripting.dll
-C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
-C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Microsoft.DotNet.Scaffolding.Shared.dll
-C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
-C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
-C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.Features.resources.dll
-C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.VisualBasic.resources.dll
-C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\appsettings.Development.json
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\appsettings.json
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\TwilioWebApplication.staticwebassets.runtime.json
@@ -340,6 +332,10 @@ C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debu
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\MessagePack.Annotations.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\System.Net.Http.Formatting.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\System.Web.Http.dll
+C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.UI.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.Razor.Extensions.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Microsoft.AspNetCore.Razor.Language.dll
@@ -349,6 +345,8 @@ C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debu
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Microsoft.CodeAnalysis.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Microsoft.CodeAnalysis.CSharp.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Microsoft.CodeAnalysis.CSharp.Features.dll
+C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Microsoft.CodeAnalysis.Features.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Microsoft.CodeAnalysis.Razor.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Microsoft.CodeAnalysis.Scripting.dll
@@ -359,12 +357,17 @@ C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debu
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Microsoft.DiaSymReader.dll
+C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Microsoft.DotNet.Scaffolding.Shared.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.SqlServer.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Microsoft.Extensions.FileProviders.Embedded.dll
+C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Microsoft.Extensions.Identity.Core.dll
+C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Microsoft.Extensions.Identity.Stores.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Microsoft.Identity.Client.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
@@ -404,6 +407,7 @@ C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debu
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\System.Security.Permissions.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\System.Windows.Extensions.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Twilio.dll
+C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Twilio.AspNet.Mvc.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.resources.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.resources.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.resources.dll
@@ -417,6 +421,7 @@ C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debu
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.resources.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll
+C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
@@ -470,6 +475,7 @@ C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debu
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.Features.resources.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.Features.resources.dll
+C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.Features.resources.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.Features.resources.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.Features.resources.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.Features.resources.dll
@@ -496,6 +502,7 @@ C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debu
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.VisualBasic.resources.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.VisualBasic.resources.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.VisualBasic.resources.dll
+C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.VisualBasic.resources.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.VisualBasic.resources.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.VisualBasic.resources.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.VisualBasic.resources.dll
@@ -557,6 +564,7 @@ C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debu
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
@@ -590,12 +598,3 @@ C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\obj\Debu
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\obj\Debug\net6.0\TwilioWebApplication.pdb
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\obj\Debug\net6.0\TwilioWebApplication.genruntimeconfig.cache
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\obj\Debug\net6.0\ref\TwilioWebApplication.dll
-C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\System.Web.Mvc.dll
-C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\System.Web.Razor.dll
-C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\System.Web.Helpers.dll
-C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\System.Web.WebPages.Deployment.dll
-C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\System.Web.WebPages.Razor.dll
-C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\System.Web.WebPages.dll
-C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Microsoft.Web.Infrastructure.dll
-C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Twilio.AspNet.Common.dll
-C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\Twilio.AspNet.Mvc.dll
