@@ -13,6 +13,7 @@ namespace TwilioWebApplication.Models
         public string FriendlyName { get; set; }
         public string TwilioSID { get; set; }
 
+    }
     public class IncomingFromTwilio
     {
         public string CallingNumber { get; set; }

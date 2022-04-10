@@ -292,6 +292,10 @@ namespace TwilioWebApplication.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("TwilioSID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("PhoneNumber");
 
                     b.ToTable("TwilioPhoneNumbers");

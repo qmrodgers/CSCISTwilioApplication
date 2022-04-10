@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TwilioWebApplication.Migrations
 {
-    public partial class AddToAppDatabase : Migration
+    public partial class AddTablestoTwilioAppDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -75,7 +75,8 @@ namespace TwilioWebApplication.Migrations
                 columns: table => new
                 {
                     PhoneNumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FriendlyName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    FriendlyName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TwilioSID = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {

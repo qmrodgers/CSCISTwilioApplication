@@ -23,14 +23,13 @@ namespace TwilioWebApplication.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly WebApplicationContext _db;
-        string SID;
-        string Secret;
+
         public TwilioPhoneNumberController(WebApplicationContext db, UserManager<User> userManager)
         {
             _db = db;
             _userManager = userManager;
 
-            TwilioClient.Init(userManager.GetUserAsync(User).Result.TwilioSID, userManager.GetUserAsync(User).Result.TwilioSID);
+
         }
 
 
@@ -39,7 +38,10 @@ namespace TwilioWebApplication.Controllers
         public ActionResult<IEnumerable<string>> GetTwilioPhoneNumbers()
         {
 
-            
+            // user and database context
+            User user = _userManager.GetUserAsync(User).Result;
+            TwilioClient.Init(user.TwilioSID, user.TwilioSecretKey);
+
 
             var phoneNumbers = IncomingPhoneNumberResource.Read();
 
@@ -59,8 +61,8 @@ namespace TwilioWebApplication.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> GetNumber(string callerNumber, string twilioNumber)
         {
-           
-            
+
+
 
             Employee emp = (from Employee e in _db.Employees where e.AssignedNumber == twilioNumber select e).First();
 
@@ -99,6 +101,10 @@ namespace TwilioWebApplication.Controllers
         [HttpGet]
         public async Task<JsonResult> GetNumber(string callerNumber, string twilioNumber, string messageData)
         {
+            // user and database context
+            User user = _userManager.GetUserAsync(User).Result;
+            TwilioClient.Init(user.TwilioSID, user.TwilioSecretKey);
+
             Regex e164formatTest = new Regex(@"^\+?[1 - 9]\d{1,14}");
 
             //check for number formatting
@@ -111,8 +117,8 @@ namespace TwilioWebApplication.Controllers
 
 
             ApiResponseModel response = new ApiResponseModel(emp);
-            response.TwilioSecret = Secret;
-            response.TwilioSid = SID;
+            response.TwilioSecret = user.TwilioSecretKey;
+            response.TwilioSid = user.TwilioSID;
             // returns early without extra processing if caller is not an employee.
             if (emp.PhoneNumber != callerNumber) return Json(response);
 
@@ -163,6 +169,8 @@ namespace TwilioWebApplication.Controllers
         [Route("Get/Voicemail")]
         public JsonResult GetVoicemailList(string employeeNumber, string twilioNumber)
         {
+
+
             var recordings = new Dictionary<string, string>();
             int counter = 1;
             foreach (Call call in _db.Calls)
@@ -186,6 +194,10 @@ namespace TwilioWebApplication.Controllers
         [Route("Call")]
         public ActionResult PostCallLog(string clientNumber, string employeeNumber, string sessionId, string twilioNumber, CallType? type, string? recordingSid = null)
         {
+            // user and database context
+            User user = _userManager.GetUserAsync(User).Result;
+            TwilioClient.Init(user.TwilioSID, user.TwilioSecretKey);
+
             Call call = new Call();
             call.CallDate = DateTime.Now;
             call.ClientNumber = clientNumber;
@@ -217,6 +229,10 @@ namespace TwilioWebApplication.Controllers
         [Route("EmployeeToClient")]
         public ActionResult PostEmployeeCallLog(string calledNumber, string employeeNumber, string twilioNumber)
         {
+            // user and database context
+            User user = _userManager.GetUserAsync(User).Result;
+            TwilioClient.Init(user.TwilioSID, user.TwilioSecretKey);
+
             Call call = new Call();
             call.CallDate = DateTime.Now;
             call.CallType = CallType.Sent;

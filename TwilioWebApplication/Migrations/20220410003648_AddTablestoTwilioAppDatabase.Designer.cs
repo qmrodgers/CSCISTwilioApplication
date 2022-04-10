@@ -12,8 +12,8 @@ using TwilioWebApplication.Data;
 namespace TwilioWebApplication.Migrations
 {
     [DbContext(typeof(WebApplicationContext))]
-    [Migration("20220407201638_AddToAppDatabase")]
-    partial class AddToAppDatabase
+    [Migration("20220410003648_AddTablestoTwilioAppDatabase")]
+    partial class AddTablestoTwilioAppDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -291,6 +291,10 @@ namespace TwilioWebApplication.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("FriendlyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TwilioSID")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
