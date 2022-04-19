@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "XTwmqW11UczuHVnSQEwhYq10b+FoVqJPbictULuEH4ZJ7WSqUKuRooLJ4mUV+G3j0h59W7FLhiHOQQiscGnBpg==",
+  "dgSpecHash": "JmKs31AeLa/0WHhkyZ+mgXtKoYIzUiWObJlmBG4CZfxzVB3npzMxBNBz7BI7tCdG/TjOZUz1KUA1xWTGGOb9tg==",
   "success": true,
   "projectFilePath": "C:\\Users\\quaid\\source\\repos\\CSCISTwilioApplication\\TwilioWebApplication\\TwilioWebApplication.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\quaid\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
+    "C:\\Users\\quaid\\.nuget\\packages\\libphonenumber-csharp\\8.12.46\\libphonenumber-csharp.8.12.46.nupkg.sha512",
     "C:\\Users\\quaid\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",
     "C:\\Users\\quaid\\.nuget\\packages\\messagepack.annotations\\2.1.152\\messagepack.annotations.2.1.152.nupkg.sha512",
     "C:\\Users\\quaid\\.nuget\\packages\\messagepackanalyzer\\2.1.152\\messagepackanalyzer.2.1.152.nupkg.sha512",

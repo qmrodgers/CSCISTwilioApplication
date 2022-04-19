@@ -44,6 +44,7 @@
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "6.0.2",
           "Twilio": "5.74.0",
           "Twilio.AspNet.Mvc": "5.73.0",
+          "libphonenumber-csharp": "8.12.46",
           "Microsoft.AspNetCore.Antiforgery": "6.0.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions": "6.0.0.0",
           "Microsoft.AspNetCore.Authentication.Cookies": "6.0.0.0",
@@ -346,6 +347,20 @@
             "assemblyVersion": "2.8.0.0",
             "fileVersion": "2.8.26.1919"
           }
+        }
+      },
+      "libphonenumber-csharp/8.12.46": {
+        "dependencies": {
+          "System.Collections.Immutable": "6.0.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/PhoneNumbers.dll": {
+            "assemblyVersion": "8.12.46.0",
+            "fileVersion": "8.12.46.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/PhoneNumbers.dll": {}
         }
       },
       "MessagePack/2.1.152": {
@@ -4695,6 +4710,13 @@
       "sha512": "sha512-OiKusGL20vby4uDEswj2IgkdchC1yQ6rwbIkZDVBPIR6al2b7n3pC91elBul9q33KaBgRKhbZH3+2Ur4fnWx2A==",
       "path": "humanizer.core/2.8.26",
       "hashPath": "humanizer.core.2.8.26.nupkg.sha512"
+    },
+    "libphonenumber-csharp/8.12.46": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-erEYZK4gpD4UqELOQSv3N05E25FIKNnMNI0sjDY57Prk9vuUWDOMGr+GBaHVPE1I5DSLiSjaEjhSz2iTL3NM9A==",
+      "path": "libphonenumber-csharp/8.12.46",
+      "hashPath": "libphonenumber-csharp.8.12.46.nupkg.sha512"
     },
     "MessagePack/2.1.152": {
       "type": "package",

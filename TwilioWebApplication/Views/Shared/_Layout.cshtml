@@ -21,21 +21,31 @@
                     if (SignInManager.IsSignedIn(User))
                     {
 
-
-                        string? brandName = UserManager.GetUserAsync(User).Result.brandName;
-                        string? brandURI = UserManager.GetUserAsync(User).Result.brandURI;
-                        if (brandURI != null)
+                        try
                         {
-                            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                                <img id="brand-image" src="@brandURI" alt="@(brandName == null ? "Low Volume Phone Management Portal" : brandName)"/>
-                            </a>
+                            
+                            string? brandName = UserManager.GetUserAsync(User).Result.brandName;
+                            string? brandURI = UserManager.GetUserAsync(User).Result.brandURI;
+                            if (brandURI != null)
+                            {
+                                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                                    <img id="brand-image" src="@brandURI" alt="@(brandName == null ? "Low Volume Phone Management Portal" : brandName)"/>
+                                </a>
 
+                            }
+
+
+                            else
+                            {
+                                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                                    @(brandName == null ? "Low Volume Phone Management Portal" : brandName)
+                                </a>
+                            }
                         }
-                        else
+                        catch(Exception ex)
                         {
-                            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                                @(brandName == null ? "Low Volume Phone Management Portal" : brandName)
-                            </a>
+                            System.Diagnostics.Debug.WriteLine("error getting user");
+                            
                         }
                     }
                     else

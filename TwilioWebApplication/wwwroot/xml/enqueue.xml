@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+<Enqueue waitUrl="{{DomainUrl}}/xml/queue.xml" waitUrlMethod="GET">{{EmployeeNumber}}
+</Enqueue>
+<Redirect>https://webhooks.twilio.com/v1/Accounts/{{AccountSid}}/Flows/{{FlowSid}}?FlowEvent=return</Redirect>
+</Response>

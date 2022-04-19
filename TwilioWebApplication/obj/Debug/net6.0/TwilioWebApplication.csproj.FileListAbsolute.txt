@@ -598,3 +598,4 @@ C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\obj\Debu
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\obj\Debug\net6.0\TwilioWebApplication.pdb
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\obj\Debug\net6.0\TwilioWebApplication.genruntimeconfig.cache
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\obj\Debug\net6.0\ref\TwilioWebApplication.dll
+C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\PhoneNumbers.dll

@@ -85,6 +85,10 @@
             "Twilio.AspNet.Mvc": {
               "target": "Package",
               "version": "[5.73.0, )"
+            },
+            "libphonenumber-csharp": {
+              "target": "Package",
+              "version": "[8.12.46, )"
             }
           },
           "imports": [

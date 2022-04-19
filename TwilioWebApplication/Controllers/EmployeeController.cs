@@ -53,7 +53,9 @@ namespace TwilioWebApplication.Controllers
         [Route("Employees")]
         public IActionResult Employees(bool employeeDeleted = false) //employeeDeleted is set to true when HttpDelete is called on an employee
         {
-            IEnumerable<Employee> Employees = _db.Employees;
+            // user and database context
+            User user = _userManager.GetUserAsync(User).Result;
+            IEnumerable<Employee> Employees = (from Employee e in _db.Employees where e.Company.User.Id == user.Id select e);
             if (employeeDeleted) ViewData["deleted"] = "Employee successfully deleted.";
             return View(Employees);
         }

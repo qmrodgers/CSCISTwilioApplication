@@ -5,21 +5,31 @@
     ViewData["ActivePage"] = ManageNavPages.Personalization;
 }
 
-<h3>@ViewData["Title"] </h3>
+
 <partial name="_StatusMessage" for="StatusMessage" />
-<div class="row">
-    <div class="col-md-6">
-        <form enctype="multipart/form-data" id="personalization-form" method="post">
+<div class="container-fluid">
+    <form enctype="multipart/form-data" id="personalization-form" method="post">
+    <div class="row">
+    <div class="col-6 d-flex flex-column">
+    <h3 class="m-0">@ViewData["Title"] </h3>
+    <div class="">
             <div asp-validation-summary="All" class="text-danger"></div>
             <label asp-for="Input.NewBrandName"></label>
             <input asp-for="Input.NewBrandName" value=""/>
 
-            <img src="@Model.FormFile"/>
+    </div>
+    <div class="mt-1">
+
             <label asp-for="Input.NewFormFile"></label>
             <input asp-for="Input.NewFormFile" type="file" />
-
-
-            <input asp-page-handler="ChangePersonalization" class="btn" type="submit" value="upload" />
-        </form>
+            <input asp-page-handler="ChangePersonalization" class="btn btn-primary mt-1" type="submit" value="Save Changes" />
+        
     </div>
+    </div>
+    <div class="col-6">
+            <img src="@Model.FormFile"/>
+    </div>
+    
+    </div>
+    </form>
 </div>

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "bmsPVfqAJoSnPozlhjStrbJOZjXFxPp5WJfxSFmwL5A=",
+  "Hash": "mw5rkfqbecJqHLbf3CsM4W4fvKvQhBCxqNXJBErSWlk=",
   "Source": "TwilioWebApplication",
   "BasePath": "_content/TwilioWebApplication",
   "Mode": "Default",
@@ -2089,6 +2089,57 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Identity": "C:\\Users\\quaid\\source\\repos\\CSCISTwilioApplication\\TwilioWebApplication\\wwwroot\\xml\\dialQueue.xml",
+      "SourceId": "TwilioWebApplication",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\quaid\\source\\repos\\CSCISTwilioApplication\\TwilioWebApplication\\wwwroot\\",
+      "BasePath": "_content/TwilioWebApplication",
+      "RelativePath": "xml/dialQueue.xml",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\xml\\dialQueue.xml"
+    },
+    {
+      "Identity": "C:\\Users\\quaid\\source\\repos\\CSCISTwilioApplication\\TwilioWebApplication\\wwwroot\\xml\\enqueue.xml",
+      "SourceId": "TwilioWebApplication",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\quaid\\source\\repos\\CSCISTwilioApplication\\TwilioWebApplication\\wwwroot\\",
+      "BasePath": "_content/TwilioWebApplication",
+      "RelativePath": "xml/enqueue.xml",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\xml\\enqueue.xml"
+    },
+    {
+      "Identity": "C:\\Users\\quaid\\source\\repos\\CSCISTwilioApplication\\TwilioWebApplication\\wwwroot\\xml\\queue.xml",
+      "SourceId": "TwilioWebApplication",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\quaid\\source\\repos\\CSCISTwilioApplication\\TwilioWebApplication\\wwwroot\\",
+      "BasePath": "_content/TwilioWebApplication",
+      "RelativePath": "xml/queue.xml",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\xml\\queue.xml"
     }
   ]
 }

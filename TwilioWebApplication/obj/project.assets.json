@@ -11,6 +11,18 @@
           "lib/netstandard2.0/Humanizer.dll": {}
         }
       },
+      "libphonenumber-csharp/8.12.46": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections.Immutable": "1.7.1"
+        },
+        "compile": {
+          "lib/netstandard2.0/PhoneNumbers.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/PhoneNumbers.dll": {}
+        }
+      },
       "MessagePack/2.1.152": {
         "type": "package",
         "dependencies": {
@@ -3340,6 +3352,23 @@
         "lib/netstandard2.0/Humanizer.dll",
         "lib/netstandard2.0/Humanizer.xml",
         "logo.png"
+      ]
+    },
+    "libphonenumber-csharp/8.12.46": {
+      "sha512": "erEYZK4gpD4UqELOQSv3N05E25FIKNnMNI0sjDY57Prk9vuUWDOMGr+GBaHVPE1I5DSLiSjaEjhSz2iTL3NM9A==",
+      "type": "package",
+      "path": "libphonenumber-csharp/8.12.46",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net462/PhoneNumbers.dll",
+        "lib/net462/PhoneNumbers.xml",
+        "lib/netstandard2.0/PhoneNumbers.dll",
+        "lib/netstandard2.0/PhoneNumbers.xml",
+        "lib/portable-net45+win8+wp8+wpa81/PhoneNumbers.dll",
+        "lib/portable-net45+win8+wp8+wpa81/PhoneNumbers.xml",
+        "libphonenumber-csharp.8.12.46.nupkg.sha512",
+        "libphonenumber-csharp.nuspec"
       ]
     },
     "MessagePack/2.1.152": {
@@ -10278,7 +10307,8 @@
       "Microsoft.EntityFrameworkCore.Tools >= 6.0.3",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 6.0.2",
       "Twilio >= 5.74.0",
-      "Twilio.AspNet.Mvc >= 5.73.0"
+      "Twilio.AspNet.Mvc >= 5.73.0",
+      "libphonenumber-csharp >= 8.12.46"
     ]
   },
   "packageFolders": {
@@ -10366,6 +10396,10 @@
           "Twilio.AspNet.Mvc": {
             "target": "Package",
             "version": "[5.73.0, )"
+          },
+          "libphonenumber-csharp": {
+            "target": "Package",
+            "version": "[8.12.46, )"
           }
         },
         "imports": [

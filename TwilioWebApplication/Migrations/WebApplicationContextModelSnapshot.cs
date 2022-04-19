@@ -167,6 +167,9 @@ namespace TwilioWebApplication.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("AccountId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CallDate")
                         .HasColumnType("datetime2");
 
@@ -179,10 +182,13 @@ namespace TwilioWebApplication.Migrations
                     b.Property<int>("EmployeeID")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
                     b.Property<string>("RecordingId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SessionId")
+                    b.Property<string>("RecordingUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TwilioNumber")
