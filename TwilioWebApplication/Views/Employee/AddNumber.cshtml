@@ -1,0 +1,103 @@
+﻿@model PostNewNumberModel
+@{
+    ViewData["Title"] = "Add Number";
+
+}
+
+
+
+<h1 class="text-primary" style="margin-inline: auto; text-align:center;">Add Number</h1>
+
+<form method="post">
+    <div class="container addnumberbox">
+        <p class="alert alert-warning">
+            Twilio charges $1 plus fees for each held phone number. Please keep that in mind as you add numbers. If you believe you purchased a number,
+            but arent seeing it, make sure you've clicked the button 'Refresh Numbers in Database'.
+        </p>
+        <!-- start of container-->
+        <div class="row">
+            <div class="d-flex justify-content-center">
+                <label asp-for="ISOCode" style="margin-right: .5rem;"></label>
+                <select id="ISO" asp-for="ISOCode" asp-items="@(new SelectList((ViewData["CountryCodes"] as List<string>)))" class="form-control">
+                    <option value="US" selected>Default: US</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="d-flex justify-content-center">
+                <label style="margin-right: .5rem;">Type of Number:</label>
+                <select id="locality" class="form-control">
+                    <option value="None" selected>None</option>
+                    <option value="Local">Local</option>
+                    <option value="Mobile">Mobile</option>
+                    <option value="TollFree">Toll-Free</option>
+                </select>
+
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="d-flex justify-content-center">
+                <select id="pnList" size="10" asp-for="PhoneNumber" class="form-control">
+                </select>
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary visually-hidden">Add Number</button>
+        </div>
+        <row class="d-flex justify-content-end">
+        <button type="submit" class="btn-primary btn">Purchase Number</button>
+        <a asp-controller="Employee" asp-action="Numbers" class="btn-secondary btn" style="margin-left: .5rem;">Back</a>
+
+         </row>
+
+    </div> <!-- end of container -->
+</form>
+<script type="text/javascript">
+
+    window.onload = function () {
+
+        let locality = document.getElementById('locality');
+
+        locality.onchange = function () {
+
+            // empty list
+            var list = document.getElementById("pnList")
+            while(list.firstChild) {
+            list.removeChild(list.firstChild);
+            }
+
+
+            // gather data
+            var localityText = locality.options[locality.selectedIndex].value;
+            var ISO = document.getElementById("ISO");
+            var ISOText = ISO.options[ISO.selectedIndex].value;
+            if (ISOText == "US" && localityText == "Mobile") localityText="Local";
+                if (localityText != "None") {
+                    console.log("selected locality");
+                    var headers = new Headers();
+                    headers.append('Authorization', 'Basic ' + btoa("@(ViewData["AccountSid"] as string)" + ':' + "@(ViewData["AuthToken"] as string)"));
+                    console.log(ISOText + " is the ISO text");
+                    console.log(localityText + " is the locality text");
+                    //fetch from twilio api
+                    fetch(`https://api.twilio.com/2010-04-01/Accounts/@(ViewData["AccountSid"] as string)/AvailablePhoneNumbers/${ISOText}/${localityText}.json`, { headers: headers })
+                    .then(response => response.json())
+                    .then(response => {
+                        console.log(response);
+                        //iterate through response to populate select list
+                        for (let i=0; i < response.available_phone_numbers.length; i++)
+                        {
+                            //console.log(d);
+                        let option = document.createElement("option");
+                        option.value = response.available_phone_numbers[i].phone_number;
+                        let node = document.createTextNode(response.available_phone_numbers[i].friendly_name);
+                        option.appendChild(node);
+                        list.appendChild(option);
+
+                        };
+                    }).catch(error => console.error(error));
+                }
+
+        }
+    }
+</script>
+

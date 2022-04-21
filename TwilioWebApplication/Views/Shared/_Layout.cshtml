@@ -23,13 +23,13 @@
 
                         try
                         {
-                            
+
                             string? brandName = UserManager.GetUserAsync(User).Result.brandName;
                             string? brandURI = UserManager.GetUserAsync(User).Result.brandURI;
                             if (brandURI != null)
                             {
                                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                                    <img id="brand-image" src="@brandURI" alt="@(brandName == null ? "Low Volume Phone Management Portal" : brandName)"/>
+                                    <img id="brand-image" src="@brandURI" alt="@(brandName == null ? "Low Volume Phone Management Portal" : brandName)" />
                                 </a>
 
                             }
@@ -42,17 +42,17 @@
                                 </a>
                             }
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
                             System.Diagnostics.Debug.WriteLine("error getting user");
-                            
+
                         }
                     }
                     else
                     {
                         <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                             Low Volume Phone Management Portal
-                            </a>
+                        </a>
                     }
                 }
 
@@ -93,7 +93,23 @@
         </div>
     </footer>
     <script>
-    //custom script
+        //custom script
+            window.onload=function() {
+                            let locality = document.getElementById('locality');
+                            console.log("onload-function");
+                                locality.onchange=function() {
+                                                            console.log("hello");
+                                                            var ISO = document.getElementById("ISO");
+                                                            var localityText = locality.options[locality.selectedIndex].text;
+                                                            var ISOText = ISO.options[ISO.selectedIndex].text;
+
+                                                            console.log(ISOText + "is the ISO text");
+                                                            console.log(localityText + "is the locality text");
+                                                            if (localityText != "None") {
+                                                            fetch(`https://api.twilio.com/2010-04-01/Accounts/@(ViewData["AccountSid"] as string)/AvailablePhoneNumbers/${ISOText}/${localityText}.json`).then(response => {console.log(response); });
+                                                                }
+
+                                                          }
     </script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

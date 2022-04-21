@@ -19,3 +19,31 @@ body {
  th, td {
      vertical-align:middle;
  }
+
+
+
+ .addnumberbox select {
+     margin-bottom: 1rem;
+ }
+
+ #pnList {
+     font-size: 1.2rem;
+ }
+/*
+      .addnumberbox {
+     margin-inline: auto;
+     width: 60%;
+ }
+
+.addnumberbox * {
+    font-size: 1.4rem;
+    font-family: Helvetica;
+
+}
+
+#pnList {
+    width: min(500px, 70%);
+    text-align: center;
+    font-weight: bold;
+}
+*/

@@ -19,7 +19,7 @@
         @{
             int count = 0;
             //Employee e in Model <- replace bottom with if Linq not working out
-            foreach (Employee emp in (from e in Model orderby e.LastName ascending select e))
+            foreach (Employee emp in (from e in Model where e.Company.CompanyID == ViewData["companyId"] as int? orderby e.LastName ascending select e))
             {
                     <tr class="d-dlex align-items-center">
                         

@@ -16,7 +16,6 @@ using Microsoft.AspNetCore.Identity;
 namespace TwilioWebApplication.Controllers
 {
     
-
     [ApiController]
     [Route("Api/")]
     public class TwilioPhoneNumberController : Controller
@@ -49,7 +48,7 @@ namespace TwilioWebApplication.Controllers
            
             // user and database context
             User user = _userManager.GetUserAsync(User).Result;
-            TwilioClient.Init(user.TwilioSID, user.TwilioSecretKey);
+            TwilioClient.Init(user.TwilioAccountSid, user.TwilioAuthToken);
 
 
             var phoneNumbers = IncomingPhoneNumberResource.Read();
@@ -108,48 +107,28 @@ namespace TwilioWebApplication.Controllers
 
         [Route("Get/Employee")]
         [HttpGet]
-        public JsonResult GetNumber(string callerNumber, string twilioNumber, string messageData)
+        public IActionResult GetNumber(string callerNumber, string twilioNumber, string messageData)
         {
             // user and database context
 
 
-            Regex e164formatTest = new Regex(@"^\+?[1 - 9]\d{1,14}");
+            Regex e164formatTest = new Regex(@"^\+?[1-9]\d{1,14}$");
 
             //check for number formatting
             //if (!e164formatTest.IsMatch(twilioNumber) | !e164formatTest.IsMatch(callerNumber)) return Problem($"{twilioNumber} is not a correctly formatted associated Twilio Phone Number", null, 422);
-
-            Employee? emp = (from Employee e in _db.Employees where e.AssignedNumber == twilioNumber select e).First();
-
-            
+            IEnumerable<Employee> emps = (from Employee e in _db.Employees where e.AssignedNumber == twilioNumber select e);
+            if (!emps.Any()) return Problem("Could not find an employee who uses this Twilio Number"); 
+            Employee emp = (from Employee e in _db.Employees where e.AssignedNumber == twilioNumber select e).First();
 
             Company c = emp.Company;
 
             var user = (from User u in users where c.User.Id == u.Id select u).First();
-
-            
-
-
-
-
-
-            //check if an Employee exists with an assigned twilio number matching the request.
-            //if (emp == null) return Problem($"No employee found with this assigned Twilio Phone Number");
-            
-            
-            
-            
             
             ApiResponseModel response = new ApiResponseModel(emp);
-            response.TwilioSecret = user.TwilioSecretKey;
-            response.TwilioSid = user.TwilioSID;
+            response.TwilioSecret = user.TwilioAuthToken;
+            response.TwilioSid = user.TwilioAccountSid;
             // returns early without extra processing if caller is not an employee.
             if (emp.PhoneNumber != callerNumber) return Json(response);
-
-            
-
-            
-
-
 
             response.callerIsEmployee = true;
             var wrappedResponse = new
@@ -160,30 +139,8 @@ namespace TwilioWebApplication.Controllers
             
             
 
-            return Json(response); //needs more data
+            return Json(response);
             
-
-            //temp functionality
-            /*
-            var emplist = (from e in _db.Employees where e.PhoneNumber == fromTwilio.CallingNumber select e).ToList();
-
-            if (emplist.Count == 1)
-            {
-                
-            }
-            foreach (Employee e in _db.Employees)
-            {
-                if(e.PhoneNumber == fromTwilio.CallingNumber)
-                {
-                    emp = e;
-                }
-            }
-            if (emp != null)
-            {
-
-            }
-            */
-
         }
 
 

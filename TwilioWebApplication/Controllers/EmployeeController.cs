@@ -12,31 +12,37 @@ using System.Text.RegularExpressions;
 
 namespace TwilioWebApplication.Controllers
 {
+    [Authorize]
     [Route("Manage/")]
     public class EmployeeController : Controller
     {
 
-        
+        private IWebHostEnvironment _webHostEnvironment;
         private readonly WebApplicationContext _db;
         private List<Company> _companylist;
         private List<Employee> _employeelist;
         private List<TwilioPhoneNumber> _phoneNumbers;
         UserManager<User> _userManager;
+        User _user; //remove later potentially
 
 
 
 
 
 
-        public EmployeeController(WebApplicationContext db, UserManager<User> userManager)
+        public EmployeeController(WebApplicationContext db, UserManager<User> userManager, IWebHostEnvironment environment)
         {
             //UserManager<User> hello = new UserManager<User>();
-            
-            
+
+            _webHostEnvironment = environment;
             _db = db;
+            _companylist = _db.Companies.ToList();
+            _employeelist = _db.Employees.ToList();
+            _phoneNumbers = _db.TwilioPhoneNumbers.ToList();
             _userManager = userManager;
 
-            
+
+
         }
 
 
@@ -55,8 +61,19 @@ namespace TwilioWebApplication.Controllers
         {
             // user and database context
             User user = _userManager.GetUserAsync(User).Result;
-            IEnumerable<Employee> Employees = (from Employee e in _db.Employees where e.Company.User.Id == user.Id select e);
+           
+            List<Employee> Employees = (from e in _employeelist where e.Company.User.Id == user.Id select e).ToList();
             if (employeeDeleted) ViewData["deleted"] = "Employee successfully deleted.";
+            List<int> companies = new List<int>();
+            foreach (Employee employee in Employees)
+            {
+                if (!companies.Contains(employee.Company.CompanyID))
+                {
+                    companies.Add(employee.Company.CompanyID);
+                }
+            }
+            ViewData["CompanyIds"] = companies;
+
             return View(Employees);
         }
         
@@ -68,11 +85,12 @@ namespace TwilioWebApplication.Controllers
 
             // user and database context
             User user = _userManager.GetUserAsync(User).Result;
+            //_companylist = _companylist.Where(c => c.User.Id == user.Id) as List<Company>;
             _companylist = (from Company c in _db.Companies where c.User.Id == user.Id select c).ToList();
             _employeelist = (from Employee e in _db.Employees where e.Company.User.Id == user.Id select e).ToList();
 
 
-            _phoneNumbers = (from TwilioPhoneNumber t in _db.TwilioPhoneNumbers where t.TwilioSID == user.TwilioSID select t).ToList();
+            _phoneNumbers = (from TwilioPhoneNumber t in _db.TwilioPhoneNumbers where t.TwilioSID == user.TwilioAccountSid select t).ToList();
             
 
 
@@ -102,7 +120,7 @@ namespace TwilioWebApplication.Controllers
             _employeelist = (from Employee e in _db.Employees where e.Company.User.Id == user.Id select e).ToList();
 
 
-            _phoneNumbers = (from TwilioPhoneNumber t in _db.TwilioPhoneNumbers where t.TwilioSID == user.TwilioSID select t).ToList();
+            _phoneNumbers = (from TwilioPhoneNumber t in _db.TwilioPhoneNumbers where t.TwilioSID == user.TwilioAccountSid select t).ToList();
             
 
 
@@ -119,7 +137,7 @@ namespace TwilioWebApplication.Controllers
                     filteredPhoneNumbers.RemoveAll(x => x.PhoneNumber == e.AssignedNumber);
                 }
             }
-            ViewData["numbers"] = filteredPhoneNumbers;
+            
 
 
             //custom ModelState check: Our dropdown list on the submission page always throws a model state error, even when correct. So if there's only 1 error it is still actually valid. We see if the dropdown is valid by making sure the ReturnedCompanyID isn't blank.
@@ -130,29 +148,37 @@ namespace TwilioWebApplication.Controllers
                 empModel.Employee.Company = company;
                 try
                 {
-                    Regex numberCheck = new Regex(@"^(\+1)?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$");
-                    if (!numberCheck.IsMatch(empModel.Employee.PhoneNumber))
+                    //Regex numberCheck = new Regex(@"^(\+1)?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$");
+                    Regex numberCheck = new Regex(@"^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$");
+
+                    MatchCollection numbermatches = numberCheck.Matches(empModel.Employee.PhoneNumber);
+                    if (!numbermatches.Any())
                     {
                         throw new Exception("incorrect number format");
                     }
-                    empModel.Employee.PhoneNumber = Employee.FormatPhoneNumber(empModel.Employee.PhoneNumber);
+                    string e164number = "+";
+                    if (numbermatches[0].Groups[1].Value == "") e164number += "1";
+                    e164number += numbermatches[0].Groups[2].Value + numbermatches[0].Groups[3].Value + numbermatches[0].Groups[4].Value;
+                    if (numbermatches[0].Groups[5].Value != "") e164number += "x" + numbermatches[0].Groups[5].Value;
+
+
+
+                    empModel.Employee.PhoneNumber = e164number;
+
+                    _db.Employees.Add(empModel.Employee);
+                    _db.SaveChanges();
+
+                    filteredPhoneNumbers.RemoveAll(x => x.PhoneNumber == empModel.Employee.AssignedNumber);
                 }
                 catch(Exception ex)
                 {
                     ViewData["failed"] = "Server Validation failed. Did you format the employee's phone number correctly?";
                     return View(empModel);
                 }
-                 
-                
-                _db.Employees.Add(empModel.Employee);
-                _db.SaveChanges();
 
-                //ensures the filteredPhoneNumbers are up to date
-                if(empModel.Employee.AssignedNumber != null)
-                {
-                    filteredPhoneNumbers.RemoveAll(x => x.PhoneNumber == empModel.Employee.AssignedNumber);
-                    ViewData["numbers"] = filteredPhoneNumbers;
-                }
+
+                ViewData["numbers"] = filteredPhoneNumbers;
+
                 
                 
                 ModelState.Clear();
@@ -174,7 +200,7 @@ namespace TwilioWebApplication.Controllers
             _employeelist = (from Employee e in _db.Employees where e.Company.User.Id == user.Id select e).ToList();
 
 
-            _phoneNumbers = (from TwilioPhoneNumber t in _db.TwilioPhoneNumbers where t.TwilioSID == user.TwilioSID select t).ToList();
+            _phoneNumbers = (from TwilioPhoneNumber t in _db.TwilioPhoneNumbers where t.TwilioSID == user.TwilioAccountSid select t).ToList();
             
 
             ViewData["companies"] = _companylist;
@@ -205,7 +231,7 @@ namespace TwilioWebApplication.Controllers
             _employeelist = (from Employee e in _db.Employees where e.Company.User.Id == user.Id select e).ToList();
 
 
-            _phoneNumbers = (from TwilioPhoneNumber t in _db.TwilioPhoneNumbers where t.TwilioSID == user.TwilioSID select t).ToList();
+            _phoneNumbers = (from TwilioPhoneNumber t in _db.TwilioPhoneNumbers where t.TwilioSID == user.TwilioAccountSid select t).ToList();
             
 
             //custom ModelState check: Our dropdown list on the submission page always throws a model state error, even when correct. So if there's only 1 error it is still actually valid. We see if the dropdown is valid by making sure the ReturnedCompanyID isn't blank.
@@ -285,6 +311,16 @@ namespace TwilioWebApplication.Controllers
 
         /// End of Employee Views
         /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
         /// </summary>
         /// Start of Number Views
 
@@ -295,17 +331,69 @@ namespace TwilioWebApplication.Controllers
         {
             // user and database context
             User user = _userManager.GetUserAsync(User).Result;
+            
             _employeelist = (from Employee e in _db.Employees where e.Company.User.Id == user.Id select e).ToList();
 
 
-            _phoneNumbers = (from TwilioPhoneNumber t in _db.TwilioPhoneNumbers where t.TwilioSID == user.TwilioSID select t).ToList();
+            _phoneNumbers = _phoneNumbers.Where(p => p.TwilioSID == user.TwilioAccountSid).ToList();
             
 
 
-            CombinedModel combinedModel = new CombinedModel();
+            PairedModel combinedModel = new PairedModel();
             combinedModel.Employees = _employeelist;
-            combinedModel.TwilioPhoneNumbers = _db.TwilioPhoneNumbers;
+            combinedModel.TwilioPhoneNumbers = _phoneNumbers;
             return View(combinedModel);
+        }
+        [Route("Numbers/AddNumber")]
+        public IActionResult AddNumber()
+        {
+            User user = _userManager.GetUserAsync(User).Result;
+            ISO3166.Country[] countries = ISO3166.Country.List;
+            List<string> codes = new List<string>();
+            foreach (ISO3166.Country c in countries)
+            {
+                codes.Add(c.TwoLetterCode);
+            }
+            ViewData["AccountSid"] = user.TwilioAccountSid;
+            ViewData["AuthToken"] = user.TwilioAuthToken;
+            ViewData["at"] = @"@";
+            ViewData["CountryCodes"] = codes;
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("Numbers/AddNumber")]
+        public IActionResult AddNumber(PostNewNumberModel p)
+        {
+            User user;
+            // user and database context
+            try
+            {
+                user = _userManager.GetUserAsync(User).Result;
+            }
+            catch(Exception ex)
+            {
+                return NotFound();
+            }
+            string path = this.Request.Headers.Origin;
+            if (path.Contains("localhost"))
+            {
+                return View("Error");
+            }
+            //REMOVE AFTER IMPLEMENTATION
+
+            path = path + "/Flow.json";
+            Uri uri = new Uri(path);
+
+            TwilioClient.Init(user.TwilioAccountSid, user.TwilioAuthToken);
+            var incomingPhoneNumber = IncomingPhoneNumberResource.Create(
+            phoneNumber: new Twilio.Types.PhoneNumber(p.PhoneNumber),
+            smsApplicationSid: user.TwilioFlowSid
+            ); ;
+            ViewData["NumberAdded"] = "Successfully added phone Number!";
+            return RedirectToAction("Numbers");
         }
         [Route("Numbers/RefreshNumbers")]
         public IActionResult RefreshNumbers()
@@ -313,33 +401,78 @@ namespace TwilioWebApplication.Controllers
             // user and database context
             User user = _userManager.GetUserAsync(User).Result;
 
-            _employeelist = (from Employee e in _db.Employees where e.Company.User.Id == user.Id select e).ToList();
+            TwilioClient.Init(user.TwilioAccountSid, user.TwilioAuthToken);
 
+            List<IncomingPhoneNumberResource> phoneNumbers = IncomingPhoneNumberResource.Read().ToList();
+            string path = $@"https://webhooks.twilio.com/v1/Accounts/{user.TwilioAccountSid}/Flows/{user.TwilioFlowSid}";
 
-            _phoneNumbers = (from TwilioPhoneNumber t in _db.TwilioPhoneNumbers where t.TwilioSID == user.TwilioSID select t).ToList();
-            TwilioClient.Init(user.TwilioSID, user.TwilioSecretKey);
-
-            var phoneNumbers = IncomingPhoneNumberResource.Read();
-            List<TwilioPhoneNumber> updatedNumbers = new List<TwilioPhoneNumber>();
-            foreach (var x in phoneNumbers)
+            Uri uri = new Uri(path);
+            foreach (IncomingPhoneNumberResource phoneNumber in phoneNumbers)
             {
-                TwilioPhoneNumber number = (from TwilioPhoneNumber t in _db.TwilioPhoneNumbers where x.PhoneNumber.ToString() == t.PhoneNumber select t).FirstOrDefault();
-                if (number == null)
+                IncomingPhoneNumberResource.Update(
+                smsUrl: uri,
+                voiceUrl: uri,
+                pathSid: phoneNumber.Sid);
+                     
+            }
+            
+            //Go through each of User's numbers in database
+
+            foreach ( TwilioPhoneNumber twilionumber in _db.TwilioPhoneNumbers.Where(dbnumber => dbnumber.TwilioSID == user.TwilioAccountSid))
+            {
+                IEnumerable<IncomingPhoneNumberResource> incomingNumber = phoneNumbers.Where(number => number.PhoneNumber.ToString() == twilionumber.PhoneNumber);
+               //Check for any phone numbers that shouldn't still be in database
+                if (!incomingNumber.Any()) //if db number not found in list of twilio numbers for account
                 {
-                    _db.TwilioPhoneNumbers.Add(new TwilioPhoneNumber { PhoneNumber = x.PhoneNumber.ToString(), FriendlyName = x.FriendlyName, TwilioSID = _userManager.GetUserAsync(User).Result.TwilioSID});
+                    try
+                    {
+                        //delete phone number from any employees that somehow have it assigned.
+                        foreach(Employee e in _db.Employees.Where(dbemployee => dbemployee.AssignedNumber == twilionumber.PhoneNumber))
+                        {
+                            e.AssignedNumber = null;
+                        }
+                        _db.TwilioPhoneNumbers.Remove(twilionumber); //delete number
+                    }
+                    catch(Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine(ex.Message);
+                        ViewData["Error"] = "Could not add new Numbers to database";
+                        return RedirectToAction("Numbers");
+                    }
+
+                    continue;
                 }
-                _db.SaveChanges();
+
+                
+
+                phoneNumbers.Remove(incomingNumber.First());
+                
+            }
+
+            foreach(IncomingPhoneNumberResource incomingPhoneNumber in phoneNumbers)
+            {
+                try
+                {
+                    _db.TwilioPhoneNumbers.Add(new TwilioPhoneNumber() {
+                        PhoneNumber = incomingPhoneNumber.PhoneNumber.ToString(),
+                        FriendlyName = incomingPhoneNumber.FriendlyName,
+                        TwilioSID = user.TwilioAccountSid
+                    });
+
+                }
+                catch(Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    ViewData["Error"] = "Could not add new Numbers to database";
+                    return RedirectToAction("Numbers");
+                }
 
             }
-            foreach (TwilioPhoneNumber t in _db.TwilioPhoneNumbers)
-            {
 
-                if ((from IncomingPhoneNumberResource x in phoneNumbers where x.PhoneNumber.ToString() == t.PhoneNumber select x).Count() < 1)
-                {
-                    _db.TwilioPhoneNumbers.Remove(t);
-                }
+            if(_db.ChangeTracker.HasChanges()) {
                 _db.SaveChanges();
-            }
+                    }
+
             return RedirectToAction("Numbers");
         }
 
@@ -475,7 +608,7 @@ namespace TwilioWebApplication.Controllers
             _employeelist = (from Employee e in _db.Employees where e.Company.User.Id == user.Id select e).ToList();
 
 
-            _phoneNumbers = (from TwilioPhoneNumber t in _db.TwilioPhoneNumbers where t.TwilioSID == user.TwilioSID select t).ToList();
+            _phoneNumbers = (from TwilioPhoneNumber t in _db.TwilioPhoneNumbers where t.TwilioSID == user.TwilioAccountSid select t).ToList();
 
             if (comp.CompanyName != null)
             {

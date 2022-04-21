@@ -20,6 +20,8 @@ namespace TwilioWebApplication.Data
             builder.ApplyConfiguration(new UserEntityConfiguration());
         }
 
+
+
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Call> Calls { get; set; }
         public DbSet<Company> Companies { get; set; }
@@ -33,8 +35,8 @@ namespace TwilioWebApplication.Data
         {
             builder.Property(u => u.FirstName).HasMaxLength(255);
             builder.Property(u => u.LastName).HasMaxLength(255);
-            builder.Property(u => u.TwilioSID).HasMaxLength(34);
-            builder.Property(u => u.TwilioSecretKey).HasMaxLength(34);
+            builder.Property(u => u.TwilioAccountSid).HasMaxLength(34);
+            builder.Property(u => u.TwilioAuthToken).HasMaxLength(34);
 
         }
     }

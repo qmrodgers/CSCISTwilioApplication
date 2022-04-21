@@ -1,0 +1,4568 @@
+{
+  "description": "A New Flow",
+  "states": [
+    {
+      "name": "Trigger",
+      "type": "trigger",
+      "transitions": [
+        {
+          "next": "Copy_of_Copy_of_Set_Domain_URL",
+          "event": "incomingMessage"
+        },
+        {
+          "next": "Set_Domain_URL",
+          "event": "incomingCall"
+        },
+        {
+          "next": "Copy_of_Set_Domain_URL",
+          "event": "incomingRequest"
+        },
+        {
+          "event": "incomingParent"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 110,
+          "y": -340
+        }
+      }
+    },
+    {
+      "name": "getRequestMessageInfoFromApplication",
+      "type": "make-http-request",
+      "transitions": [
+        {
+          "next": "Employee_Customer_Check",
+          "event": "success"
+        },
+        {
+          "next": "getRequestMessageInfoFromApplication",
+          "event": "failed"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": -780,
+          "y": -520
+        },
+        "method": "GET",
+        "content_type": "application/x-www-form-urlencoded;charset=utf-8",
+        "parameters": [
+          {
+            "value": "{{contact.channel.address}}",
+            "key": "callerNumber"
+          },
+          {
+            "value": "{{flow.channel.address}}",
+            "key": "twilioNumber"
+          },
+          {
+            "value": "{{trigger.message.Body}}",
+            "key": "messageData"
+          }
+        ],
+        "url": "{{flow.variables.domainurl}}/api/get/employee"
+      }
+    },
+    {
+      "name": "employeeCheckError",
+      "type": "send-message",
+      "transitions": [
+        {
+          "event": "sent"
+        },
+        {
+          "event": "failed"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": -1230,
+          "y": -270
+        },
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "from": "{{flow.channel.address}}",
+        "to": "{{contact.channel.address}}",
+        "body": "Employee customer checking retrieved an incorrect value"
+      }
+    },
+    {
+      "name": "Employee_Customer_Check",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "employeeCheckError",
+          "event": "noMatch"
+        },
+        {
+          "next": "EmployeeMakingCallCheck",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to true",
+              "arguments": [
+                "{{widgets.getRequestMessageInfoFromApplication.parsed.callerIsEmployee}}"
+              ],
+              "type": "equal_to",
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "next": "notEmployeeMessage",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to false",
+              "arguments": [
+                "{{widgets.getRequestMessageInfoFromApplication.parsed.callerIsEmployee}}"
+              ],
+              "type": "equal_to",
+              "value": "false"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.getRequestMessageInfoFromApplication.parsed.callerIsEmployee}}",
+        "offset": {
+          "x": -750,
+          "y": -290
+        }
+      }
+    },
+    {
+      "name": "isEmployeeMessage",
+      "type": "send-message",
+      "transitions": [
+        {
+          "event": "sent"
+        },
+        {
+          "event": "failed"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": -1620,
+          "y": 430
+        },
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "from": "{{flow.channel.address}}",
+        "to": "{{contact.channel.address}}",
+        "body": "Hey there, employee"
+      }
+    },
+    {
+      "name": "notEmployeeMessage",
+      "type": "send-message",
+      "transitions": [
+        {
+          "event": "sent"
+        },
+        {
+          "event": "failed"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": -440,
+          "y": 30
+        },
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "from": "{{flow.channel.address}}",
+        "to": "{{contact.channel.address}}",
+        "body": "You are not an employee"
+      }
+    },
+    {
+      "name": "getRequestCallInfoFromApplication",
+      "type": "make-http-request",
+      "transitions": [
+        {
+          "next": "Employee_Customer_Check_for_Calls",
+          "event": "success"
+        },
+        {
+          "next": "getRequestCallInfoFromApplication",
+          "event": "failed"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 200,
+          "y": 220
+        },
+        "method": "GET",
+        "content_type": "application/x-www-form-urlencoded;charset=utf-8",
+        "parameters": [
+          {
+            "value": "{{contact.channel.address}}",
+            "key": "callerNumber"
+          },
+          {
+            "value": "{{flow.channel.address}}",
+            "key": "twilioNumber"
+          },
+          {
+            "value": "0",
+            "key": "messageData"
+          }
+        ],
+        "url": "{{flow.variables.domainurl}}/api/get/employee"
+      }
+    },
+    {
+      "name": "MessageHttpFailure",
+      "type": "send-message",
+      "transitions": [
+        {
+          "event": "sent"
+        },
+        {
+          "event": "failed"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": -1090,
+          "y": -540
+        },
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "from": "{{flow.channel.address}}",
+        "to": "{{contact.channel.address}}",
+        "body": "An error occurred while processing your message. We apologize for the inconvenience."
+      }
+    },
+    {
+      "name": "CallHttpFailure",
+      "type": "send-message",
+      "transitions": [
+        {
+          "event": "sent"
+        },
+        {
+          "event": "failed"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": -220,
+          "y": 270
+        },
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "from": "{{flow.channel.address}}",
+        "to": "{{contact.channel.address}}",
+        "body": "Something went wrong while processing your information. We apologize for the inconvenience."
+      }
+    },
+    {
+      "name": "Employee_Customer_Check_for_Calls",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "employeeCheckErrorCall",
+          "event": "noMatch"
+        },
+        {
+          "next": "EmployeeIVR",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to true",
+              "arguments": [
+                "{{widgets.getRequestCallInfoFromApplication.parsed.callerIsEmployee}}"
+              ],
+              "type": "equal_to",
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "next": "client_option",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to false",
+              "arguments": [
+                "{{widgets.getRequestCallInfoFromApplication.parsed.callerIsEmployee}}"
+              ],
+              "type": "equal_to",
+              "value": "false"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.getRequestCallInfoFromApplication.parsed.callerIsEmployee}}",
+        "offset": {
+          "x": 170,
+          "y": 510
+        }
+      }
+    },
+    {
+      "name": "employeeCheckErrorCall",
+      "type": "send-message",
+      "transitions": [
+        {
+          "event": "sent"
+        },
+        {
+          "event": "failed"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": -300,
+          "y": 510
+        },
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "from": "{{flow.channel.address}}",
+        "to": "{{contact.channel.address}}",
+        "body": "Employee customer checking retrieved an incorrect value\n{{widgets.getRequestCallInfoFromApplication.parsed.callerIsEmployee}}"
+      }
+    },
+    {
+      "name": "EmployeeIVR",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "IVRdigits",
+          "event": "keypress"
+        },
+        {
+          "event": "speech"
+        },
+        {
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Salli",
+        "offset": {
+          "x": 0,
+          "y": 820
+        },
+        "finish_on_key": "#",
+        "say": "Hello {{widgets.getRequestCallInfoFromApplication.parsed.firstName}}. To dial a number, press 1. For voicemail and more, press 2. To redial, press 3.",
+        "language": "en-US",
+        "stop_gather": false,
+        "speech_model": "numbers_and_commands",
+        "profanity_filter": "true",
+        "timeout": 8,
+        "number_of_digits": 1,
+        "speech_timeout": "auto",
+        "loop": 1,
+        "gather_language": "en-US"
+      }
+    },
+    {
+      "name": "IVRdigits",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "say_play_1",
+          "event": "noMatch"
+        },
+        {
+          "next": "gather_2",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 1",
+              "arguments": [
+                "{{widgets.EmployeeIVR.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "next": "LoopVariableSet",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 2",
+              "arguments": [
+                "{{widgets.EmployeeIVR.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 3",
+              "arguments": [
+                "{{widgets.EmployeeIVR.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 4",
+              "arguments": [
+                "{{widgets.EmployeeIVR.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "4"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.EmployeeIVR.Digits}}",
+        "offset": {
+          "x": -290,
+          "y": 1130
+        }
+      }
+    },
+    {
+      "name": "say_play_1",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "EmployeeIVR",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "alice",
+        "offset": {
+          "x": -410,
+          "y": 820
+        },
+        "loop": 1,
+        "say": "Please enter a correct digit between 1 and 3",
+        "language": "en-US"
+      }
+    },
+    {
+      "name": "gather_2",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "connect_call_1",
+          "event": "keypress"
+        },
+        {
+          "event": "speech"
+        },
+        {
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "alice",
+        "speech_timeout": "auto",
+        "offset": {
+          "x": -1940,
+          "y": 1780
+        },
+        "loop": 1,
+        "finish_on_key": "#",
+        "say": "Please enter a number, then press pound to make a call",
+        "language": "en-US",
+        "stop_gather": true,
+        "gather_language": "en-US",
+        "speech_model": "numbers_and_commands",
+        "profanity_filter": "true",
+        "timeout": 13
+      }
+    },
+    {
+      "name": "connect_call_1",
+      "type": "connect-call-to",
+      "transitions": [
+        {
+          "next": "SentCallHttpPost",
+          "event": "callCompleted"
+        },
+        {
+          "next": "Failed_SentCallHttpPost",
+          "event": "hangup"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": -1990,
+          "y": 2020
+        },
+        "caller_id": "{{flow.channel.address}}",
+        "noun": "number",
+        "to": "{{widgets.gather_2.Digits}}",
+        "timeout": 30
+      }
+    },
+    {
+      "name": "say_play_2",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "http_1",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Salli",
+        "offset": {
+          "x": 460,
+          "y": 1360
+        },
+        "loop": 1,
+        "say": "Please wait while we connect you",
+        "language": "en-US"
+      }
+    },
+    {
+      "name": "EmployeeMakingCallCheck",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "send_and_reply_1",
+          "event": "noMatch"
+        },
+        {
+          "next": "liquidfunction",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value starts_with #",
+              "arguments": [
+                "{{trigger.message.Body}}"
+              ],
+              "type": "starts_with",
+              "value": "#"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{trigger.message.Body}}",
+        "offset": {
+          "x": -980,
+          "y": -30
+        }
+      }
+    },
+    {
+      "name": "liquidfunction",
+      "type": "set-variables",
+      "transitions": [
+        {
+          "next": "send_message_2",
+          "event": "next"
+        }
+      ],
+      "properties": {
+        "variables": [
+          {
+            "value": "{% assign splitstring2 = splitstring.first | split: \"#\" %}\n\n{{splitstring2.last}}",
+            "key": "numbertocall"
+          }
+        ],
+        "offset": {
+          "x": -790,
+          "y": 230
+        }
+      }
+    },
+    {
+      "name": "call_user_1",
+      "type": "make-outgoing-call-v2",
+      "transitions": [
+        {
+          "next": "say_play_3",
+          "event": "answered"
+        },
+        {
+          "event": "busy"
+        },
+        {
+          "event": "noAnswer"
+        },
+        {
+          "event": "failed"
+        }
+      ],
+      "properties": {
+        "machine_detection_speech_threshold": "2400",
+        "detect_answering_machine": false,
+        "send_digits": "",
+        "sip_auth_username": "",
+        "offset": {
+          "x": -800,
+          "y": 710
+        },
+        "recording_status_callback": "",
+        "sip_auth_password": "",
+        "recording_channels": "mono",
+        "timeout": 60,
+        "machine_detection": "Enable",
+        "trim": "true",
+        "record": false,
+        "machine_detection_speech_end_threshold": "1200",
+        "machine_detection_timeout": "30",
+        "from": "{{flow.channel.address}}",
+        "to": "{{contact.channel.address}}",
+        "machine_detection_silence_timeout": "5000"
+      }
+    },
+    {
+      "name": "connect_call_3",
+      "type": "connect-call-to",
+      "transitions": [
+        {
+          "event": "callCompleted"
+        },
+        {
+          "event": "hangup"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": -840,
+          "y": 1280
+        },
+        "caller_id": "{{flow.channel.address}}",
+        "noun": "number",
+        "to": "{{widgets.liquidfunction.numbertocall}}",
+        "timeout": 30
+      }
+    },
+    {
+      "name": "say_play_3",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "connect_call_3",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "man",
+        "offset": {
+          "x": -810,
+          "y": 990
+        },
+        "loop": 1,
+        "say": "connecting you to {{widgets.liquidfunction.numbertocall}}",
+        "language": "en-US"
+      }
+    },
+    {
+      "name": "send_and_reply_1",
+      "type": "send-and-wait-for-reply",
+      "transitions": [
+        {
+          "next": "call_user_2",
+          "event": "incomingMessage"
+        },
+        {
+          "event": "timeout"
+        },
+        {
+          "event": "deliveryFailure"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": -1190,
+          "y": 210
+        },
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "from": "{{flow.channel.address}}",
+        "body": "hello {{widgets.getRequestMessageInfoFromApplication.parsed.firstName}} . Please enter a number to call.",
+        "timeout": "30"
+      }
+    },
+    {
+      "name": "call_user_2",
+      "type": "make-outgoing-call-v2",
+      "transitions": [
+        {
+          "next": "connect_call_4",
+          "event": "answered"
+        },
+        {
+          "event": "busy"
+        },
+        {
+          "event": "noAnswer"
+        },
+        {
+          "event": "failed"
+        }
+      ],
+      "properties": {
+        "machine_detection_speech_threshold": "2400",
+        "detect_answering_machine": false,
+        "send_digits": "",
+        "sip_auth_username": "",
+        "offset": {
+          "x": -1250,
+          "y": 490
+        },
+        "recording_status_callback": "",
+        "sip_auth_password": "",
+        "recording_channels": "mono",
+        "timeout": 60,
+        "machine_detection": "Enable",
+        "trim": "true",
+        "record": false,
+        "machine_detection_speech_end_threshold": "1200",
+        "machine_detection_timeout": "30",
+        "from": "{{flow.channel.address}}",
+        "to": "{{contact.channel.address}}",
+        "machine_detection_silence_timeout": "5000"
+      }
+    },
+    {
+      "name": "connect_call_4",
+      "type": "connect-call-to",
+      "transitions": [
+        {
+          "event": "callCompleted"
+        },
+        {
+          "event": "hangup"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": -1300,
+          "y": 740
+        },
+        "caller_id": "{{contact.channel.address}}",
+        "noun": "number",
+        "to": "{{widgets.send_and_reply_1.outbound.Body}}",
+        "timeout": 30
+      }
+    },
+    {
+      "name": "send_message_2",
+      "type": "send-message",
+      "transitions": [
+        {
+          "next": "call_user_1",
+          "event": "sent"
+        },
+        {
+          "event": "failed"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": -730,
+          "y": 450
+        },
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "from": "{{flow.channel.address}}",
+        "to": "{{contact.channel.address}}",
+        "body": "{{widgets.liquidfunction.numbertocall}}"
+      }
+    },
+    {
+      "name": "http_1",
+      "type": "make-http-request",
+      "transitions": [
+        {
+          "next": "redirect_2",
+          "event": "success"
+        },
+        {
+          "event": "failed"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 870,
+          "y": 1410
+        },
+        "method": "POST",
+        "content_type": "application/x-www-form-urlencoded;charset=utf-8",
+        "body": "",
+        "parameters": [
+          {
+            "value": "{{widgets.getRequestCallInfoFromApplication.parsed.phone}}",
+            "key": "To"
+          },
+          {
+            "value": "{{flow.channel.address}}",
+            "key": "From"
+          },
+          {
+            "value": "{\"fullName\":\"{{widgets.getRequestCallInfoFromApplication.parsed.fullName}}\",\"firstName\":\"{{widgets.getRequestCallInfoFromApplication.parsed.firstName}}\",\"callingNumber\":\"{{contact.channel.address}}\"}",
+            "key": "Parameters"
+          }
+        ],
+        "url": "https://{{widgets.getRequestCallInfoFromApplication.parsed.twilioSid}}:{{widgets.getRequestCallInfoFromApplication.parsed.twilioSecret}}@studio.twilio.com/v2/Flows/FWcdfdc7eca35b83929ebc25f66e88209a/Executions"
+      }
+    },
+    {
+      "name": "send_and_reply_2",
+      "type": "send-and-wait-for-reply",
+      "transitions": [
+        {
+          "next": "call_user_3",
+          "event": "incomingMessage"
+        },
+        {
+          "event": "timeout"
+        },
+        {
+          "event": "deliveryFailure"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 970,
+          "y": 470
+        },
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "from": "{{flow.channel.address}}",
+        "body": "You have a call incoming from {{flow.data.callingNumber}}. Please reply with any message to accept call. Otherwise, ignore to send caller to voicemail",
+        "timeout": "65"
+      }
+    },
+    {
+      "name": "call_user_3",
+      "type": "make-outgoing-call-v2",
+      "transitions": [
+        {
+          "next": "redirect_1",
+          "event": "answered"
+        },
+        {
+          "event": "busy"
+        },
+        {
+          "event": "noAnswer"
+        },
+        {
+          "event": "failed"
+        }
+      ],
+      "properties": {
+        "machine_detection_speech_threshold": "2400",
+        "detect_answering_machine": false,
+        "send_digits": "",
+        "sip_auth_username": "",
+        "offset": {
+          "x": 1340,
+          "y": 850
+        },
+        "recording_status_callback": "",
+        "sip_auth_password": "",
+        "recording_channels": "mono",
+        "timeout": 60,
+        "machine_detection": "Enable",
+        "trim": "do-not-trim",
+        "record": false,
+        "machine_detection_speech_end_threshold": "1200",
+        "machine_detection_timeout": "30",
+        "from": "{{flow.channel.address}}",
+        "to": "{{contact.channel.address}}",
+        "machine_detection_silence_timeout": "5000"
+      }
+    },
+    {
+      "name": "record_voicemail_failed",
+      "type": "record-voicemail",
+      "transitions": [
+        {
+          "next": "MissedCallHttpPost",
+          "event": "recordingComplete"
+        },
+        {
+          "event": "noAudio"
+        },
+        {
+          "next": "MissedCallHttpPost",
+          "event": "hangup"
+        }
+      ],
+      "properties": {
+        "transcribe": false,
+        "offset": {
+          "x": 570,
+          "y": 2080
+        },
+        "trim": "trim-silence",
+        "play_beep": "true",
+        "timeout": 5,
+        "max_length": 3600
+      }
+    },
+    {
+      "name": "say_play_4",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "record_voicemail_failed",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Salli",
+        "offset": {
+          "x": 1050,
+          "y": 1810
+        },
+        "loop": 1,
+        "say": "We apologize, but we could not connect you. Please leave a message after the tone....",
+        "language": "en-US"
+      }
+    },
+    {
+      "name": "redirect_1",
+      "type": "add-twiml-redirect",
+      "transitions": [
+        {
+          "next": "SuccessfulCallHttpPost",
+          "event": "return"
+        },
+        {
+          "next": "SuccessfulCallHttpPost",
+          "event": "timeout"
+        },
+        {
+          "event": "fail"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 1670,
+          "y": 1120
+        },
+        "method": "GET",
+        "url": "{{flow.variables.domainurl}}/api/xml/dialQueue?EmployeeNumber={{contact.channel.address}}",
+        "timeout": "30"
+      }
+    },
+    {
+      "name": "SuccessfulCallHttpPost",
+      "type": "make-http-request",
+      "transitions": [
+        {
+          "event": "success"
+        },
+        {
+          "event": "failed"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 1880,
+          "y": 1470
+        },
+        "method": "POST",
+        "content_type": "application/x-www-form-urlencoded;charset=utf-8",
+        "parameters": [
+          {
+            "value": "{{flow.data.callingNumber}}",
+            "key": "callerNumber"
+          },
+          {
+            "value": "{{contact.channel.address}}",
+            "key": "employeeNumber"
+          },
+          {
+            "value": "{{flow.channel.address}}",
+            "key": "twilioNumber"
+          },
+          {
+            "value": "{{flow.sid}}",
+            "key": "sessionId"
+          },
+          {
+            "value": "1",
+            "key": "type"
+          }
+        ],
+        "url": "{{flow.variables.domainurl}}/api/call"
+      }
+    },
+    {
+      "name": "MissedCallHttpPost",
+      "type": "make-http-request",
+      "transitions": [
+        {
+          "event": "success"
+        },
+        {
+          "event": "failed"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 1100,
+          "y": 2280
+        },
+        "method": "GET",
+        "content_type": "application/x-www-form-urlencoded;charset=utf-8",
+        "parameters": [
+          {
+            "value": "{{contact.channel.address}}",
+            "key": "clientNumber"
+          },
+          {
+            "value": "{{widgets.getRequestCallInfoFromApplication.parsed.phone}}",
+            "key": "employeeNumber"
+          },
+          {
+            "value": "{{flow.channel.address}}",
+            "key": "twilioNumber"
+          },
+          {
+            "value": "{{widgets.record_voicemail_failed.RecordingSid}}",
+            "key": "recordingSid"
+          },
+          {
+            "value": "0",
+            "key": "type"
+          },
+          {
+            "value": "{{widgets.record_voicemail_failed.AccountSid}}",
+            "key": "sessionId"
+          },
+          {
+            "value": "{{widgets.record_voicemail_failed.RecordingUrl}}",
+            "key": "recordingUrl"
+          }
+        ],
+        "url": "{{flow.variables.domainurl}}/api/call"
+      }
+    },
+    {
+      "name": "SentCallHttpPost",
+      "type": "make-http-request",
+      "transitions": [
+        {
+          "event": "success"
+        },
+        {
+          "event": "failed"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": -2290,
+          "y": 2260
+        },
+        "method": "GET",
+        "content_type": "application/x-www-form-urlencoded;charset=utf-8",
+        "parameters": [
+          {
+            "value": "{{widgets.gather_2.Digits}}",
+            "key": "clientNumber"
+          },
+          {
+            "value": "{{contact.channel.address}}",
+            "key": "employeeNumber"
+          },
+          {
+            "value": "{{flow.channel.address}}",
+            "key": "twilioNumber"
+          },
+          {
+            "value": "2",
+            "key": "type"
+          },
+          {
+            "value": "{{flow.data}}",
+            "key": "sessionId"
+          }
+        ],
+        "url": "{{flow.variables.domainurl}}/api/call"
+      }
+    },
+    {
+      "name": "Failed_SentCallHttpPost",
+      "type": "make-http-request",
+      "transitions": [
+        {
+          "event": "success"
+        },
+        {
+          "event": "failed"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": -1740,
+          "y": 2260
+        },
+        "method": "GET",
+        "content_type": "application/x-www-form-urlencoded;charset=utf-8",
+        "parameters": [
+          {
+            "value": "{{widgets.gather_2.Digits}}",
+            "key": "clientNumber"
+          },
+          {
+            "value": "{{contact.channel.address}}",
+            "key": "employeeNumber"
+          },
+          {
+            "value": "{{flow.channel.address}}",
+            "key": "twilioNumber"
+          },
+          {
+            "value": "3",
+            "key": "type"
+          },
+          {
+            "value": "{{flow.sid}}}",
+            "key": "sessionId"
+          }
+        ],
+        "url": "{{flow.variables.domainurl}}/api/call"
+      }
+    },
+    {
+      "name": "callLogsRequest",
+      "type": "make-http-request",
+      "transitions": [
+        {
+          "next": "split_6",
+          "event": "success"
+        },
+        {
+          "event": "failed"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": -210,
+          "y": 1760
+        },
+        "method": "GET",
+        "content_type": "application/x-www-form-urlencoded;charset=utf-8",
+        "parameters": [
+          {
+            "value": "{{flow.channel.address}}",
+            "key": "twilioNumber"
+          },
+          {
+            "value": "{{contact.channel.address}}",
+            "key": "employeeNumber"
+          }
+        ],
+        "url": "{{flow.variables.domainurl}}/api/get/calllogs"
+      }
+    },
+    {
+      "name": "redirect_2",
+      "type": "add-twiml-redirect",
+      "transitions": [
+        {
+          "next": "say_play_4",
+          "event": "return"
+        },
+        {
+          "next": "say_play_4",
+          "event": "timeout"
+        },
+        {
+          "next": "say_play_4",
+          "event": "fail"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 640,
+          "y": 1660
+        },
+        "method": "GET",
+        "url": "{{flow.variables.domainurl}}/api/xml/enqueue?AccountSid={{widgets.say_play_2.AccountSid}}&FlowSid={{flow.flow_sid}}&DomainUrl={{flow.variables.domainurl}}&EmployeeNumber={{widgets.getRequestCallInfoFromApplication.parsed.phone}}",
+        "timeout": "90"
+      }
+    },
+    {
+      "name": "Set_Domain_URL",
+      "type": "set-variables",
+      "transitions": [
+        {
+          "next": "getRequestCallInfoFromApplication",
+          "event": "next"
+        }
+      ],
+      "properties": {
+        "variables": [
+          {
+            "value": "http://8303-23-251-2-236.ngrok.io",
+            "key": "domainurl"
+          }
+        ],
+        "offset": {
+          "x": 100,
+          "y": -120
+        }
+      }
+    },
+    {
+      "name": "Copy_of_Set_Domain_URL",
+      "type": "set-variables",
+      "transitions": [
+        {
+          "next": "send_and_reply_2",
+          "event": "next"
+        }
+      ],
+      "properties": {
+        "variables": [
+          {
+            "value": "http://8303-23-251-2-236.ngrok.io",
+            "key": "domainurl"
+          }
+        ],
+        "offset": {
+          "x": 540,
+          "y": -90
+        }
+      }
+    },
+    {
+      "name": "Copy_of_Copy_of_Set_Domain_URL",
+      "type": "set-variables",
+      "transitions": [
+        {
+          "next": "getRequestMessageInfoFromApplication",
+          "event": "next"
+        }
+      ],
+      "properties": {
+        "variables": [
+          {
+            "value": "http://8303-23-251-2-236.ngrok.io",
+            "key": "domainurl"
+          }
+        ],
+        "offset": {
+          "x": -250,
+          "y": -310
+        }
+      }
+    },
+    {
+      "name": "client_option",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "split_1",
+          "event": "keypress"
+        },
+        {
+          "next": "split_2",
+          "event": "speech"
+        },
+        {
+          "next": "say_play_2",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Salli",
+        "offset": {
+          "x": 650,
+          "y": 780
+        },
+        "finish_on_key": "",
+        "say": "You are attempting to connect to,  {{widgets.getRequestCallInfoFromApplication.parsed.fullName}} . To leave a message, press 1. Otherwise remain on the line and we will attempt to connect you.",
+        "language": "en-US",
+        "stop_gather": false,
+        "speech_model": "numbers_and_commands",
+        "profanity_filter": "true",
+        "timeout": 5,
+        "number_of_digits": 1,
+        "speech_timeout": "auto",
+        "loop": 1,
+        "gather_language": "en-US"
+      }
+    },
+    {
+      "name": "split_1",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "client_option",
+          "event": "noMatch"
+        },
+        {
+          "next": "say_play_6",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 1",
+              "arguments": [
+                "{{widgets.client_option.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.client_option.Digits}}",
+        "offset": {
+          "x": 410,
+          "y": 1070
+        }
+      }
+    },
+    {
+      "name": "split_2",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "client_option",
+          "event": "noMatch"
+        },
+        {
+          "next": "say_play_6",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 1",
+              "arguments": [
+                "{{widgets.client_option.SpeechResult}}"
+              ],
+              "type": "contains",
+              "value": "1"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.client_option.SpeechResult}}",
+        "offset": {
+          "x": 870,
+          "y": 1040
+        }
+      }
+    },
+    {
+      "name": "say_play_6",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "record_voicemail_failed",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Salli",
+        "offset": {
+          "x": 220,
+          "y": 1790
+        },
+        "loop": 1,
+        "say": "Please record a message",
+        "language": "en-US"
+      }
+    },
+    {
+      "name": "LoopVariableSet",
+      "type": "set-variables",
+      "transitions": [
+        {
+          "next": "callLogsRequest",
+          "event": "next"
+        }
+      ],
+      "properties": {
+        "variables": [
+          {
+            "value": "0",
+            "key": "counter"
+          }
+        ],
+        "offset": {
+          "x": -230,
+          "y": 1580
+        }
+      }
+    },
+    {
+      "name": "missedCallsGather1",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "split_3",
+          "event": "keypress"
+        },
+        {
+          "next": "Copy_of_split_3",
+          "event": "speech"
+        },
+        {
+          "next": "missedCallsGather1",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Salli",
+        "offset": {
+          "x": -800,
+          "y": 2050
+        },
+        "finish_on_key": "#",
+        "say": "You have, \n{% if widgets.callLogsRequest.parsed.newMissedCalls.size %}{{widgets.callLogsRequest.parsed.newMissedCalls.size}}  {% else %} 0 {% endif %}, new missed calls. To continue, press 1, or press 2 for a full list of calls for your number.....",
+        "language": "en-US",
+        "stop_gather": false,
+        "speech_model": "numbers_and_commands",
+        "profanity_filter": "true",
+        "timeout": 3,
+        "number_of_digits": 1,
+        "speech_timeout": "auto",
+        "loop": 2,
+        "gather_language": "en"
+      }
+    },
+    {
+      "name": "split_3",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "missedCallsGather1",
+          "event": "noMatch"
+        },
+        {
+          "next": "gather_4",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 1",
+              "arguments": [
+                "{{widgets.missedCallsGather1.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "next": "choose_calls",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 2",
+              "arguments": [
+                "{{widgets.missedCallsGather1.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "2"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.missedCallsGather1.Digits}}",
+        "offset": {
+          "x": -1300,
+          "y": 2350
+        }
+      }
+    },
+    {
+      "name": "Copy_of_split_3",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "missedCallsGather1",
+          "event": "noMatch"
+        },
+        {
+          "next": "gather_4",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 1",
+              "arguments": [
+                "{{widgets.missedCallsGather1.SpeechResult}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "next": "choose_calls",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 2",
+              "arguments": [
+                "{{widgets.missedCallsGather1.SpeechResult}}"
+              ],
+              "type": "equal_to",
+              "value": "2"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.missedCallsGather1.SpeechResult}}",
+        "offset": {
+          "x": -750,
+          "y": 2450
+        }
+      }
+    },
+    {
+      "name": "gather_3",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "Copy_of_Copy_of_split_9",
+          "event": "keypress"
+        },
+        {
+          "event": "speech"
+        },
+        {
+          "next": "gather_6",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "play": "{% assign count = flow.variables.counter | plus: 0 %}{{widgets.callLogsRequest.parsed.newMissedCalls[count].recordingUrl}}",
+        "number_of_digits": 1,
+        "speech_timeout": "auto",
+        "offset": {
+          "x": -950,
+          "y": 3350
+        },
+        "loop": 1,
+        "finish_on_key": "#",
+        "stop_gather": false,
+        "gather_language": "en",
+        "profanity_filter": "true",
+        "timeout": 2
+      }
+    },
+    {
+      "name": "split_6",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "say_play_9",
+          "event": "noMatch"
+        },
+        {
+          "next": "missedCallsGather1",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value greater_than 0",
+              "arguments": [
+                "{{widgets.callLogsRequest.parsed.newMissedCalls.size}}"
+              ],
+              "type": "greater_than",
+              "value": "0"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.callLogsRequest.parsed.newMissedCalls.size}}",
+        "offset": {
+          "x": -180,
+          "y": 2040
+        }
+      }
+    },
+    {
+      "name": "say_play_9",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "choose_calls",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Salli",
+        "offset": {
+          "x": 240,
+          "y": 2390
+        },
+        "loop": 1,
+        "say": "You have no new missed calls.",
+        "language": "en-US"
+      }
+    },
+    {
+      "name": "choose_calls",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "Copy_of_set_variables_1",
+          "event": "keypress"
+        },
+        {
+          "next": "set_variables_1",
+          "event": "speech"
+        },
+        {
+          "next": "choose_calls",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Salli",
+        "offset": {
+          "x": 220,
+          "y": 2730
+        },
+        "finish_on_key": "#",
+        "say": "For successfully received calls, press 1. For sent calls, press 2. For failed calls, press 3. For past voicemail, press 4. To return to the main menu, press 5.",
+        "language": "en-US",
+        "stop_gather": false,
+        "speech_model": "numbers_and_commands",
+        "profanity_filter": "true",
+        "timeout": 5,
+        "number_of_digits": 1,
+        "speech_timeout": "auto",
+        "loop": 1,
+        "gather_language": "en"
+      }
+    },
+    {
+      "name": "split_7",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "choose_calls",
+          "event": "noMatch"
+        },
+        {
+          "next": "received",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 1",
+              "arguments": [
+                "{{widgets.choose_calls.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "next": "sentcalls",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 2",
+              "arguments": [
+                "{{widgets.choose_calls.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "next": "failedcalls",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 3",
+              "arguments": [
+                "{{widgets.choose_calls.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "next": "EmployeeIVR",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 5",
+              "arguments": [
+                "{{widgets.choose_calls.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "5"
+            }
+          ]
+        },
+        {
+          "next": "oldvoicemail",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 4",
+              "arguments": [
+                "{{widgets.choose_calls.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "4"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.choose_calls.Digits}}",
+        "offset": {
+          "x": -230,
+          "y": 3150
+        }
+      }
+    },
+    {
+      "name": "split_8",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "choose_calls",
+          "event": "noMatch"
+        },
+        {
+          "next": "received",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 1",
+              "arguments": [
+                "{{widgets.choose_calls.SpeechResult}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "next": "sentcalls",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 2",
+              "arguments": [
+                "{{widgets.choose_calls.SpeechResult}}"
+              ],
+              "type": "equal_to",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "next": "failedcalls",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 3",
+              "arguments": [
+                "{{widgets.choose_calls.SpeechResult}}"
+              ],
+              "type": "equal_to",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "next": "EmployeeIVR",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 5",
+              "arguments": [
+                "{{widgets.choose_calls.SpeechResult}}"
+              ],
+              "type": "equal_to",
+              "value": "5"
+            }
+          ]
+        },
+        {
+          "next": "oldvoicemail",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 4",
+              "arguments": [
+                "{{widgets.choose_calls.SpeechResult}}"
+              ],
+              "type": "equal_to",
+              "value": "4"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.choose_calls.SpeechResult}}",
+        "offset": {
+          "x": 580,
+          "y": 3180
+        }
+      }
+    },
+    {
+      "name": "gather_4",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "split_9",
+          "event": "keypress"
+        },
+        {
+          "event": "speech"
+        },
+        {
+          "next": "gather_5",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Salli",
+        "number_of_digits": 1,
+        "speech_timeout": "auto",
+        "offset": {
+          "x": -1100,
+          "y": 2810
+        },
+        "loop": 1,
+        "finish_on_key": "#",
+        "say": "Message {{flow.variables.counter | plus : 1}}:",
+        "language": "en-US",
+        "stop_gather": false,
+        "gather_language": "en",
+        "profanity_filter": "true",
+        "timeout": 1
+      }
+    },
+    {
+      "name": "gather_5",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "Copy_of_split_9",
+          "event": "keypress"
+        },
+        {
+          "event": "speech"
+        },
+        {
+          "next": "gather_3",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Salli",
+        "offset": {
+          "x": -940,
+          "y": 3130
+        },
+        "finish_on_key": "#",
+        "say": "{% assign count = flow.variables.counter | plus : 0 %}\nFrom: {{widgets.callLogsRequest.parsed.newMissedCalls[count].clientNumber}}..  on: {{widgets.callLogsRequest.parsed.newMissedCalls[count].callDate}} ....",
+        "language": "en-US",
+        "stop_gather": false,
+        "speech_model": "numbers_and_commands",
+        "profanity_filter": "true",
+        "timeout": 1,
+        "number_of_digits": 1,
+        "speech_timeout": "auto",
+        "loop": 1,
+        "gather_language": "en"
+      }
+    },
+    {
+      "name": "gather_6",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "Copy_of_Copy_of_Copy_of_split_9",
+          "event": "keypress"
+        },
+        {
+          "event": "speech"
+        },
+        {
+          "next": "gather_6",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Salli",
+        "number_of_digits": 1,
+        "speech_timeout": "auto",
+        "offset": {
+          "x": -830,
+          "y": 3660
+        },
+        "loop": 1,
+        "finish_on_key": "#",
+        "say": "To move on to next message, press 1. To replay message, press 2. To dial number, press 3.",
+        "language": "en-US",
+        "stop_gather": false,
+        "gather_language": "en",
+        "profanity_filter": "true",
+        "timeout": 5
+      }
+    },
+    {
+      "name": "split_9",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "gather_5",
+          "event": "noMatch"
+        },
+        {
+          "next": "http_2",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 1",
+              "arguments": [
+                "{{widgets.gather_4.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "next": "gather_4",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 2",
+              "arguments": [
+                "{{widgets.gather_4.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "next": "say_play_11",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 3",
+              "arguments": [
+                "{{widgets.gather_4.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "3"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.gather_4.Digits}}",
+        "offset": {
+          "x": -1670,
+          "y": 2840
+        }
+      }
+    },
+    {
+      "name": "Copy_of_split_9",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "gather_3",
+          "event": "noMatch"
+        },
+        {
+          "next": "http_2",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 1",
+              "arguments": [
+                "{{widgets.gather_5.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "next": "gather_5",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 2",
+              "arguments": [
+                "{{widgets.gather_5.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "next": "say_play_11",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 3",
+              "arguments": [
+                "{{widgets.gather_5.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "3"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.gather_5.Digits}}",
+        "offset": {
+          "x": -1780,
+          "y": 3050
+        }
+      }
+    },
+    {
+      "name": "Copy_of_Copy_of_split_9",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "gather_6",
+          "event": "noMatch"
+        },
+        {
+          "next": "http_2",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 1",
+              "arguments": [
+                "{{widgets.gather_3.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "next": "gather_3",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 2",
+              "arguments": [
+                "{{widgets.gather_3.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "next": "say_play_11",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 3",
+              "arguments": [
+                "{{widgets.gather_3.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "3"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.gather_3.Digits}}",
+        "offset": {
+          "x": -1490,
+          "y": 3370
+        }
+      }
+    },
+    {
+      "name": "Copy_of_Copy_of_Copy_of_split_9",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "gather_6",
+          "event": "noMatch"
+        },
+        {
+          "next": "http_2",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 1",
+              "arguments": [
+                "{{widgets.gather_6.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "next": "gather_6",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 2",
+              "arguments": [
+                "{{widgets.gather_6.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "next": "say_play_11",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 3",
+              "arguments": [
+                "{{widgets.gather_6.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "3"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.gather_6.Digits}}",
+        "offset": {
+          "x": -1450,
+          "y": 3650
+        }
+      }
+    },
+    {
+      "name": "increment_counter",
+      "type": "set-variables",
+      "transitions": [
+        {
+          "next": "split_4",
+          "event": "next"
+        }
+      ],
+      "properties": {
+        "variables": [
+          {
+            "value": "{{flow.variables.counter| plus: 1}}",
+            "key": "counter"
+          }
+        ],
+        "offset": {
+          "x": -2380,
+          "y": 2630
+        }
+      }
+    },
+    {
+      "name": "say_play_11",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "connect_call_2",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Salli",
+        "offset": {
+          "x": -2340,
+          "y": 3670
+        },
+        "loop": 1,
+        "say": "{% assign count = flow.variables.counter | plus: 0 %} connecting you to, {{widgets.callLogsRequest.parsed.newMissedCalls[count].clientNumber}}.....",
+        "language": "en-US"
+      }
+    },
+    {
+      "name": "connect_call_2",
+      "type": "connect-call-to",
+      "transitions": [
+        {
+          "event": "callCompleted"
+        },
+        {
+          "event": "hangup"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": -2250,
+          "y": 4000
+        },
+        "caller_id": "{{flow.channel.address}}",
+        "noun": "number",
+        "to": "{% assign count = flow.variables.counter | plus: 0 %}{{widgets. callLogsRequest.parsed.newMissedCalls[count].e164Number}}",
+        "timeout": 30
+      }
+    },
+    {
+      "name": "split_4",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "gather_4",
+          "event": "noMatch"
+        },
+        {
+          "next": "say_play_5",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to {{widgets.callLogsRequest.parsed.newMissedCalls.size}}",
+              "arguments": [
+                "{{flow.variables.counter}}"
+              ],
+              "type": "equal_to",
+              "value": "{{widgets.callLogsRequest.parsed.newMissedCalls.size}}"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{flow.variables.counter}}",
+        "offset": {
+          "x": -1880,
+          "y": 2510
+        }
+      }
+    },
+    {
+      "name": "say_play_5",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "EmployeeIVR",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Salli",
+        "offset": {
+          "x": -1270,
+          "y": 1730
+        },
+        "loop": 1,
+        "say": "End of new missed calls......",
+        "language": "en-US"
+      }
+    },
+    {
+      "name": "http_2",
+      "type": "make-http-request",
+      "transitions": [
+        {
+          "next": "increment_counter",
+          "event": "success"
+        },
+        {
+          "next": "servererror",
+          "event": "failed"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": -2640,
+          "y": 2890
+        },
+        "method": "POST",
+        "content_type": "application/x-www-form-urlencoded;charset=utf-8",
+        "parameters": [],
+        "url": "{% assign count = flow.variables.counter | plus : 0 %}{{flow.variables.domainurl}}/api/post/readcall?callId={{widgets.callLogsRequest.parsed.newMissedCalls[count].callId}}"
+      }
+    },
+    {
+      "name": "servererror",
+      "type": "say-play",
+      "transitions": [
+        {
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Salli",
+        "offset": {
+          "x": -2710,
+          "y": 3220
+        },
+        "loop": 1,
+        "say": "We're sorry. A server error has occurred",
+        "language": "en-US"
+      }
+    },
+    {
+      "name": "failedcalls",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "Copy_of_Copy_of_split_5",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Salli",
+        "offset": {
+          "x": 3770,
+          "y": 3790
+        },
+        "loop": 1,
+        "say": "You have , {% if widgets.callLogsRequest.parsed.newMissedCalls.size > 0 %}{{widgets.callLogsRequest.parsed.failedCallsLog.size}}  {% else %} 0 {% endif %},  recent failed calls.",
+        "language": "en-US"
+      }
+    },
+    {
+      "name": "sentcalls",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "split_5",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Salli",
+        "offset": {
+          "x": 2030,
+          "y": 3840
+        },
+        "loop": 1,
+        "say": "You have , {% if widgets.callLogsRequest.parsed.newMissedCalls.size > 0 %}{{widgets.callLogsRequest.parsed.outgoingCallsLog.size}}  {% else %} 0 {% endif %},  recently sent calls.",
+        "language": "en-US"
+      }
+    },
+    {
+      "name": "received",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "Copy_of_split_5",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Salli",
+        "offset": {
+          "x": 40,
+          "y": 3830
+        },
+        "loop": 1,
+        "say": "You have, {% if widgets.callLogsRequest.parsed.newMissedCalls.size > 0 %}{{widgets.callLogsRequest.parsed.receivedCallsLog.size}}  {% else %} 0 {% endif %}, recently received calls.",
+        "language": "en-US"
+      }
+    },
+    {
+      "name": "split_5",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "choose_calls",
+          "event": "noMatch"
+        },
+        {
+          "next": "Copy_2_of_gather_1",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value greater_than 0",
+              "arguments": [
+                "{{widgets.callLogsRequest.parsed.outgoingCallsLog.size}}"
+              ],
+              "type": "greater_than",
+              "value": "0"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.callLogsRequest.parsed.outgoingCallsLog.size}}",
+        "offset": {
+          "x": 2020,
+          "y": 4110
+        }
+      }
+    },
+    {
+      "name": "Copy_of_split_5",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "choose_calls",
+          "event": "noMatch"
+        },
+        {
+          "next": "gather_1",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value greater_than 0",
+              "arguments": [
+                "{{widgets.callLogsRequest.parsed.receivedCallsLog.size}}"
+              ],
+              "type": "greater_than",
+              "value": "0"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.callLogsRequest.parsed.receivedCallsLog.size}}",
+        "offset": {
+          "x": 60,
+          "y": 4140
+        }
+      }
+    },
+    {
+      "name": "Copy_of_Copy_of_split_5",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "choose_calls",
+          "event": "noMatch"
+        },
+        {
+          "next": "Copy_of_Copy_2_of_gather_1",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value greater_than 0",
+              "arguments": [
+                "{{widgets.callLogsRequest.parsed.failedCallsLog.size}}"
+              ],
+              "type": "greater_than",
+              "value": "0"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.callLogsRequest.parsed.failedCallsLog.size}}",
+        "offset": {
+          "x": 3760,
+          "y": 4100
+        }
+      }
+    },
+    {
+      "name": "gather_1",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "split_10",
+          "event": "keypress"
+        },
+        {
+          "event": "speech"
+        },
+        {
+          "next": "Copy_of_gather_1",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Salli",
+        "number_of_digits": 1,
+        "speech_timeout": "auto",
+        "offset": {
+          "x": 140,
+          "y": 4470
+        },
+        "loop": 1,
+        "finish_on_key": "#",
+        "say": "Call {{flow.variables.counter | plus: 1}}",
+        "language": "en-US",
+        "stop_gather": false,
+        "gather_language": "en",
+        "profanity_filter": "true",
+        "timeout": 2
+      }
+    },
+    {
+      "name": "Copy_of_gather_1",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "Copy_of_split_10",
+          "event": "keypress"
+        },
+        {
+          "event": "speech"
+        },
+        {
+          "next": "Copy_of_gather_6",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Salli",
+        "speech_timeout": "auto",
+        "offset": {
+          "x": 240,
+          "y": 4730
+        },
+        "loop": 1,
+        "finish_on_key": "#",
+        "say": "{% assign count = flow.variables.counter | plus: 0%} From:{{widgets.callLogsRequest.parsed.receivedCallsLog[count].clientNumber}} on: {{widgets.callLogsRequest.parsed.receivedCallsLog[count].callDate}}",
+        "language": "en-US",
+        "stop_gather": true,
+        "gather_language": "en",
+        "profanity_filter": "true",
+        "timeout": 2
+      }
+    },
+    {
+      "name": "Copy_of_gather_6",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "Copy_of_Copy_of_split_10",
+          "event": "keypress"
+        },
+        {
+          "event": "speech"
+        },
+        {
+          "next": "Copy_of_gather_6",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Salli",
+        "number_of_digits": 1,
+        "speech_timeout": "auto",
+        "offset": {
+          "x": 300,
+          "y": 5030
+        },
+        "loop": 1,
+        "finish_on_key": "#",
+        "say": "To move on to next message, press 1. To replay message, press 2. To dial number, press 3. To go back, press 4.",
+        "language": "en-US",
+        "stop_gather": false,
+        "gather_language": "en",
+        "profanity_filter": "true",
+        "timeout": 3
+      }
+    },
+    {
+      "name": "split_10",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "gather_1",
+          "event": "noMatch"
+        },
+        {
+          "next": "Copy_of_http_2",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 1",
+              "arguments": [
+                "{{widgets.gather_1.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "next": "gather_1",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 2",
+              "arguments": [
+                "{{widgets.gather_1.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "next": "Copy_of_say_play_11",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 3",
+              "arguments": [
+                "{{widgets.gather_1.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "next": "returntomenu",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 4",
+              "arguments": [
+                "{{widgets.gather_1.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "4"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.gather_1.Digits}}",
+        "offset": {
+          "x": -590,
+          "y": 4470
+        }
+      }
+    },
+    {
+      "name": "Copy_of_split_10",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Copy_of_gather_1",
+          "event": "noMatch"
+        },
+        {
+          "next": "Copy_of_http_2",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 1",
+              "arguments": [
+                "{{widgets.Copy_of_gather_1.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "next": "gather_1",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 2",
+              "arguments": [
+                "{{widgets.Copy_of_gather_1.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "next": "Copy_of_say_play_11",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 3",
+              "arguments": [
+                "{{widgets.Copy_of_gather_1.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "next": "returntomenu",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 4",
+              "arguments": [
+                "{{widgets.Copy_of_gather_1.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "4"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.Copy_of_gather_1.Digits}}",
+        "offset": {
+          "x": -490,
+          "y": 4760
+        }
+      }
+    },
+    {
+      "name": "Copy_of_Copy_of_split_10",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Copy_of_gather_6",
+          "event": "noMatch"
+        },
+        {
+          "next": "Copy_of_http_2",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 1",
+              "arguments": [
+                "{{widgets.Copy_of_gather_6.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "next": "gather_1",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 2",
+              "arguments": [
+                "{{widgets.Copy_of_gather_6.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "next": "Copy_of_say_play_11",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 3",
+              "arguments": [
+                "{{widgets.Copy_of_gather_6.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "next": "returntomenu",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 4",
+              "arguments": [
+                "{{widgets.Copy_of_gather_6.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "4"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.Copy_of_gather_6.Digits}}",
+        "offset": {
+          "x": -400,
+          "y": 5070
+        }
+      }
+    },
+    {
+      "name": "Copy_of_say_play_11",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "Copy_of_connect_call_2",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Salli",
+        "offset": {
+          "x": -880,
+          "y": 5190
+        },
+        "loop": 1,
+        "say": "{% assign count = flow.variables.counter | plus: 0 %} connecting you to, {{widgets.callLogsRequest.parsed.receivedCallsLog[count].clientNumber}}.....",
+        "language": "en-US"
+      }
+    },
+    {
+      "name": "Copy_of_connect_call_2",
+      "type": "connect-call-to",
+      "transitions": [
+        {
+          "event": "callCompleted"
+        },
+        {
+          "event": "hangup"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": -860,
+          "y": 5440
+        },
+        "caller_id": "{{flow.channel.address}}",
+        "noun": "number",
+        "to": "{% assign count = flow.variables.counter | plus: 0 %}{{widgets. callLogsRequest.parsed.receivedCallsLog[count].e164Number}}",
+        "timeout": 30
+      }
+    },
+    {
+      "name": "Copy_of_http_2",
+      "type": "make-http-request",
+      "transitions": [
+        {
+          "next": "Copy_of_increment_counter",
+          "event": "success"
+        },
+        {
+          "next": "servererror",
+          "event": "failed"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": -1180,
+          "y": 4580
+        },
+        "method": "POST",
+        "content_type": "application/x-www-form-urlencoded;charset=utf-8",
+        "parameters": [],
+        "url": "{% assign count = flow.variables.counter | plus : 0 %}{{flow.variables.domainurl}}/api/post/readcall?callId={{widgets.callLogsRequest.parsed.receivedCallsLog[count].callId}}"
+      }
+    },
+    {
+      "name": "Copy_of_increment_counter",
+      "type": "set-variables",
+      "transitions": [
+        {
+          "next": "Copy_of_split_4",
+          "event": "next"
+        }
+      ],
+      "properties": {
+        "variables": [
+          {
+            "value": "{{flow.variables.counter| plus: 1}}",
+            "key": "counter"
+          }
+        ],
+        "offset": {
+          "x": -900,
+          "y": 4280
+        }
+      }
+    },
+    {
+      "name": "Copy_of_split_4",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "gather_1",
+          "event": "noMatch"
+        },
+        {
+          "next": "Copy_of_say_play_5",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to {{widgets.callLogsRequest.parsed.newMissedCalls.size}}",
+              "arguments": [
+                "{{flow.variables.counter}}"
+              ],
+              "type": "equal_to",
+              "value": "{{widgets.callLogsRequest.parsed.receivedMissedCalls.size}}"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{flow.variables.counter}}",
+        "offset": {
+          "x": -630,
+          "y": 4090
+        }
+      }
+    },
+    {
+      "name": "Copy_of_say_play_5",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "choose_calls",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Salli",
+        "offset": {
+          "x": -330,
+          "y": 3810
+        },
+        "loop": 1,
+        "say": "End of received calls......",
+        "language": "en-US"
+      }
+    },
+    {
+      "name": "Copy_2_of_gather_1",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "Copy_2_of_split_10",
+          "event": "keypress"
+        },
+        {
+          "event": "speech"
+        },
+        {
+          "next": "Copy_of_Copy_of_gather_1",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Salli",
+        "number_of_digits": 1,
+        "speech_timeout": "auto",
+        "offset": {
+          "x": 2150,
+          "y": 4420
+        },
+        "loop": 1,
+        "finish_on_key": "#",
+        "say": "Call {{flow.variables.counter | plus: 1}}",
+        "language": "en-US",
+        "stop_gather": false,
+        "gather_language": "en",
+        "profanity_filter": "true",
+        "timeout": 2
+      }
+    },
+    {
+      "name": "Copy_of_Copy_of_gather_1",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "Copy_2_of_Copy_of_split_10",
+          "event": "keypress"
+        },
+        {
+          "event": "speech"
+        },
+        {
+          "next": "Copy_of_Copy_of_gather_6",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Salli",
+        "speech_timeout": "auto",
+        "offset": {
+          "x": 2160,
+          "y": 4700
+        },
+        "loop": 1,
+        "finish_on_key": "#",
+        "say": "{% assign count = flow.variables.counter | plus: 0%} From:{{widgets.callLogsRequest.parsed.outgoingCallsLog[count].clientNumber}} on: {{widgets.callLogsRequest.parsed.outgoingCallsLog[count].callDate}}",
+        "language": "en-US",
+        "stop_gather": true,
+        "gather_language": "en",
+        "profanity_filter": "true",
+        "timeout": 2
+      }
+    },
+    {
+      "name": "Copy_of_Copy_of_gather_6",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "Copy_of_Copy_of_Copy_of_split_10",
+          "event": "keypress"
+        },
+        {
+          "event": "speech"
+        },
+        {
+          "next": "Copy_of_Copy_of_gather_6",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Salli",
+        "number_of_digits": 1,
+        "speech_timeout": "auto",
+        "offset": {
+          "x": 2190,
+          "y": 4990
+        },
+        "loop": 1,
+        "finish_on_key": "#",
+        "say": "To move on to next message, press 1. To replay message, press 2. To dial number, press 3.  To go back, press 4.",
+        "language": "en-US",
+        "stop_gather": false,
+        "gather_language": "en",
+        "profanity_filter": "true",
+        "timeout": 3
+      }
+    },
+    {
+      "name": "Copy_2_of_split_10",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Copy_2_of_gather_1",
+          "event": "noMatch"
+        },
+        {
+          "next": "Copy_of_Copy_of_http_2",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 1",
+              "arguments": [
+                "{{widgets.Copy_2_of_gather_1.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "next": "Copy_2_of_gather_1",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 2",
+              "arguments": [
+                "{{widgets.Copy_2_of_gather_1.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "next": "Copy_of_Copy_of_say_play_11",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 3",
+              "arguments": [
+                "{{widgets.Copy_2_of_gather_1.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "next": "returntomenu",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 4",
+              "arguments": [
+                "{{widgets.Copy_2_of_gather_1.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "4"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.Copy_2_of_gather_1.Digits}}",
+        "offset": {
+          "x": 1480,
+          "y": 4420
+        }
+      }
+    },
+    {
+      "name": "Copy_2_of_Copy_of_split_10",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Copy_of_Copy_of_gather_1",
+          "event": "noMatch"
+        },
+        {
+          "next": "Copy_of_Copy_of_http_2",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 1",
+              "arguments": [
+                "{{widgets.Copy_of_Copy_of_gather_1.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "next": "Copy_of_Copy_of_gather_1",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 2",
+              "arguments": [
+                "{{widgets.Copy_of_Copy_of_gather_1.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "next": "Copy_of_Copy_of_say_play_11",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 3",
+              "arguments": [
+                "{{widgets.Copy_of_Copy_of_gather_1.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "next": "returntomenu",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 4",
+              "arguments": [
+                "{{widgets.Copy_of_Copy_of_gather_1.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "4"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.Copy_of_Copy_of_gather_1.Digits}}",
+        "offset": {
+          "x": 1460,
+          "y": 4740
+        }
+      }
+    },
+    {
+      "name": "Copy_of_Copy_of_Copy_of_split_10",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Copy_of_Copy_of_gather_6",
+          "event": "noMatch"
+        },
+        {
+          "next": "Copy_of_Copy_of_http_2",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 1",
+              "arguments": [
+                "{{widgets.Copy_of_Copy_of_gather_6.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "next": "Copy_of_Copy_of_gather_6",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 2",
+              "arguments": [
+                "{{widgets.Copy_of_Copy_of_gather_6.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "next": "Copy_of_Copy_of_say_play_11",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 3",
+              "arguments": [
+                "{{widgets.Copy_of_Copy_of_gather_6.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "next": "returntomenu",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 4",
+              "arguments": [
+                "{{widgets.Copy_of_Copy_of_gather_6.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "4"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.Copy_of_Copy_of_gather_6.Digits}}",
+        "offset": {
+          "x": 1470,
+          "y": 5040
+        }
+      }
+    },
+    {
+      "name": "Copy_of_Copy_of_say_play_11",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "Copy_of_Copy_of_connect_call_2",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Salli",
+        "offset": {
+          "x": 1070,
+          "y": 5310
+        },
+        "loop": 1,
+        "say": "{% assign count = flow.variables.counter | plus: 0 %} connecting you to, {{widgets.callLogsRequest.parsed.outgoingCallsLog[count].clientNumber}}.....",
+        "language": "en-US"
+      }
+    },
+    {
+      "name": "Copy_of_Copy_of_connect_call_2",
+      "type": "connect-call-to",
+      "transitions": [
+        {
+          "event": "callCompleted"
+        },
+        {
+          "event": "hangup"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 1150,
+          "y": 5570
+        },
+        "caller_id": "{{flow.channel.address}}",
+        "noun": "number",
+        "to": "{% assign count = flow.variables.counter | plus: 0 %}{{widgets. callLogsRequest.parsed.outgoingCallsLog[count].e164Number}}",
+        "timeout": 30
+      }
+    },
+    {
+      "name": "Copy_of_Copy_of_http_2",
+      "type": "make-http-request",
+      "transitions": [
+        {
+          "next": "Copy_of_Copy_of_increment_counter",
+          "event": "success"
+        },
+        {
+          "next": "servererror",
+          "event": "failed"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 930,
+          "y": 4730
+        },
+        "method": "POST",
+        "content_type": "application/x-www-form-urlencoded;charset=utf-8",
+        "parameters": [],
+        "url": "{% assign count = flow.variables.counter | plus : 0 %}{{flow.variables.domainurl}}/api/post/readcall?callId={{widgets.callLogsRequest.parsed.outgoingCallsLog[count].callId}}"
+      }
+    },
+    {
+      "name": "Copy_of_Copy_of_increment_counter",
+      "type": "set-variables",
+      "transitions": [
+        {
+          "next": "Copy_of_Copy_of_split_4",
+          "event": "next"
+        }
+      ],
+      "properties": {
+        "variables": [
+          {
+            "value": "{{flow.variables.counter| plus: 1}}",
+            "key": "counter"
+          }
+        ],
+        "offset": {
+          "x": 1030,
+          "y": 4400
+        }
+      }
+    },
+    {
+      "name": "Copy_of_Copy_of_split_4",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Copy_2_of_gather_1",
+          "event": "noMatch"
+        },
+        {
+          "next": "Copy_of_Copy_of_say_play_5",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to {{widgets.callLogsRequest.parsed.newMissedCalls.size}}",
+              "arguments": [
+                "{{flow.variables.counter}}"
+              ],
+              "type": "equal_to",
+              "value": "{{widgets.callLogsRequest.parsed.receivedMissedCalls.size}}"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{flow.variables.counter}}",
+        "offset": {
+          "x": 1250,
+          "y": 4040
+        }
+      }
+    },
+    {
+      "name": "Copy_of_Copy_of_say_play_5",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "choose_calls",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Salli",
+        "offset": {
+          "x": 1630,
+          "y": 3680
+        },
+        "loop": 1,
+        "say": "End of outgoing calls......",
+        "language": "en-US"
+      }
+    },
+    {
+      "name": "set_variables_1",
+      "type": "set-variables",
+      "transitions": [
+        {
+          "next": "split_8",
+          "event": "next"
+        }
+      ],
+      "properties": {
+        "variables": [
+          {
+            "value": "0",
+            "key": "counter"
+          }
+        ],
+        "offset": {
+          "x": 640,
+          "y": 2930
+        }
+      }
+    },
+    {
+      "name": "Copy_of_set_variables_1",
+      "type": "set-variables",
+      "transitions": [
+        {
+          "next": "split_7",
+          "event": "next"
+        }
+      ],
+      "properties": {
+        "variables": [
+          {
+            "value": "0",
+            "key": "counter"
+          }
+        ],
+        "offset": {
+          "x": -160,
+          "y": 2940
+        }
+      }
+    },
+    {
+      "name": "returntomenu",
+      "type": "say-play",
+      "transitions": [
+        {
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Salli",
+        "offset": {
+          "x": 640,
+          "y": 3690
+        },
+        "loop": 1,
+        "say": "Returning...",
+        "language": "en-US"
+      }
+    },
+    {
+      "name": "Copy_of_Copy_2_of_gather_1",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "Copy_of_Copy_2_of_split_10",
+          "event": "keypress"
+        },
+        {
+          "event": "speech"
+        },
+        {
+          "next": "Copy_of_Copy_of_Copy_of_gather_1",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Salli",
+        "number_of_digits": 1,
+        "speech_timeout": "auto",
+        "offset": {
+          "x": 3890,
+          "y": 4360
+        },
+        "loop": 1,
+        "finish_on_key": "#",
+        "say": "Call {{flow.variables.counter | plus: 1}}",
+        "language": "en-US",
+        "stop_gather": false,
+        "gather_language": "en",
+        "profanity_filter": "true",
+        "timeout": 2
+      }
+    },
+    {
+      "name": "Copy_of_Copy_of_Copy_of_gather_1",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "Copy_of_Copy_2_of_Copy_of_split_10",
+          "event": "keypress"
+        },
+        {
+          "event": "speech"
+        },
+        {
+          "next": "Copy_of_Copy_of_Copy_of_gather_6",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Salli",
+        "speech_timeout": "auto",
+        "offset": {
+          "x": 3870,
+          "y": 4640
+        },
+        "loop": 1,
+        "finish_on_key": "#",
+        "say": "{% assign count = flow.variables.counter | plus: 0%} From:{{widgets.callLogsRequest.parsed.failedCallsLog[count].clientNumber}} on: {{widgets.callLogsRequest.parsed.failedCallsLog[count].callDate}}",
+        "language": "en-US",
+        "stop_gather": true,
+        "gather_language": "en",
+        "profanity_filter": "true",
+        "timeout": 2
+      }
+    },
+    {
+      "name": "Copy_of_Copy_of_Copy_of_gather_6",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "Copy_of_Copy_of_Copy_of_Copy_of_split_10",
+          "event": "keypress"
+        },
+        {
+          "event": "speech"
+        },
+        {
+          "next": "Copy_of_Copy_of_Copy_of_gather_6",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Salli",
+        "number_of_digits": 1,
+        "speech_timeout": "auto",
+        "offset": {
+          "x": 3930,
+          "y": 4970
+        },
+        "loop": 1,
+        "finish_on_key": "#",
+        "say": "To move on to next message, press 1. To replay message, press 2. To dial number, press 3.  To go back, press 4.",
+        "language": "en-US",
+        "stop_gather": false,
+        "gather_language": "en",
+        "profanity_filter": "true",
+        "timeout": 3
+      }
+    },
+    {
+      "name": "Copy_of_Copy_2_of_split_10",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Copy_of_Copy_2_of_gather_1",
+          "event": "noMatch"
+        },
+        {
+          "next": "Copy_of_Copy_of_Copy_of_http_2",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 1",
+              "arguments": [
+                "{{widgets.Copy_of_Copy_2_of_gather_1.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "next": "Copy_of_Copy_2_of_gather_1",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 2",
+              "arguments": [
+                "{{widgets.Copy_of_Copy_2_of_gather_1.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "next": "Copy_of_Copy_of_Copy_of_say_play_11",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 3",
+              "arguments": [
+                "{{widgets.Copy_of_Copy_2_of_gather_1.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "next": "returntomenu",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 4",
+              "arguments": [
+                "{{widgets.Copy_of_Copy_2_of_gather_1.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "4"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.Copy_of_Copy_2_of_gather_1.Digits}}",
+        "offset": {
+          "x": 3110,
+          "y": 4360
+        }
+      }
+    },
+    {
+      "name": "Copy_of_Copy_2_of_Copy_of_split_10",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Copy_of_Copy_of_Copy_of_gather_1",
+          "event": "noMatch"
+        },
+        {
+          "next": "Copy_of_Copy_of_Copy_of_http_2",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 1",
+              "arguments": [
+                "{{widgets.Copy_of_Copy_of_Copy_of_gather_1.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "next": "Copy_of_Copy_2_of_gather_1",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 2",
+              "arguments": [
+                "{{widgets.Copy_of_Copy_of_Copy_of_gather_1.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "next": "Copy_of_Copy_of_Copy_of_say_play_11",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 3",
+              "arguments": [
+                "{{widgets.Copy_of_Copy_of_Copy_of_gather_1.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "next": "returntomenu",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 4",
+              "arguments": [
+                "{{widgets.Copy_of_Copy_of_Copy_of_gather_1.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "4"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.Copy_of_Copy_of_Copy_of_gather_1.Digits}}",
+        "offset": {
+          "x": 3080,
+          "y": 4650
+        }
+      }
+    },
+    {
+      "name": "Copy_of_Copy_of_Copy_of_Copy_of_split_10",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Copy_of_Copy_of_Copy_of_gather_6",
+          "event": "noMatch"
+        },
+        {
+          "next": "Copy_of_Copy_of_Copy_of_http_2",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 1",
+              "arguments": [
+                "{{widgets.Copy_of_Copy_of_Copy_of_gather_6.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "next": "Copy_of_Copy_2_of_gather_1",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 2",
+              "arguments": [
+                "{{widgets.Copy_of_Copy_of_Copy_of_gather_6.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "next": "Copy_of_Copy_of_Copy_of_say_play_11",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 3",
+              "arguments": [
+                "{{widgets.Copy_of_Copy_of_Copy_of_gather_6.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "next": "returntomenu",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 4",
+              "arguments": [
+                "{{widgets.Copy_of_Copy_of_Copy_of_gather_6.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "4"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.Copy_of_Copy_of_Copy_of_gather_6.Digits}}",
+        "offset": {
+          "x": 3090,
+          "y": 4970
+        }
+      }
+    },
+    {
+      "name": "Copy_of_Copy_of_Copy_of_say_play_11",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "Copy_of_Copy_of_Copy_of_connect_call_2",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Salli",
+        "offset": {
+          "x": 2760,
+          "y": 5220
+        },
+        "loop": 1,
+        "say": "{% assign count = flow.variables.counter | plus: 0 %} connecting you to, {{widgets.callLogsRequest.parsed.failedCallsLog[count].clientNumber}}.....",
+        "language": "en-US"
+      }
+    },
+    {
+      "name": "Copy_of_Copy_of_Copy_of_connect_call_2",
+      "type": "connect-call-to",
+      "transitions": [
+        {
+          "event": "callCompleted"
+        },
+        {
+          "event": "hangup"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 2820,
+          "y": 5530
+        },
+        "caller_id": "{{flow.channel.address}}",
+        "noun": "number",
+        "to": "{% assign count = flow.variables.counter | plus: 0 %}{{widgets. callLogsRequest.parsed.failedCallsLog[count].e164Number}}",
+        "timeout": 30
+      }
+    },
+    {
+      "name": "Copy_of_Copy_of_Copy_of_http_2",
+      "type": "make-http-request",
+      "transitions": [
+        {
+          "next": "Copy_of_Copy_of_Copy_of_increment_counter",
+          "event": "success"
+        },
+        {
+          "next": "servererror",
+          "event": "failed"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 2620,
+          "y": 4620
+        },
+        "method": "POST",
+        "content_type": "application/x-www-form-urlencoded;charset=utf-8",
+        "parameters": [],
+        "url": "{% assign count = flow.variables.counter | plus : 0 %}{{flow.variables.domainurl}}/api/post/readcall?callId={{widgets.callLogsRequest.parsed.failedCallsLog[count].callId}}"
+      }
+    },
+    {
+      "name": "Copy_of_Copy_of_Copy_of_increment_counter",
+      "type": "set-variables",
+      "transitions": [
+        {
+          "next": "Copy_of_Copy_of_Copy_of_split_4",
+          "event": "next"
+        }
+      ],
+      "properties": {
+        "variables": [
+          {
+            "value": "{{flow.variables.counter| plus: 1}}",
+            "key": "counter"
+          }
+        ],
+        "offset": {
+          "x": 2670,
+          "y": 4310
+        }
+      }
+    },
+    {
+      "name": "Copy_of_Copy_of_Copy_of_split_4",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Copy_of_Copy_2_of_gather_1",
+          "event": "noMatch"
+        },
+        {
+          "next": "Copy_of_Copy_of_Copy_of_say_play_5",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to {{widgets.callLogsRequest.parsed.newMissedCalls.size}}",
+              "arguments": [
+                "{{flow.variables.counter}}"
+              ],
+              "type": "equal_to",
+              "value": "{{widgets.callLogsRequest.parsed.receivedMissedCalls.size}}"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{flow.variables.counter}}",
+        "offset": {
+          "x": 2960,
+          "y": 3970
+        }
+      }
+    },
+    {
+      "name": "Copy_of_Copy_of_Copy_of_say_play_5",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "choose_calls",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Salli",
+        "offset": {
+          "x": 3300,
+          "y": 3720
+        },
+        "loop": 1,
+        "say": "End of outgoing calls......",
+        "language": "en-US"
+      }
+    },
+    {
+      "name": "oldvoicemail",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "Copy_2_of_Copy_of_split_5",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Salli",
+        "offset": {
+          "x": 3150,
+          "y": 1880
+        },
+        "loop": 1,
+        "say": "You have, {% if widgets.callLogsRequest.parsed.newMissedCalls.size > 0 %}{{widgets.callLogsRequest.parsed.oldMissedCalls.size}}  {% else %} 0 {% endif %}, total voice messages.",
+        "language": "en-US"
+      }
+    },
+    {
+      "name": "Copy_2_of_Copy_of_split_5",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "choose_calls",
+          "event": "noMatch"
+        },
+        {
+          "next": "Copy_of_gather_4",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value greater_than 0",
+              "arguments": [
+                "{{widgets.callLogsRequest.parsed.oldMissedCalls.size}}"
+              ],
+              "type": "greater_than",
+              "value": "0"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.callLogsRequest.parsed.oldMissedCalls.size}}",
+        "offset": {
+          "x": 3140,
+          "y": 2160
+        }
+      }
+    },
+    {
+      "name": "Copy_of_gather_4",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "Copy_2_of_split_9",
+          "event": "keypress"
+        },
+        {
+          "event": "speech"
+        },
+        {
+          "next": "Copy_of_gather_5",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Salli",
+        "number_of_digits": 1,
+        "speech_timeout": "auto",
+        "offset": {
+          "x": 3270,
+          "y": 2480
+        },
+        "loop": 1,
+        "finish_on_key": "#",
+        "say": "Message {{flow.variables.counter | plus : 1}}:",
+        "language": "en-US",
+        "stop_gather": false,
+        "gather_language": "en",
+        "profanity_filter": "true",
+        "timeout": 1
+      }
+    },
+    {
+      "name": "Copy_of_gather_5",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "Copy_of_Copy_2_of_split_9",
+          "event": "keypress"
+        },
+        {
+          "event": "speech"
+        },
+        {
+          "next": "Copy_of_gather_3",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Salli",
+        "offset": {
+          "x": 3260,
+          "y": 2760
+        },
+        "finish_on_key": "#",
+        "say": "{% assign count = flow.variables.counter | plus : 0 %}\nFrom: {{widgets.callLogsRequest.parsed.oldMissedCalls[count].clientNumber}}..  on: {{widgets.callLogsRequest.parsed.oldMissedCalls[count].callDate}} ....",
+        "language": "en-US",
+        "stop_gather": false,
+        "speech_model": "numbers_and_commands",
+        "profanity_filter": "true",
+        "timeout": 1,
+        "number_of_digits": 1,
+        "speech_timeout": "auto",
+        "loop": 1,
+        "gather_language": "en"
+      }
+    },
+    {
+      "name": "Copy_of_gather_3",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "Copy_of_Copy_of_Copy_2_of_split_9",
+          "event": "keypress"
+        },
+        {
+          "event": "speech"
+        },
+        {
+          "next": "Copy_2_of_gather_6",
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "play": "{% assign count = flow.variables.counter | plus: 0 %}{{widgets.callLogsRequest.parsed.oldMissedCalls[count].recordingUrl}}",
+        "number_of_digits": 1,
+        "speech_timeout": "auto",
+        "offset": {
+          "x": 3300,
+          "y": 3000
+        },
+        "loop": 1,
+        "finish_on_key": "#",
+        "stop_gather": false,
+        "gather_language": "en",
+        "profanity_filter": "true",
+        "timeout": 2
+      }
+    },
+    {
+      "name": "Copy_2_of_gather_6",
+      "type": "gather-input-on-call",
+      "transitions": [
+        {
+          "next": "Copy_of_Copy_of_Copy_of_Copy_2_of_split_9",
+          "event": "keypress"
+        },
+        {
+          "event": "speech"
+        },
+        {
+          "event": "timeout"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Salli",
+        "number_of_digits": 1,
+        "speech_timeout": "auto",
+        "offset": {
+          "x": 3270,
+          "y": 3270
+        },
+        "loop": 1,
+        "finish_on_key": "#",
+        "say": "To move on to next message, press 1. To replay message, press 2. To dial number, press 3. To jump forward 5 messages, press 4.",
+        "language": "en-US",
+        "stop_gather": false,
+        "gather_language": "en",
+        "profanity_filter": "true",
+        "timeout": 5
+      }
+    },
+    {
+      "name": "Copy_2_of_split_9",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Copy_of_gather_4",
+          "event": "noMatch"
+        },
+        {
+          "next": "increment1",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 1",
+              "arguments": [
+                "{{widgets.gather_4.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "next": "Copy_of_gather_4",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 2",
+              "arguments": [
+                "{{widgets.gather_4.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "next": "Copy_of_Copy_of_Copy_of_Copy_of_say_play_11",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 3",
+              "arguments": [
+                "{{widgets.gather_4.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "next": "Copy_of_increment1",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 4",
+              "arguments": [
+                "{{widgets.gather_4.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "4"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.gather_4.Digits}}",
+        "offset": {
+          "x": 2390,
+          "y": 2450
+        }
+      }
+    },
+    {
+      "name": "Copy_of_Copy_2_of_split_9",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Copy_of_gather_5",
+          "event": "noMatch"
+        },
+        {
+          "next": "increment1",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 1",
+              "arguments": [
+                "{{widgets.gather_4.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "next": "Copy_of_gather_4",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 2",
+              "arguments": [
+                "{{widgets.gather_4.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "next": "Copy_of_Copy_of_Copy_of_Copy_of_say_play_11",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 3",
+              "arguments": [
+                "{{widgets.gather_4.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "next": "Copy_of_increment1",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 4",
+              "arguments": [
+                "{{widgets.gather_4.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "4"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.gather_4.Digits}}",
+        "offset": {
+          "x": 2370,
+          "y": 2740
+        }
+      }
+    },
+    {
+      "name": "Copy_of_Copy_of_Copy_2_of_split_9",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Copy_of_gather_3",
+          "event": "noMatch"
+        },
+        {
+          "next": "increment1",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 1",
+              "arguments": [
+                "{{widgets.gather_4.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "next": "Copy_of_gather_4",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 2",
+              "arguments": [
+                "{{widgets.gather_4.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "next": "Copy_of_Copy_of_Copy_of_Copy_of_say_play_11",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 3",
+              "arguments": [
+                "{{widgets.gather_4.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "next": "Copy_of_increment1",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 4",
+              "arguments": [
+                "{{widgets.gather_4.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "4"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.gather_4.Digits}}",
+        "offset": {
+          "x": 2560,
+          "y": 3030
+        }
+      }
+    },
+    {
+      "name": "Copy_of_Copy_of_Copy_of_Copy_2_of_split_9",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Copy_2_of_gather_6",
+          "event": "noMatch"
+        },
+        {
+          "next": "increment1",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 1",
+              "arguments": [
+                "{{widgets.gather_4.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "next": "Copy_of_gather_4",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 2",
+              "arguments": [
+                "{{widgets.gather_4.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "next": "Copy_of_Copy_of_Copy_of_Copy_of_say_play_11",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 3",
+              "arguments": [
+                "{{widgets.gather_4.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "next": "Copy_of_increment1",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to 4",
+              "arguments": [
+                "{{widgets.gather_4.Digits}}"
+              ],
+              "type": "equal_to",
+              "value": "4"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{widgets.gather_4.Digits}}",
+        "offset": {
+          "x": 2490,
+          "y": 3330
+        }
+      }
+    },
+    {
+      "name": "Copy_of_Copy_of_Copy_of_Copy_of_say_play_11",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "Copy_of_Copy_of_Copy_of_Copy_of_connect_call_2",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Salli",
+        "offset": {
+          "x": 4090,
+          "y": 3120
+        },
+        "loop": 1,
+        "say": "{% assign count = flow.variables.counter | plus: 0 %} connecting you to, {{widgets.callLogsRequest.parsed.oldMissedCalls[count].clientNumber}}.....",
+        "language": "en-US"
+      }
+    },
+    {
+      "name": "Copy_of_Copy_of_Copy_of_Copy_of_connect_call_2",
+      "type": "connect-call-to",
+      "transitions": [
+        {
+          "event": "callCompleted"
+        },
+        {
+          "event": "hangup"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 4230,
+          "y": 3340
+        },
+        "caller_id": "{{flow.channel.address}}",
+        "noun": "number",
+        "to": "{% assign count = flow.variables.counter | plus: 0 %}{{widgets. callLogsRequest.parsed.oldMissedCalls[count].e164Number}}",
+        "timeout": 30
+      }
+    },
+    {
+      "name": "increment1",
+      "type": "set-variables",
+      "transitions": [
+        {
+          "next": "Copy_2_of_split_4",
+          "event": "next"
+        }
+      ],
+      "properties": {
+        "variables": [
+          {
+            "value": "{{flow.variables.counter| plus: 1}}",
+            "key": "counter"
+          }
+        ],
+        "offset": {
+          "x": 1760,
+          "y": 2280
+        }
+      }
+    },
+    {
+      "name": "Copy_2_of_split_4",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Copy_of_gather_4",
+          "event": "noMatch"
+        },
+        {
+          "next": "Copy_2_of_say_play_5",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to {{widgets.callLogsRequest.parsed.newMissedCalls.size}}",
+              "arguments": [
+                "{{flow.variables.counter}}"
+              ],
+              "type": "equal_to",
+              "value": "{{widgets.callLogsRequest.parsed.oldMissedCalls.size}}"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{flow.variables.counter}}",
+        "offset": {
+          "x": 2530,
+          "y": 1640
+        }
+      }
+    },
+    {
+      "name": "Copy_of_increment1",
+      "type": "set-variables",
+      "transitions": [
+        {
+          "next": "Copy_of_Copy_2_of_split_4",
+          "event": "next"
+        }
+      ],
+      "properties": {
+        "variables": [
+          {
+            "value": "{{flow.variables.counter| plus: 5}}",
+            "key": "counter"
+          }
+        ],
+        "offset": {
+          "x": 2380,
+          "y": 2210
+        }
+      }
+    },
+    {
+      "name": "Copy_of_Copy_2_of_split_4",
+      "type": "split-based-on",
+      "transitions": [
+        {
+          "next": "Copy_2_of_split_4",
+          "event": "noMatch"
+        },
+        {
+          "next": "Copy_2_of_say_play_5",
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value equal_to {{widgets.callLogsRequest.parsed.newMissedCalls.size}}",
+              "arguments": [
+                "{{flow.variables.counter}}"
+              ],
+              "type": "greater_than",
+              "value": "{{widgets.callLogsRequest.parsed.oldMissedCalls.size}}"
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "input": "{{flow.variables.counter}}",
+        "offset": {
+          "x": 2430,
+          "y": 1960
+        }
+      }
+    },
+    {
+      "name": "Copy_2_of_say_play_5",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "choose_calls",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "Polly.Salli",
+        "offset": {
+          "x": 2590,
+          "y": 1270
+        },
+        "loop": 1,
+        "say": "End of new missed calls......",
+        "language": "en-US"
+      }
+    }
+  ],
+  "initial_state": "Trigger",
+  "flags": {
+    "allow_concurrent_calls": false
+  }
+}

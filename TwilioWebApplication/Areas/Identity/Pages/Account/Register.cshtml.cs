@@ -18,6 +18,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
+using Twilio;
+using Twilio.Rest.Studio.V2;
 using TwilioWebApplication.Models;
 
 namespace TwilioWebApplication.Areas.Identity.Pages.Account
@@ -82,14 +85,14 @@ namespace TwilioWebApplication.Areas.Identity.Pages.Account
             public string LastName { get; set; }
 
             [Required]
-            [StringLength(34, ErrorMessage = "TwilioSIDs are no longer than 34 characters")]
-            [Display(Name = "TwilioSID", Description = "Required to connect to your account's Twilio numbers")]
-            public string TwilioSID { get; set; }
+            [StringLength(34, ErrorMessage = "Twilio Account Sids are no longer than 34 characters")]
+            [Display(Name = "Twilio Account Sid", Description = "Required to connect to your account's Twilio numbers")]
+            public string TwilioAccountSid { get; set; }
 
             [Required]
-            [StringLength(34, ErrorMessage = "Twilio Secret Keys are no longer than 34 characters")]
-            [Display(Name = "TwilioSecret", Description = "Required to connect to your account's Twilio numbers")]
-            public string TwilioSecret { get; set; }
+            [StringLength(34, ErrorMessage = "Twilio Auth Tokens are no longer than 34 characters")]
+            [Display(Name = "Twilio Auth Token", Description = "Required to connect to your account's Twilio numbers")]
+            public string TwilioAuthToken { get; set; }
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -135,10 +138,36 @@ namespace TwilioWebApplication.Areas.Identity.Pages.Account
                 var user = CreateUser();
                 user.FirstName = Input.FirstName;
                 user.LastName = Input.LastName;
-                user.TwilioSID = Input.TwilioSID;
-                user.TwilioSecretKey = Input.TwilioSecret;
+                user.TwilioAccountSid = Input.TwilioAccountSid;
+                user.TwilioAuthToken = Input.TwilioAuthToken;
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+                
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+
+
+                
+                try
+                {
+                    JObject objectJSON = JObject.Parse(System.IO.File.ReadAllText(@"wwwroot/Flow.json"));
+                    
+                    TwilioClient.Init(user.TwilioAccountSid, user.TwilioAuthToken);
+                    var flow = FlowResource.Create(
+                    commitMessage: "First commit",
+                    friendlyName: $"Low Phone Volume IVR {DateTime.Now.ToShortDateString()}",
+                    status: FlowResource.StatusEnum.Published,
+                    definition: objectJSON
+                    );
+
+                    user.TwilioFlowSid = flow.Sid;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return Page();
+                }
+
+               
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)

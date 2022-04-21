@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<Employee>
 @*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+
 *@
 
 <div class="container p-3">
@@ -16,4 +16,17 @@
  </div>
 
 </div>
-<partial name="~/Views/Shared/_Employees.cshtml" />
+@{
+    int count = 1;
+    foreach(int i in ViewData["CompanyIds"] as List<int>)
+    {
+        
+        ViewData["companyId"] = i;
+        <h3 class="text-primary" style="margin-inline: auto; text-align:center;">Company @count</h3>
+        <partial name="~/Views/Shared/_Employees.cshtml" view-data="ViewData"/>
+
+        count++;
+    }
+
+    
+}
