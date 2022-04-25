@@ -9,110 +9,122 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Twilio Employee to Client Management Portal</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <!--<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />-->
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/TwilioWebApplication.styles.css" asp-append-version="true" />
+    <!--<link rel="stylesheet" href="~/TwilioWebApplication.styles.css" asp-append-version="true" /> -->
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                @{
-                    if (SignInManager.IsSignedIn(User))
-                    {
+    
+<header>
+        <nav class="navigation-pane">
 
-                        try
-                        {
-
-                            string? brandName = UserManager.GetUserAsync(User).Result.brandName;
-                            string? brandURI = UserManager.GetUserAsync(User).Result.brandURI;
-                            if (brandURI != null)
-                            {
-                                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                                    <img id="brand-image" src="@brandURI" alt="@(brandName == null ? "Low Volume Phone Management Portal" : brandName)" />
-                                </a>
-
-                            }
-
-
-                            else
-                            {
-                                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                                    @(brandName == null ? "Low Volume Phone Management Portal" : brandName)
-                                </a>
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            System.Diagnostics.Debug.WriteLine("error getting user");
-
-                        }
-                    }
-                    else
-                    {
-                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                            Low Volume Phone Management Portal
-                        </a>
-                    }
-                }
-
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="Numbers">Purchased Numbers</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="Employees">Employees</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="Companies">Companies</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-
-                </div>
-                <partial name="_LoginPartial" />
+            <div class="navigation-item">
+                <a asp-controller="Home" asp-action="Index" class="nav-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
+                        <path fill-rule="evenodd"
+                            d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z" />
+                    </svg>
+                    <span class="nav-text">Home</span>
+                </a>
             </div>
+            <div class="navigation-item">
+                <a asp-controller="Employee" asp-action="Numbers" class="nav-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-telephone-fill" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
+                    </svg>
+                    <span class="nav-text">Numbers</span>
+                </a>
+            </div>
+            <div class="navigation-item">
+                <a asp-controller="Employee" asp-action="Employees" class="nav-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-person-fill" viewBox="0 0 16 16">
+                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                    </svg>
+                    <span class="nav-text">Employees</span>
+                </a>
+            </div>
+            <div class="navigation-item">
+                <a asp-controller="Employee" asp-action="Companies" class="nav-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-people-fill" viewBox="0 0 16 16">
+                        <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                        <path fill-rule="evenodd"
+                            d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z" />
+                        <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" />
+                    </svg>
+                    <span class="nav-text">Companies</span>
+                </a>
+            </div>
+
+            @if(SignInManager.IsSignedIn(User))
+            {
+                
+                <div class="navigation-item nav-bottom responsive-w">
+                <a id="manage" asp-area="Identity" asp-page="/Account/Manage/Index" class="nav-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-gear-fill settings-btn"
+                        viewBox="0 0 16 16">
+                        <path
+                            d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z" />
+                    </svg>
+                    <span class="nav-text">Hello @UserManager.GetUserAsync(User).Result.FirstName!</span>
+                </a>
+            </div>
+            <form id="logoutForm" class="navigation-item responsive-w">
+                <a id="logout" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })"class="nav-link" onclick="document.getElementById('logoutForm').submit()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-door-open-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M1.5 15a.5.5 0 0 0 0 1h13a.5.5 0 0 0 0-1H13V2.5A1.5 1.5 0 0 0 11.5 1H11V.5a.5.5 0 0 0-.57-.495l-7 1A.5.5 0 0 0 3 1.5V15H1.5zM11 2h.5a.5.5 0 0 1 .5.5V15h-1V2zm-2.5 8c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z" />
+                    </svg>
+                    <span class="nav-text">Logout</span>
+                </a>
+                </form>
+
+            }
+            else
+            {
+                
+                <div class="navigation-item nav-bottom responsive-w">
+                <a id="manage" asp-area="Identity" asp-page="/Account/Register" class="nav-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-gear-fill settings-btn"
+                        viewBox="0 0 16 16">
+                        <path
+                            d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z" />
+                    </svg>
+                    <span class="nav-text">Register</span>
+                </a>
+            </div>
+            <form id="loginForm" class="navigation-item responsive-w">
+                <a id="login" asp-area="Identity" asp-page="/Account/Login" class="nav-link" onclick="">
+                    <span class="nav-text">Login</span>
+                </a>
+                </form>
+
+            }
+
+            
+
         </nav>
     </header>
-    <div class="container-fluid">
-        <main role="main" class="pb-3">
+    <main role="main" class="pb-3">
             @RenderBody()
-        </main>
-    </div>
+    </main>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - TwilioWebApplication - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+
+    <footer class="">
+        <div class="">
+            No &copy; 2022 - Twilio Management Portal - Quaid Rodgers - CSCISGroup4 - <a href="/">Privacy</a>
         </div>
     </footer>
     <script>
-        //custom script
-            window.onload=function() {
-                            let locality = document.getElementById('locality');
-                            console.log("onload-function");
-                                locality.onchange=function() {
-                                                            console.log("hello");
-                                                            var ISO = document.getElementById("ISO");
-                                                            var localityText = locality.options[locality.selectedIndex].text;
-                                                            var ISOText = ISO.options[ISO.selectedIndex].text;
 
-                                                            console.log(ISOText + "is the ISO text");
-                                                            console.log(localityText + "is the locality text");
-                                                            if (localityText != "None") {
-                                                            fetch(`https://api.twilio.com/2010-04-01/Accounts/@(ViewData["AccountSid"] as string)/AvailablePhoneNumbers/${ISOText}/${localityText}.json`).then(response => {console.log(response); });
-                                                                }
-
-                                                          }
     </script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

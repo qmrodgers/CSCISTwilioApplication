@@ -3,30 +3,30 @@
 
 *@
 
-<div class="container p-3">
-    <div class="row">
- <div class="col-6">
-     <h3 class="text-primary">Employee List</h3>
- </div>
- <div class="col-6 text-end">
-     <a asp-controller="Employee" asp-action="AddNewEmployee" class="btn btn-primary">
-         Add New Employee
-     </a>
- </div>
- </div>
-
+<div class="title-box">
+    <h1 class="page-title">
+        Employee List</h3>
+        <a href="/" class="title-button">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+            </svg>
+            <span> Add</span>
+        </a>
 </div>
-@{
-    int count = 1;
-    foreach(int i in ViewData["CompanyIds"] as List<int>)
-    {
-        
-        ViewData["companyId"] = i;
-        <h3 class="text-primary" style="margin-inline: auto; text-align:center;">Company @count</h3>
-        <partial name="~/Views/Shared/_Employees.cshtml" view-data="ViewData"/>
+<hr class="break">
+    @{
+        int count = 1;
+        foreach (int i in ViewData["CompanyIds"] as List<int>)
+        {
 
-        count++;
+            ViewData["companyId"] = i;
+            <span class="box-separator-title">Company @count</span>
+            <div class="list-wrapper">
+            <partial name="~/Views/Shared/_Employees.cshtml" view-data="ViewData" />
+            </div>
+            count++;
+        }
+
+
     }
 
-    
-}
