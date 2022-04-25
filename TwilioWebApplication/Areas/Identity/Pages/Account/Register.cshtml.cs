@@ -143,12 +143,11 @@ namespace TwilioWebApplication.Areas.Identity.Pages.Account
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
-
-
                 
                 try
                 {
-                    JObject objectJSON = JObject.Parse(System.IO.File.ReadAllText(@"wwwroot/Flow.json"));
+                    JObject objectJSON = JObject.Parse(System.IO.File.ReadAllText(@"wwwroot/Flow.json").Replace("%ReplaceURL%", Request.Headers.Origin));
+                    Console.WriteLine(objectJSON["states"]);
                     
                     TwilioClient.Init(user.TwilioAccountSid, user.TwilioAuthToken);
                     var flow = FlowResource.Create(

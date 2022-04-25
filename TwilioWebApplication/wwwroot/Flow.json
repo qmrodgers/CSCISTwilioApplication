@@ -1212,7 +1212,7 @@
       "properties": {
         "variables": [
           {
-            "value": "http://8303-23-251-2-236.ngrok.io",
+            "value": "%ReplaceURL%",
             "key": "domainurl"
           }
         ],
@@ -1223,7 +1223,7 @@
       }
     },
     {
-      "name": "Copy_of_Set_Domain_URL",
+      "name": "Set_Domain_URL2",
       "type": "set-variables",
       "transitions": [
         {
@@ -1234,7 +1234,7 @@
       "properties": {
         "variables": [
           {
-            "value": "http://8303-23-251-2-236.ngrok.io",
+            "value": "%ReplaceURL%",
             "key": "domainurl"
           }
         ],
@@ -1245,7 +1245,7 @@
       }
     },
     {
-      "name": "Copy_of_Copy_of_Set_Domain_URL",
+      "name": "Set_Domain_URL3",
       "type": "set-variables",
       "transitions": [
         {
@@ -1256,7 +1256,7 @@
       "properties": {
         "variables": [
           {
-            "value": "http://8303-23-251-2-236.ngrok.io",
+            "value": "%ReplaceURL%",
             "key": "domainurl"
           }
         ],

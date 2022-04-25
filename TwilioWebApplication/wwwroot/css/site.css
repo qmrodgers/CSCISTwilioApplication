@@ -32,6 +32,22 @@ a {
     color: var(--primary-black)
 }
 
+.homediv {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+.hometitle {
+    font-size: 5rem;
+    font-family: 'Staatliches';
+}
+
+.homedetails {
+    font-size: 1.25rem;
+}
+
 li {
     list-style: none;
 }

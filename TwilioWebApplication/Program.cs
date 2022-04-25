@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using MySqlConnector;
+using Newtonsoft.Json.Linq;
+using System.Text.Json.Nodes;
 using TwilioWebApplication.Data;
 using TwilioWebApplication.Models;
 
@@ -18,7 +20,9 @@ var stringbuilder = new MySqlConnectionStringBuilder()
     SslMode = MySqlSslMode.None
 };
 string newconnectionstring = stringbuilder.ConnectionString;
-Console.WriteLine(newconnectionstring);
+
+
+
 
 if (_connection.Contains("%CONTENTROOTPATH%"))
 {

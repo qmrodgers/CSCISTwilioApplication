@@ -8,145 +8,145 @@ build_property.PlatformNeutralAssembly =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = TwilioWebApplication
 build_property.RootNamespace = TwilioWebApplication
-build_property.ProjectDir = c:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\
+build_property.ProjectDir = C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = true
-build_property.MSBuildProjectDirectory = c:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication
+build_property.MSBuildProjectDirectory = C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication
 build_property._RazorSourceGeneratorDebug = 
 
-[c:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Areas/Identity/Pages/Account/Login.cshtml]
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Areas/Identity/Pages/Account/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Areas/Identity/Pages/Account/Logout.cshtml]
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Areas/Identity/Pages/Account/Logout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxMb2dvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Areas/Identity/Pages/Account/Manage/ChangePassword.cshtml]
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Areas/Identity/Pages/Account/Manage/ChangePassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcQ2hhbmdlUGFzc3dvcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Areas/Identity/Pages/Account/Manage/Email.cshtml]
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Areas/Identity/Pages/Account/Manage/Email.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcRW1haWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Areas/Identity/Pages/Account/Manage/PersonalData.cshtml]
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Areas/Identity/Pages/Account/Manage/PersonalData.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcUGVyc29uYWxEYXRhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Areas/Identity/Pages/Account/Manage/Personalization.cshtml]
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Areas/Identity/Pages/Account/Manage/Personalization.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcUGVyc29uYWxpemF0aW9uLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Areas/Identity/Pages/Account/Manage/_ManageNav.cshtml]
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Areas/Identity/Pages/Account/Manage/_ManageNav.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcX01hbmFnZU5hdi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Areas/Identity/Pages/Account/Manage/_ViewImports.cshtml]
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Areas/Identity/Pages/Account/Manage/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Areas/Identity/Pages/Account/Register.cshtml]
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Areas/Identity/Pages/Account/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Areas/Identity/Pages/Account/_ViewImports.cshtml]
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Areas/Identity/Pages/Account/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxfVmlld0ltcG9ydHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Areas/Identity/Pages/_ValidationScriptsPartial.cshtml]
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Areas/Identity/Pages/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZhbGlkYXRpb25TY3JpcHRzUGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Areas/Identity/Pages/_ViewImports.cshtml]
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Areas/Identity/Pages/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Areas/Identity/Pages/_ViewStart.cshtml]
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Areas/Identity/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Employee/AddNewCompany.cshtml]
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Employee/AddNewCompany.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcQWRkTmV3Q29tcGFueS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Employee/AddNewEmployee.cshtml]
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Employee/AddNewEmployee.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcQWRkTmV3RW1wbG95ZWUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Employee/AddNumber.cshtml]
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Employee/AddNumber.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcQWRkTnVtYmVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Employee/Companies.cshtml]
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Employee/Companies.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcQ29tcGFuaWVzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Employee/DeleteCompany.cshtml]
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Employee/DeleteCompany.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcRGVsZXRlQ29tcGFueS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Employee/DeleteEmployee.cshtml]
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Employee/DeleteEmployee.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcRGVsZXRlRW1wbG95ZWUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Employee/EditCompany.cshtml]
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Employee/EditCompany.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcRWRpdENvbXBhbnkuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Employee/EditEmployee.cshtml]
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Employee/EditEmployee.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcRWRpdEVtcGxveWVlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Employee/Employees.cshtml]
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Employee/Employees.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcRW1wbG95ZWVzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Employee/Numbers.cshtml]
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Employee/Numbers.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcTnVtYmVycy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Home/Index.cshtml]
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Home/Privacy.cshtml]
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Shared/Error.cshtml]
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Shared/_Companies.cshtml]
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Shared/_Companies.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Db21wYW5pZXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Shared/_Employees.cshtml]
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Shared/_Employees.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9FbXBsb3llZXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Shared/_LoginPartial.cshtml]
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Shared/_LoginPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2dpblBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Shared/_Numbers.cshtml]
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Shared/_Numbers.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9OdW1iZXJzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/_ViewImports.cshtml]
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/_ViewStart.cshtml]
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Shared/_Layout.cshtml]
+[C:/Users/quaid/source/repos/CSCISTwilioApplication/TwilioWebApplication/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-0e2shu63rl
