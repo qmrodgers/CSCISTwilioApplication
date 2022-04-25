@@ -11,7 +11,7 @@ using TwilioWebApplication.Data;
 namespace TwilioWebApplication.Migrations
 {
     [DbContext(typeof(WebApplicationContext))]
-    [Migration("20220425205257_init")]
+    [Migration("20220425212548_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

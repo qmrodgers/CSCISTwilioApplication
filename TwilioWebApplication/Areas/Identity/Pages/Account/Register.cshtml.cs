@@ -146,8 +146,7 @@ namespace TwilioWebApplication.Areas.Identity.Pages.Account
                 
                 try
                 {
-                    JObject objectJSON = JObject.Parse(System.IO.File.ReadAllText(@"wwwroot/Flow.json").Replace("%ReplaceURL%", Request.Headers.Origin));
-                    Console.WriteLine(objectJSON["states"]);
+                    JObject objectJSON = JObject.Parse(System.IO.File.ReadAllText(@"wwwroot/Flow.json").Replace("_ReplaceURL_", Request.Headers.Origin));
                     
                     TwilioClient.Init(user.TwilioAccountSid, user.TwilioAuthToken);
                     var flow = FlowResource.Create(

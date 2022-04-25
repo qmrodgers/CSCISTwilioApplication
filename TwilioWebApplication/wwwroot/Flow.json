@@ -6,7 +6,7 @@
       "type": "trigger",
       "transitions": [
         {
-          "next": "Copy_of_Copy_of_Set_Domain_URL",
+          "next": "Set_Domain_URL3",
           "event": "incomingMessage"
         },
         {
@@ -14,7 +14,7 @@
           "event": "incomingCall"
         },
         {
-          "next": "Copy_of_Set_Domain_URL",
+          "next": "Set_Domain_URL2",
           "event": "incomingRequest"
         },
         {
@@ -1212,7 +1212,7 @@
       "properties": {
         "variables": [
           {
-            "value": "%ReplaceURL%",
+            "value": "_ReplaceURL_",
             "key": "domainurl"
           }
         ],
@@ -1234,7 +1234,7 @@
       "properties": {
         "variables": [
           {
-            "value": "%ReplaceURL%",
+            "value": "_ReplaceURL_",
             "key": "domainurl"
           }
         ],
@@ -1256,7 +1256,7 @@
       "properties": {
         "variables": [
           {
-            "value": "%ReplaceURL%",
+            "value": "_ReplaceURL_",
             "key": "domainurl"
           }
         ],
