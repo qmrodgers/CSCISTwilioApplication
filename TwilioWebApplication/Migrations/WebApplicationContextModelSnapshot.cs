@@ -15,26 +15,24 @@ namespace TwilioWebApplication.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.4")
-                .HasAnnotation("Relational:MaxIdentifierLength", 64);
+            modelBuilder.HasAnnotation("ProductVersion", "6.0.4");
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("longtext");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("NormalizedName")
                         .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -49,17 +47,17 @@ namespace TwilioWebApplication.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("longtext");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("longtext");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("RoleId")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -72,17 +70,17 @@ namespace TwilioWebApplication.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("longtext");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("longtext");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -95,18 +93,18 @@ namespace TwilioWebApplication.Migrations
                 {
                     b.Property<string>("LoginProvider")
                         .HasMaxLength(128)
-                        .HasColumnType("varchar(128)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("ProviderKey")
                         .HasMaxLength(128)
-                        .HasColumnType("varchar(128)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("longtext");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -118,10 +116,10 @@ namespace TwilioWebApplication.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("RoleId")
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -133,18 +131,18 @@ namespace TwilioWebApplication.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("LoginProvider")
                         .HasMaxLength(128)
-                        .HasColumnType("varchar(128)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .HasMaxLength(128)
-                        .HasColumnType("varchar(128)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Value")
-                        .HasColumnType("longtext");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
@@ -155,35 +153,35 @@ namespace TwilioWebApplication.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("AccountId")
-                        .HasColumnType("longtext");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CallDate")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("CallType")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("ClientNumber")
-                        .HasColumnType("longtext");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("EmployeeID")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsRead")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("RecordingId")
-                        .HasColumnType("longtext");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("RecordingUrl")
-                        .HasColumnType("longtext");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("TwilioNumber")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -196,14 +194,14 @@ namespace TwilioWebApplication.Migrations
                 {
                     b.Property<int>("CompanyID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("CompanyName")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("CompanyID");
 
@@ -216,21 +214,21 @@ namespace TwilioWebApplication.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("ContactName")
-                        .HasColumnType("longtext");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("ContactPhone")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("EmployeePhone")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("TEXT");
 
                     b.Property<bool>("Favorite")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -241,30 +239,30 @@ namespace TwilioWebApplication.Migrations
                 {
                     b.Property<int>("EmployeeID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("AssignedNumber")
-                        .HasColumnType("longtext");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("CompanyID")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
-                        .HasColumnType("longtext");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("longtext");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("LastCall")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("EmployeeID");
 
@@ -276,15 +274,15 @@ namespace TwilioWebApplication.Migrations
             modelBuilder.Entity("TwilioWebApplication.Models.TwilioPhoneNumber", b =>
                 {
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("FriendlyName")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("TwilioSID")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("PhoneNumber");
 
@@ -294,84 +292,84 @@ namespace TwilioWebApplication.Migrations
             modelBuilder.Entity("TwilioWebApplication.Models.User", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("longtext");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("TEXT");
 
                     b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("TEXT");
 
                     b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("PasswordHash")
-                        .HasColumnType("longtext");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("longtext");
+                        .HasColumnType("TEXT");
 
                     b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("SecurityStamp")
-                        .HasColumnType("longtext");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("TwilioAccountSid")
                         .IsRequired()
                         .HasMaxLength(34)
-                        .HasColumnType("varchar(34)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("TwilioAuthToken")
                         .IsRequired()
                         .HasMaxLength(34)
-                        .HasColumnType("varchar(34)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("TwilioFlowSid")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("TEXT");
 
                     b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("brandName")
-                        .HasColumnType("longtext");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("brandURI")
-                        .HasColumnType("longtext");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 

@@ -23,7 +23,6 @@ namespace TwilioWebApplication.Controllers
         private List<Employee> _employeelist;
         private List<TwilioPhoneNumber> _phoneNumbers;
         UserManager<User> _userManager;
-        User _user; //remove later potentially
 
 
 

@@ -83,11 +83,13 @@ body::-webkit-scrollbar-thumb {
 
 
 .list-wrapper {
+
     width: 100%;
     padding: 0;
     margin: 0;
     display: flex;
     flex-wrap: wrap;
+    gap: .25rem;
     justify-content: center;
 }
 
@@ -166,12 +168,12 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0;
 }
 
-main a {
-    transition: background-color ease-in 100ms;
+a.title-button, a.list-btn{
+    transition: filter ease-in 50ms;
 }
 
-    main a:hover {
-        background-color: #16191a;
+a.title-button:hover, a.list-btn:hover {
+        filter: grayscale(10%) opacity(.7)
     }
 
 .box-separator-title {
@@ -185,15 +187,22 @@ main a {
 }
 
 .title-box {
+    
     display: flex;
     align-items: center;
-    height: 2.5rem;
-    width: 100%;
-    margin: 1rem 0 1.5rem 0;
+    
+    margin-left: -1rem;
+    margin-top: -.5rem;
+    margin-bottom: .25rem;
+    min-height: 75px;
+    width: calc(100% + 4rem);
+    padding: 1rem 2rem 1.5rem 2rem;
+    background-image: linear-gradient(90deg, #16191a 50%, #13121a);
 }
 
 .page-title {
     font-size: min(calc(1rem + 3vw), 3rem);
+    color: var(--primary-white);
 }
 
 .title-button {
@@ -202,18 +211,22 @@ main a {
     height: 100%;
     background-color: var(--light-red);
     color: var(--primary-white);
-    padding-block: 2rem;
-    padding-right: 1rem;
-    border-radius: .5rem;
-    margin-left: auto;
+    padding-block: .5em;
+    padding-right: .25em;
+    border-radius: .25em;
+
     text-transform: uppercase;
     font-family: 'Staatliches';
-    font-size: 3rem;
+    font-size: 1rem;
 }
 
+    .title-button:first-of-type {
+        margin-left: auto;
+        margin-right: .25em;
+    }
     .title-button svg {
-        height: 2rem;
-        width: 2rem;
+        height: 1em;
+        width: 1em;
     }
 
 .listbox {
@@ -224,7 +237,8 @@ main a {
     width: 90%;
     max-width: 900px;
     min-width: 500px;
-    box-shadow: 2px 2px 5px hsla(250, 21%, 16%, 0.151);
+    box-shadow: 3px 3px 4px hsla(250, 21%, 16%, 0.2);
+    border: 1px solid grey;
     padding: 1rem;
     border-radius: 4px;
 }

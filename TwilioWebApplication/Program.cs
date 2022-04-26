@@ -8,30 +8,21 @@ using TwilioWebApplication.Data;
 using TwilioWebApplication.Models;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+
+// this segment of code optimizes the connection string so it isn't hard coded (it finds out the root of the project automatically at runtime)
 string _connection = builder.Configuration.GetConnectionString("DefaultConnection");
-Console.Write("Please enter a password for your SQL server:"); //optional but avoids hard coding password
-
-var stringbuilder = new MySqlConnectionStringBuilder()
-{
-    Server = "freetwilioappserverquaid.mysql.database.azure.com",
-    Database = "twilio_app_database",
-    UserID = "quidax",
-    Password = $"St33lballrun",
-    SslMode = MySqlSslMode.None
-};
-string newconnectionstring = stringbuilder.ConnectionString;
-
-
-
 
 if (_connection.Contains("%CONTENTROOTPATH%"))
 {
     _connection = _connection.Replace("%CONTENTROOTPATH%", builder.Environment.ContentRootPath);
 }
-builder.Services.AddDbContext<WebApplicationContext>(options => options.UseMySql(
-    newconnectionstring, ServerVersion.AutoDetect(newconnectionstring)
+builder.Services.AddDbContext<WebApplicationContext>(options => options.UseSqlite(
+    _connection
     ));
 builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<WebApplicationContext>();
+//end of db setup
+
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddRazorPages();
 builder.Services.AddHttpClient();
