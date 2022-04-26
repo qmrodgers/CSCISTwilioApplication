@@ -24,12 +24,20 @@ html {
     margin: 0;
     padding: 0;
     color: var(--primary-black);
-    background-color: var(--primary-white);
+    background-image: linear-gradient(var(--primary-white) 50%, #eeeeed);
+    
+    background-repeat: no-repeat;
 }
 
 a {
     text-decoration: none;
     color: var(--primary-black)
+}
+body {
+    min-height: 100vh;
+    min-width: 100vw;
+    top: 0;
+    left: 0;
 }
 
 .homediv {
@@ -185,6 +193,8 @@ a.title-button:hover, a.list-btn:hover {
     letter-spacing: .1rem;
     margin-bottom: 1rem;
 }
+
+
 
 .title-box {
     
@@ -377,4 +387,58 @@ a.title-button:hover, a.list-btn:hover {
         .listbox:nth-of-type(odd) {
             margin-right: 2%;
         }
+}
+
+.formbox {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#registerForm {
+    width: 100%;
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+
+}
+
+
+
+.form-floating {
+    display: grid;
+    grid-template-columns: repeat(12, calc(100%/12));
+    grid-template-rows: repeat(12, calc(100%/12));
+}
+
+.form-floating input {
+    grid-row-start: 1;
+    grid-row-end: 13;
+
+    grid-column-start: 5;
+    grid-column-end: 13;
+
+    width: 100%;
+
+    justify-self:center;
+}
+.form-floating label {
+    grid-row-start: 1;
+    grid-row-end: 13;
+
+    grid-column-start: 1;
+    grid-column-end: 5;
+    font-size: min(calc(100vw/30), 1rem);
+    
+    margin-left: auto;
+    margin-right: .25rem;
+}
+.externalbox {
+    padding-block: 4rem;
+}
+.externalbox > section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
