@@ -227,7 +227,7 @@ a.title-button:hover, a.list-btn:hover {
 
     text-transform: uppercase;
     font-family: 'Staatliches';
-    font-size: 1rem;
+    font-size: 1.25rem;
 }
 
     .title-button:first-of-type {
@@ -385,7 +385,7 @@ a.title-button:hover, a.list-btn:hover {
     }
 
         .listbox:nth-of-type(odd) {
-            margin-right: 2%;
+            margin-right: .25rem;
         }
 }
 
@@ -394,6 +394,8 @@ a.title-button:hover, a.list-btn:hover {
     display: flex;
     justify-content: center;
 }
+
+
 
 #registerForm {
     width: 100%;
