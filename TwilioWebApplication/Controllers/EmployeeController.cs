@@ -9,6 +9,7 @@ using System.Globalization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Text.RegularExpressions;
+using Microsoft.EntityFrameworkCore;
 
 namespace TwilioWebApplication.Controllers
 {
@@ -35,8 +36,8 @@ namespace TwilioWebApplication.Controllers
 
             _webHostEnvironment = environment;
             _db = db;
-            _companylist = _db.Companies.ToList();
-            _employeelist = _db.Employees.ToList();
+            _companylist = _db.Companies.Include(comp => comp.User).ToList();
+            _employeelist = _db.Employees.Include(emp => emp.Company.User).ToList();
             _phoneNumbers = _db.TwilioPhoneNumbers.ToList();
             _userManager = userManager;
 
@@ -60,8 +61,8 @@ namespace TwilioWebApplication.Controllers
         {
             // user and database context
             User user = _userManager.GetUserAsync(User).Result;
-           
-            List<Employee> Employees = (from e in _employeelist where e.Company.User.Id == user.Id select e).ToList();
+            
+            List<Employee>? Employees = (from e in _employeelist where e.Company.User.Id == user.Id select e).ToList();
             if (employeeDeleted) ViewData["deleted"] = "Employee successfully deleted.";
             List<int> companies = new List<int>();
             foreach (Employee employee in Employees)
