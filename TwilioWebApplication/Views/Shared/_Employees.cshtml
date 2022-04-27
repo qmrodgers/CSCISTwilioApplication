@@ -7,7 +7,7 @@
 
             
 
-            @foreach (Employee emp in (from e in Model where e.Company.CompanyID == ViewData["companyId"] as int? orderby e.LastName ascending select e))
+            @foreach (Employee emp in (from e in Model where e.Company.CompanyID == ViewData["companyId"] as int? orderby e.EmployeeID ascending select e))
             {
 
                 <div class="listbox">
@@ -27,7 +27,7 @@
                         </svg></a>
                 </div>
                 <div class="list-details">
-                    <p><b class="list-assigned">@((@emp.AssignedNumber == null) ? "" : $"Assigned Number: {@emp.AssignedNumber}")</b></p>
+                    <p><b class="list-assigned">@((@emp.AssignedNumber == null) ? "None Assigned" : $"Assigned Number: {@emp.AssignedNumber}")</b></p>
                     <a class="list-email" href="mailto:@emp.Email">@emp.Email</a>
                 </div>
                 </div>

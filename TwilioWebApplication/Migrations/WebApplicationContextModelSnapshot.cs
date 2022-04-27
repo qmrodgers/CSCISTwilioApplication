@@ -365,12 +365,6 @@ namespace TwilioWebApplication.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("brandName")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("brandURI")
-                        .HasColumnType("TEXT");
-
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")

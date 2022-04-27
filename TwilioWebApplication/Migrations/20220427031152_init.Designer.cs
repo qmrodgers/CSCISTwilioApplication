@@ -11,7 +11,7 @@ using TwilioWebApplication.Data;
 namespace TwilioWebApplication.Migrations
 {
     [DbContext(typeof(WebApplicationContext))]
-    [Migration("20220426024323_init")]
+    [Migration("20220427031152_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -365,12 +365,6 @@ namespace TwilioWebApplication.Migrations
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("brandName")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("brandURI")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

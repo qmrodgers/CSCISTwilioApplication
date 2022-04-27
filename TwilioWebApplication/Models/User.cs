@@ -12,8 +12,6 @@ namespace TwilioWebApplication.Models
         public string TwilioAccountSid { get; set; }
         public string TwilioAuthToken { get; set; }
         public string TwilioFlowSid { get; set; }
-        public string? brandURI { get; set; }
-        public string? brandName { get; set; }
 
     }
 }

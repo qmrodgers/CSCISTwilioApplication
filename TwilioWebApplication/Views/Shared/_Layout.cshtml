@@ -110,7 +110,9 @@
             
 
         </nav>
+
     </header>
+    <div class='main-content-wrapper'>
     <main role="main" class="pb-3">
             @RenderBody()
     </main>
@@ -118,14 +120,16 @@
 
     <footer class="">
         <div class="">
-            No &copy; 2022 - Twilio Management Portal - Quaid Rodgers - CSCISGroup4 - <a href="/">Privacy</a>
+            No &copy; 2022 - Twilio Management Portal - Quaid Rodgers - CSCISGroup4 - <a asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+    </div>
     <script>
 
     </script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>

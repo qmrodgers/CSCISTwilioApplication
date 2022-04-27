@@ -33,13 +33,14 @@ namespace TwilioWebApplication.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<User> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IConfiguration _configuration;
 
         public RegisterModel(
             UserManager<User> userManager,
             IUserStore<User> userStore,
             SignInManager<User> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender, IConfiguration configuration)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -47,6 +48,7 @@ namespace TwilioWebApplication.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _configuration = configuration;
         }
 
         /// <summary>
@@ -120,6 +122,11 @@ namespace TwilioWebApplication.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Required]
+            [DataType(DataType.Password)]
+            [Display(Name = "User Registration Key for Authentication (App Setting)")]
+            public string UserRegistrationKey { get; set; }
         }
 
 
@@ -131,6 +138,10 @@ namespace TwilioWebApplication.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
+            if (Input.UserRegistrationKey != _configuration.GetSection("RegistrationKey")["UserRegistrationKey"])
+            {
+                return Page();
+            }
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)

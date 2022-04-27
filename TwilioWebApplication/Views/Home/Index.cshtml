@@ -3,14 +3,16 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="homediv">
+<div class="homediv" style="padding: 1rem;">
     <h1 class="hometitle">Twilio Phone Number Management Portal</h1>
 
     <section class="homedetails">
 
         <p>From here, you can edit your phone numbers after registering with a <b>Twilio Sid</b> and <b>Auth Token</b>.</p>
 
-        <p>The call IVR flow is stored in the <b>/wwwroot</b> folder in JSON format. </p>
+        <h2><b>Tips</b></h2>
+        <p>The call IVR flow is stored in the <b>/wwwroot</b> folder in JSON format. Importing the data into Twilio Studio will let you customize how you want your flow to work. Once finished, replace the contents of Flow.json with the newly generated Json. <b>DO NOT</b> remove or modify the DomainURL variable set at the start of the flow, as the application relies on it to automate flow uploading.</p>
+
 
 
     </section>

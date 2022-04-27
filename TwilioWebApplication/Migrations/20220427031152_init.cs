@@ -33,8 +33,6 @@ namespace TwilioWebApplication.Migrations
                     TwilioAccountSid = table.Column<string>(type: "TEXT", maxLength: 34, nullable: false),
                     TwilioAuthToken = table.Column<string>(type: "TEXT", maxLength: 34, nullable: false),
                     TwilioFlowSid = table.Column<string>(type: "TEXT", nullable: false),
-                    brandURI = table.Column<string>(type: "TEXT", nullable: true),
-                    brandName = table.Column<string>(type: "TEXT", nullable: true),
                     UserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
