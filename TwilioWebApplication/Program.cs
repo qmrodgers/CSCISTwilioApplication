@@ -19,7 +19,7 @@ if (_connection.Contains("%CONTENTROOTPATH%"))
 builder.Services.AddDbContext<WebApplicationContext>(options => options.UseSqlite(
     _connection
     ));
-builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<WebApplicationContext>();
+builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<WebApplicationContext>();
 //end of db setup
 
 
