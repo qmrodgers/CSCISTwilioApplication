@@ -157,7 +157,7 @@ namespace TwilioWebApplication.Areas.Identity.Pages.Account
                 
                 try
                 {
-                    JObject objectJSON = JObject.Parse(System.IO.File.ReadAllText(@"wwwroot/Flow.json").Replace("_ReplaceURL_", Request.Headers.Origin));
+                    JObject objectJSON = JObject.Parse(System.IO.File.ReadAllText(@"wwwroot/Flow.json").Replace("_ReplaceURL_", "http://" + Request.Headers.Host));
                     
                     TwilioClient.Init(user.TwilioAccountSid, user.TwilioAuthToken);
                     var flow = FlowResource.Create(
@@ -168,6 +168,7 @@ namespace TwilioWebApplication.Areas.Identity.Pages.Account
                     );
 
                     user.TwilioFlowSid = flow.Sid;
+
                 }
                 catch (Exception ex)
                 {

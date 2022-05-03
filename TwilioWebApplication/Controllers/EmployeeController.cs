@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
+using Twilio.Rest.Studio.V2;
 
 namespace TwilioWebApplication.Controllers
 {
@@ -395,6 +397,40 @@ namespace TwilioWebApplication.Controllers
             ViewData["NumberAdded"] = "Successfully added phone Number!";
             return RedirectToAction("Numbers");
         }
+
+        [Route("Numbers/RefreshFlow")]
+        public IActionResult RefreshFlow()
+        {
+            User user = _userManager.GetUserAsync(User).Result;
+            try
+            {
+                //Grabs the file Flow.json from the webroot folder! You can adjust it but be careful not to change necessary info.
+                JObject objectJSON = JObject.Parse(System.IO.File.ReadAllText(@"wwwroot/Flow.json").Replace("_ReplaceURL_", "http://" + Request.Headers.Host));
+
+                TwilioClient.Init(user.TwilioAccountSid, user.TwilioAuthToken);
+                var flow = FlowResource.Create(
+                commitMessage: "updated commit",
+                friendlyName: $"Low Phone Volume IVR {DateTime.Now.ToShortDateString()}",
+                status: FlowResource.StatusEnum.Published,
+                definition: objectJSON
+                );
+
+                user.TwilioFlowSid = flow.Sid;
+                _userManager.UpdateAsync(user);
+                _db.SaveChanges();
+                System.Diagnostics.Debug.WriteLine($"new flow sid is {flow.Sid}");
+                System.Diagnostics.Debug.WriteLine(user.TwilioFlowSid);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                ViewData["Error"] = $"An error occurred while attempting to update Flow: {ex.Message}";
+                return RedirectToAction("Numbers");
+            }
+
+            return RedirectToAction("RefreshNumbers");
+        }
+
         [Route("Numbers/RefreshNumbers")]
         public IActionResult RefreshNumbers()
         {

@@ -629,3 +629,8 @@ C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debu
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\runtimes\win-arm64\native\e_sqlite3.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\runtimes\win-x64\native\e_sqlite3.dll
 C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\runtimes\win-x86\native\e_sqlite3.dll
+C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\refs\Microsoft.Extensions.FileProviders.Embedded.dll
+C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\refs\Microsoft.Extensions.Identity.Core.dll
+C:\Users\quaid\source\repos\CSCISTwilioApplication\TwilioWebApplication\bin\Debug\net6.0\refs\Microsoft.Extensions.Identity.Stores.dll
